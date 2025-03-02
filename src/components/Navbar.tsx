@@ -61,15 +61,15 @@ const Navbar: React.FC = () => {
               />
             </svg>
             <div className="flex flex-col">
-              <span className="font-bold text-lg tracking-tight">College Degree GPT</span>
-              <span className="text-xs text-gray-600">Presented by Ai Web Tools LLC</span>
+              <span className="font-bold text-lg tracking-tight text-gray-900 dark:text-white">College Degree GPT</span>
+              <span className="text-xs text-gray-700 dark:text-gray-300">Presented by Ai Web Tools LLC</span>
             </div>
           </div>
           
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="link-underline text-sm font-medium">Features</a>
-            <a href="#how-it-works" className="link-underline text-sm font-medium">How It Works</a>
-            <a href="#example" className="link-underline text-sm font-medium">Example</a>
+            <a href="#features" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Features</a>
+            <a href="#how-it-works" className="link-underline text-sm font-medium text-gray-900 dark:text-white">How It Works</a>
+            <a href="#example" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Example</a>
           </nav>
           
           <div>
