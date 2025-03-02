@@ -15,10 +15,10 @@ const CTA: React.FC = () => {
         <AnimatedSection className="max-w-4xl mx-auto text-center">
           <GlassMorphism className="px-6 py-12 md:py-16">
             <span className="chip mb-6">Ready to Start Learning?</span>
-            <h2 className="heading text-3xl md:text-4xl lg:text-5xl mb-6">
+            <h2 className="heading text-3xl md:text-4xl lg:text-5xl mb-6 text-gray-900">
               Begin Your Educational Journey Today
             </h2>
-            <p className="subheading text-lg mx-auto mb-8 max-w-2xl">
+            <p className="text-lg mx-auto mb-8 max-w-2xl text-gray-800 font-medium">
               Access comprehensive college-level education on any subject, on your schedule, with personalized instruction from College Degree GPT.
             </p>
             

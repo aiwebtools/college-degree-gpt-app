@@ -16,12 +16,12 @@ const GlassMorphism: React.FC<GlassMorphismProps> = ({
   const getIntensityClasses = () => {
     switch (intensity) {
       case 'low':
-        return 'bg-white/30 backdrop-blur-sm border border-white/10 shadow-sm';
+        return 'bg-blue-50/90 backdrop-blur-sm border border-white/20 shadow-sm';
       case 'high':
-        return 'bg-white/80 backdrop-blur-xl border border-white/30 shadow-xl';
+        return 'bg-blue-50/95 backdrop-blur-xl border border-white/40 shadow-xl';
       case 'medium':
       default:
-        return 'bg-white/60 backdrop-blur-md border border-white/20 shadow-lg';
+        return 'bg-blue-50/90 backdrop-blur-md border border-white/30 shadow-lg';
     }
   };
 
