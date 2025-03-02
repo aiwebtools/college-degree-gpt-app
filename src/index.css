@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,7 +21,7 @@
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217 33% 17%;
-    --muted-foreground: 215 16% 65%;
+    --muted-foreground: 215 20% 75%;
 
     --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
@@ -64,7 +65,7 @@
 
 @layer components {
   .glass {
-    @apply bg-white/10 backdrop-blur-md border border-white/10 shadow-lg;
+    @apply bg-white/15 backdrop-blur-md border border-white/20 shadow-lg;
   }
   
   .subtle-shadow {
@@ -76,15 +77,15 @@
   }
   
   .chip {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/20 text-primary;
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary/20 text-white shadow-sm;
   }
   
   .heading {
-    @apply font-bold tracking-tight;
+    @apply font-bold tracking-tight drop-shadow-lg;
   }
   
   .subheading {
-    @apply text-muted-foreground max-w-3xl;
+    @apply text-white max-w-3xl font-medium shadow-sm bg-black/20 backdrop-blur-sm p-3 rounded-lg;
   }
   
   .link-underline {
