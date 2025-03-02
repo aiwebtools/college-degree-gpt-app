@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import GlassMorphism from './ui/GlassMorphism';
@@ -27,9 +28,9 @@ const Navbar: React.FC = () => {
           </div>
           
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="link-underline text-sm font-medium text-gray-900 dark:text-white">College Degree GPT</a>
-            <a href="#how-it-works" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT</a>
-            <a href="#example" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT</a>
+            <a href="https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">College Degree GPT</a>
+            <a href="https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT</a>
+            <a href="https://chatgpt.com/g/g-677690e9535c81919b3acbd5ec088644-learn-any-skill-gpt" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT</a>
           </nav>
           
           <div>
