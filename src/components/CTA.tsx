@@ -11,6 +11,16 @@ const CTA: React.FC = () => {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full filter blur-3xl opacity-30"></div>
       <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-primary/10 rounded-full filter blur-2xl opacity-30"></div>
       
+      <div className="flex justify-center mb-8">
+        <Button 
+          size="lg" 
+          className="px-8 py-6 text-lg font-semibold bg-gray-800 hover:bg-gray-700 rounded-md shadow-lg transition-all"
+          onClick={() => window.open('https://www.aiwebtools.ai', '_blank')}
+        >
+          Explore AiWebTools.Ai
+        </Button>
+      </div>
+      
       <div className="section-container relative z-10">
         <AnimatedSection className="max-w-4xl mx-auto text-center">
           <GlassMorphism className="px-6 py-12 md:py-16">
