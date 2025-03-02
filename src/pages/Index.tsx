@@ -41,9 +41,9 @@ const Index = () => {
       <main>
         <Hero />
         <HowItWorks />
+        <CTA />
         <Features />
         <CourseExample />
-        <CTA />
       </main>
       <Footer />
     </div>
