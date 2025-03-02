@@ -60,7 +60,10 @@ const Navbar: React.FC = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span className="font-bold text-lg tracking-tight">College Degree GPT</span>
+            <div className="flex flex-col">
+              <span className="font-bold text-lg tracking-tight">College Degree GPT</span>
+              <span className="text-xs text-gray-600">Presented by Ai Web Tools LLC</span>
+            </div>
           </div>
           
           <nav className="hidden md:flex items-center space-x-8">
