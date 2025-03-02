@@ -22,7 +22,7 @@ const CourseExample: React.FC = () => {
             {showVideo ? <div className="aspect-video w-full">
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" title="College Degree GPT Demo" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="aspect-video"></iframe>
               </div> : <div className="relative">
-                <img src="https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Course example thumbnail" className="w-full aspect-video object-cover" />
+                <img alt="Course example thumbnail" className="w-full aspect-video object-cover" src="/lovable-uploads/f53ee8e3-2c2a-41e6-975c-30bd30bc7322.png" />
                 <PlayButton />
               </div>}
           </div>
