@@ -49,15 +49,20 @@ const Hero: React.FC = () => {
           <GlassMorphism className="p-2 md:p-4 overflow-hidden rounded-2xl">
             <div className="relative rounded-xl overflow-hidden bg-slate-900 aspect-video w-full">
               {!videoPlaying ? (
-                <>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div 
-                      className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center cursor-pointer hover:bg-primary transition-colors duration-300"
-                      onClick={handlePlayVideo}
-                    >
+                <div className="relative aspect-video w-full">
+                  <img 
+                    src="https://img.youtube.com/vi/5cqDDGt1yn8/maxresdefault.jpg" 
+                    alt="Video thumbnail" 
+                    className="w-full h-full object-cover"
+                  />
+                  <div 
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                    onClick={handlePlayVideo}
+                  >
+                    <div className="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center hover:bg-primary transition-colors duration-300">
                       <svg 
-                        width="24" 
-                        height="24" 
+                        width="28" 
+                        height="28" 
                         viewBox="0 0 24 24" 
                         fill="none" 
                         xmlns="http://www.w3.org/2000/svg"
@@ -76,16 +81,18 @@ const Hero: React.FC = () => {
                     <h3 className="text-xl font-bold">See How College Degree GPT Works</h3>
                     <p className="text-white/80">Your personalized educational journey starts here</p>
                   </div>
-                </>
+                </div>
               ) : (
-                <iframe 
-                  src="https://www.youtube.com/embed/5cqDDGt1yn8?autoplay=1" 
-                  className="absolute top-0 left-0 w-full h-full"
-                  title="College Degree GPT Tutorial"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowFullScreen
-                ></iframe>
+                <div className="aspect-video w-full">
+                  <iframe 
+                    src="https://www.youtube.com/embed/5cqDDGt1yn8?autoplay=1" 
+                    className="w-full h-full"
+                    title="College Degree GPT Tutorial"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                  ></iframe>
+                </div>
               )}
             </div>
           </GlassMorphism>
