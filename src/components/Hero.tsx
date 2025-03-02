@@ -60,9 +60,10 @@ const Hero: React.FC = () => {
                     alt="Video thumbnail" 
                     className="w-full h-full object-cover"
                   />
-                  <div 
-                    className="absolute inset-0 flex items-center justify-center cursor-pointer"
+                  <button 
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer w-full h-full"
                     onClick={handlePlayVideo}
+                    aria-label="Play video"
                   >
                     <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center hover:bg-white/90 transition-colors duration-300">
                       <svg 
@@ -79,7 +80,7 @@ const Hero: React.FC = () => {
                         />
                       </svg>
                     </div>
-                  </div>
+                  </button>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   
                   <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
@@ -88,16 +89,14 @@ const Hero: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="aspect-video w-full">
-                  <iframe 
-                    src="https://www.youtube.com/embed/5cqDDGt1yn8?autoplay=1" 
-                    className="w-full h-full"
-                    title="College Degree GPT Tutorial"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowFullScreen
-                  ></iframe>
-                </div>
+                <iframe 
+                  src="https://www.youtube.com/embed/5cqDDGt1yn8?autoplay=1" 
+                  className="w-full h-full"
+                  title="College Degree GPT Tutorial"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
               )}
             </div>
           </GlassMorphism>
