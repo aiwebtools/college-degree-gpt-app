@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
 import { Play } from 'lucide-react';
+
 const CourseExample: React.FC = () => {
   const [showVideo, setShowVideo] = React.useState(false);
 
@@ -12,11 +14,14 @@ const CourseExample: React.FC = () => {
         <Play className="text-white ml-1" />
       </Button>;
   };
+
   return <section id="example" className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent"></div>
       <div className="section-container relative z-10">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16">
-          <span className="chip mb-6">See It In Action</span>
+          <a href="https://collegedegreegpt.com" className="inline-block">
+            <span className="chip mb-6 cursor-pointer hover:bg-primary/90 transition-colors">See It In Action</span>
+          </a>
           <h2 className="heading mb-6">Experience a College-Level Education Cost Free</h2>
           <p className="subheading max-w-2xl mx-auto">College Degree GPT provides educational content for every college degree from any institution. While it is not a substitute for an accredited degree, it serves as a valuable resource for self-study and an opportunity for those who may not have access to traditional higher education.</p>
         </AnimatedSection>
@@ -34,4 +39,5 @@ const CourseExample: React.FC = () => {
       </div>
     </section>;
 };
+
 export default CourseExample;
