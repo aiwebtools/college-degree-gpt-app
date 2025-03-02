@@ -70,7 +70,11 @@ const Navbar: React.FC = () => {
           </nav>
           
           <div>
-            <Button size="sm" className="rounded-full px-6">
+            <Button 
+              size="sm" 
+              className="rounded-full px-6"
+              onClick={() => window.open('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', '_blank')}
+            >
               Get Started
             </Button>
           </div>
