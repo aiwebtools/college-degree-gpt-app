@@ -1,10 +1,14 @@
-import React from 'react';
+
+import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from '@/components/theme-provider';
 import Index from '@/pages/index';
 import NotFound from '@/pages/NotFound';
+
+// Lazy load the FAQ component
+const FAQ = lazy(() => import('./pages/FAQ'));
 
 const queryClient = new QueryClient();
 
@@ -27,7 +31,11 @@ function App() {
             <Toaster />
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/faq" element={<React.lazy(() => import('./pages/FAQ'))} />
+              <Route path="/faq" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <FAQ />
+                </Suspense>
+              } />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </QueryClientProvider>
