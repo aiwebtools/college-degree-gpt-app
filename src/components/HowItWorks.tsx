@@ -135,8 +135,11 @@ const HowItWorks: React.FC = () => {
                   <button className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     Previous Lesson
                   </button>
-                  <button className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors">
-                    Continue Learning
+                  <button 
+                    className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
+                    onClick={() => window.open('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', '_blank')}
+                  >
+                    Access College Degree GPT
                   </button>
                 </div>
               </div>
