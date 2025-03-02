@@ -31,9 +31,7 @@ const Footer: React.FC = () => {
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Course GPT</a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  FAQ
-                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Ai Tools Free Downloadable List</a>
               </li>
             </ul>
           </div>
