@@ -1,10 +1,25 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
+import { Play } from 'lucide-react';
+
 const CourseExample: React.FC = () => {
   const [showVideo, setShowVideo] = React.useState(false);
-  const PlayButton = () => {};
+  
+  // Fixed PlayButton component that returns JSX
+  const PlayButton = () => {
+    return (
+      <Button 
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full w-16 h-16 flex items-center justify-center bg-primary/90 hover:bg-primary transition-all shadow-xl"
+        onClick={() => setShowVideo(true)}
+      >
+        <Play className="text-white ml-1" />
+      </Button>
+    );
+  };
+
   return <section id="example" className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent"></div>
       <div className="section-container relative z-10">
