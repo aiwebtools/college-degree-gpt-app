@@ -1,8 +1,5 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { Link } from 'react-router-dom';
-
 const Footer: React.FC = () => {
   return <footer className="bg-secondary/30 py-12 border-t border-border">
       <div className="section-container py-0">
@@ -34,9 +31,9 @@ const Footer: React.FC = () => {
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Course GPT</a>
               </li>
               <li>
-                <Link to="/faq" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   FAQ
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
