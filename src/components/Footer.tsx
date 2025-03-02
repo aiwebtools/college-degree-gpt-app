@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
+
 const Footer: React.FC = () => {
   return <footer className="bg-secondary/30 py-12 border-t border-border">
       <div className="section-container py-0">
@@ -22,16 +24,16 @@ const Footer: React.FC = () => {
             <h3 className="font-semibold mb-3 text-sm">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Open Source College Degree GPT Prompt</a>
+                <a href="https://docs.google.com/document/d/1TpVG9pncULpkHy9IhAjyXIgScyTW703Lf-IQKkXeJs4/edit?tab=t.0" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Open Source College Degree GPT Prompt</a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Skill GPT</a>
+                <a href="https://chatgpt.com/g/g-677690e9535c81919b3acbd5ec088644-learn-any-skill-gpt" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Skill GPT</a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Course GPT</a>
+                <a href="https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Course GPT</a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Ai Tools Free Downloadable List</a>
+                <a href="https://docs.google.com/document/d/1qtDKo3XN_EsspgrQD72Cpq2qh83H5xSd/edit?usp=sharing&ouid=116187507271950139405&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Ai Tools Free Downloadable List</a>
               </li>
             </ul>
           </div>
@@ -71,4 +73,5 @@ const Footer: React.FC = () => {
       </div>
     </footer>;
 };
+
 export default Footer;
