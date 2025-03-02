@@ -12,8 +12,9 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-background py-16 md:py-20">
-      <div className="absolute inset-0 bg-hero-pattern opacity-10"></div>
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-starry-night py-16 md:py-20">
+      <div className="absolute inset-0 bg-hero-pattern opacity-5"></div>
+      <div className="starry-background absolute inset-0"></div>
       
       <div className="absolute top-40 left-10 w-64 h-64 bg-primary/10 rounded-full filter blur-3xl opacity-30 animate-float"></div>
       <div className="absolute bottom-40 right-10 w-72 h-72 bg-primary/20 rounded-full filter blur-3xl opacity-30 animate-float" style={{ animationDelay: '2s' }}></div>
@@ -24,10 +25,10 @@ const Hero: React.FC = () => {
         </AnimatedSection>
         
         <AnimatedSection animation="fade-in" className="text-center mb-6">
-          <h1 className="heading text-4xl md:text-6xl lg:text-7xl mb-6 max-w-4xl">
+          <h1 className="heading text-4xl md:text-6xl lg:text-7xl mb-6 max-w-4xl text-white">
             Experience a Complete College Education, Powered by AI
           </h1>
-          <p className="subheading text-lg md:text-xl max-w-2xl mx-auto">
+          <p className="subheading text-lg md:text-xl max-w-2xl mx-auto text-slate-300">
             Comprehensive courses on any subject, taught step-by-step with the personalized attention of a dedicated professor.
           </p>
         </AnimatedSection>
@@ -40,13 +41,13 @@ const Hero: React.FC = () => {
           >
             Start Learning Now
           </Button>
-          <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-base">
+          <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-base border-white/20 text-white hover:bg-white/10">
             Explore Features
           </Button>
         </AnimatedSection>
         
         <AnimatedSection animation="fade-in-up" delay={0.4} className="mt-16 w-full max-w-5xl">
-          <GlassMorphism className="p-2 md:p-4 overflow-hidden rounded-2xl">
+          <GlassMorphism className="p-2 md:p-4 overflow-hidden rounded-2xl bg-black/30 border-white/10">
             <div className="relative rounded-xl overflow-hidden bg-slate-900 aspect-video w-full">
               {!videoPlaying ? (
                 <div className="relative aspect-video w-full">

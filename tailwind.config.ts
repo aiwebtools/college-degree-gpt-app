@@ -109,6 +109,10 @@ export default {
 				float: {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' }
+				},
+				drift: {
+					'0%': { backgroundPosition: '0 0' },
+					'100%': { backgroundPosition: '600px 600px' }
 				}
 			},
 			animation: {
@@ -120,11 +124,13 @@ export default {
 				'fade-in-up': 'fade-in-up 0.5s ease-out forwards',
 				'fade-in-down': 'fade-in-down 0.5s ease-out forwards',
 				'scale-in': 'scale-in 0.5s ease-out forwards',
-				'float': 'float 6s ease-in-out infinite'
+				'float': 'float 6s ease-in-out infinite',
+				'drift': 'drift 60s linear infinite'
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'hero-pattern': 'url("data:image/svg+xml,%3Csvg width=\'100%25\' height=\'100%25\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cdefs%3E%3Cpattern id=\'smallGrid\' width=\'8\' height=\'8\' patternUnits=\'userSpaceOnUse\'%3E%3Cpath d=\'M 8 0 L 0 0 0 8\' fill=\'none\' stroke=\'%23f0f0f0\' stroke-width=\'0.5\'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'url(%23smallGrid)\'/%3E%3C/svg%3E")',
+				'starry-night': 'radial-gradient(circle at center, rgba(37, 38, 43, 0.7) 0%, rgba(2, 8, 23, 1) 100%)',
 			}
 		}
 	},
