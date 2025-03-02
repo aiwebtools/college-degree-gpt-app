@@ -30,8 +30,13 @@ const CTA: React.FC = () => {
               >
                 Start Learning Now
               </Button>
-              <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-base w-full md:w-auto">
-                Explore Course Catalog
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="rounded-full px-8 py-6 text-base w-full md:w-auto"
+                onClick={() => window.open('https://www.AiWebTools.Ai', '_blank')}
+              >
+                Explore More AI Tools
               </Button>
             </div>
           </GlassMorphism>
