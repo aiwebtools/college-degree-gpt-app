@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
           </div>
           
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Features</a>
+            <a href="#features" className="link-underline text-sm font-medium text-gray-900 dark:text-white">College Degree GPT</a>
             <a href="#how-it-works" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT</a>
             <a href="#example" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT</a>
           </nav>
