@@ -17,7 +17,7 @@ const CourseExample: React.FC = () => {
       <div className="section-container relative z-10">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16">
           <span className="chip mb-6">See It In Action</span>
-          <h2 className="heading mb-6">Experience a College-Level Course</h2>
+          <h2 className="heading mb-6">Experience a College-Level Education Cost Free</h2>
           <p className="subheading max-w-2xl mx-auto">College Degree GPT provides educational content for every college degree from any institution. While it is not a substitute for an accredited degree, it serves as a valuable resource for self-study and an opportunity for those who may not have access to traditional higher education.</p>
         </AnimatedSection>
         
