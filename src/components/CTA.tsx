@@ -23,7 +23,11 @@ const CTA: React.FC = () => {
             </p>
             
             <div className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
-              <Button size="lg" className="rounded-full px-8 py-6 text-base w-full md:w-auto">
+              <Button 
+                size="lg" 
+                className="rounded-full px-8 py-6 text-base w-full md:w-auto"
+                onClick={() => window.open('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', '_blank')}
+              >
                 Start Learning Now
               </Button>
               <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-base w-full md:w-auto">
