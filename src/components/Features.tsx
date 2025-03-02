@@ -18,8 +18,8 @@ const Feature: React.FC<FeatureProps> = ({ title, description, icon, delay = 0 }
         <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center text-primary mb-4">
           {icon}
         </div>
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-muted-foreground">{description}</p>
+        <h3 className="text-xl font-semibold mb-2 text-gray-900">{title}</h3>
+        <p className="text-gray-800">{description}</p>
       </GlassMorphism>
     </AnimatedSection>
   );
@@ -27,12 +27,12 @@ const Feature: React.FC<FeatureProps> = ({ title, description, icon, delay = 0 }
 
 const Features: React.FC = () => {
   return (
-    <section id="features" className="py-24 bg-gradient-radial from-white to-secondary/40">
+    <section id="features" className="py-24 bg-gray-800">
       <div className="section-container">
         <AnimatedSection className="text-center mb-16">
           <span className="chip mb-3">Features</span>
-          <h2 className="heading text-3xl md:text-4xl mb-4">Your Complete Educational Experience</h2>
-          <p className="subheading mx-auto">
+          <h2 className="heading text-3xl md:text-4xl mb-4 text-white">Your Complete Educational Experience</h2>
+          <p className="subheading mx-auto text-gray-200">
             College Degree GPT delivers a comprehensive college education experience with personalized, detailed instruction on any subject.
           </p>
         </AnimatedSection>
