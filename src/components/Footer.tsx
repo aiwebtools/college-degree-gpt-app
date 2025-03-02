@@ -1,43 +1,15 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
-
 const Footer: React.FC = () => {
-  return (
-    <footer className="bg-secondary/30 py-12 border-t border-border">
+  return <footer className="bg-secondary/30 py-12 border-t border-border">
       <div className="section-container py-0">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-primary"
-              >
-                <path
-                  d="M12 2L2 7L12 12L22 7L12 2Z"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2 17L12 22L22 17"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2 12L12 17L22 12"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               <span className="font-bold tracking-tight">College Degree GPT</span>
             </div>
@@ -73,7 +45,7 @@ const Footer: React.FC = () => {
           </div>
           
           <div>
-            <h3 className="font-semibold mb-3 text-sm">Company</h3>
+            <h3 className="font-semibold mb-3 text-sm">Ai Web Tools LLC</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -105,8 +77,6 @@ const Footer: React.FC = () => {
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
