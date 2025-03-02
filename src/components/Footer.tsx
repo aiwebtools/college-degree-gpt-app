@@ -22,19 +22,13 @@ const Footer: React.FC = () => {
             <h3 className="font-semibold mb-3 text-sm">Resources</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Degree Catalog
-                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Open Source College Degree GPT Prompt</a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Sample Courses
-                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Skill GPT</a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  User Guides
-                </a>
+                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Course GPT</a>
               </li>
               <li>
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
