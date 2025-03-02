@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-secondary/30 py-12 border-t border-border">
       <div className="section-container py-0">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="md:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <svg
@@ -44,32 +44,6 @@ const Footer: React.FC = () => {
             <p className="text-sm text-muted-foreground">
               Your personal AI professor, offering comprehensive college education on any subject.
             </p>
-          </div>
-          
-          <div>
-            <h3 className="font-semibold mb-3 text-sm">Features</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Course Structure
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Teaching Methodology
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Multimedia Resources
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Real-world Applications
-                </a>
-              </li>
-            </ul>
           </div>
           
           <div>
