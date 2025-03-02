@@ -34,7 +34,7 @@ const Step: React.FC<StepProps> = ({ number, title, description, delay = 0 }) =>
 
 const HowItWorks: React.FC = () => {
   return (
-    <section id="how-it-works" className="py-24 relative overflow-hidden">
+    <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
       <div className="absolute inset-0 bg-hero-pattern opacity-5"></div>
       
       <div className="section-container relative z-10">
@@ -42,8 +42,8 @@ const HowItWorks: React.FC = () => {
           <div>
             <AnimatedSection className="mb-8">
               <span className="chip mb-3">How It Works</span>
-              <h2 className="heading text-3xl md:text-4xl mb-4">Your Educational Journey, Step by Step</h2>
-              <p className="subheading">
+              <h2 className="heading text-3xl md:text-4xl mb-4 text-white">Your Educational Journey, Step by Step</h2>
+              <p className="subheading text-gray-200">
                 College Degree GPT guides you through a complete educational experience, from curriculum planning to comprehensive instruction.
               </p>
             </AnimatedSection>
@@ -89,13 +89,13 @@ const HowItWorks: React.FC = () => {
           <AnimatedSection animation="fade-in-left" delay={0.3} className="relative">
             <GlassMorphism className="p-4 md:p-6 overflow-hidden">
               <div className="rounded-xl overflow-hidden bg-white border border-border">
-                <div className="p-4 border-b border-border">
+                <div className="p-4 border-b border-border bg-gray-100">
                   <div className="flex space-x-2 mb-3">
                     <div className="w-3 h-3 bg-red-400 rounded-full"></div>
                     <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
                     <div className="w-3 h-3 bg-green-400 rounded-full"></div>
                   </div>
-                  <h3 className="text-lg font-medium">Psychology 101: Introduction to Psychology</h3>
+                  <h3 className="text-lg font-medium text-gray-900">Psychology 101: Introduction to Psychology</h3>
                 </div>
                 
                 <div className="p-5 space-y-4">
@@ -103,16 +103,16 @@ const HowItWorks: React.FC = () => {
                     <h4 className="text-sm font-semibold text-primary mb-2">COURSE OUTLINE</h4>
                     <div className="pl-4 border-l-2 border-primary/30 space-y-3">
                       <div>
-                        <h5 className="font-medium">Module 1: Foundation of Psychology</h5>
-                        <p className="text-sm text-muted-foreground">History, perspectives, and research methods</p>
+                        <h5 className="font-medium text-gray-900">Module 1: Foundation of Psychology</h5>
+                        <p className="text-sm text-gray-700">History, perspectives, and research methods</p>
                       </div>
                       <div>
-                        <h5 className="font-medium">Module 2: Biological Basis of Behavior</h5>
-                        <p className="text-sm text-muted-foreground">Neuroscience, genetics, and evolutionary psychology</p>
+                        <h5 className="font-medium text-gray-900">Module 2: Biological Basis of Behavior</h5>
+                        <p className="text-sm text-gray-700">Neuroscience, genetics, and evolutionary psychology</p>
                       </div>
                       <div>
-                        <h5 className="font-medium">Module 3: Cognitive Processes</h5>
-                        <p className="text-sm text-muted-foreground">Perception, attention, memory, and language</p>
+                        <h5 className="font-medium text-gray-900">Module 3: Cognitive Processes</h5>
+                        <p className="text-sm text-gray-700">Perception, attention, memory, and language</p>
                       </div>
                     </div>
                   </div>
@@ -120,8 +120,8 @@ const HowItWorks: React.FC = () => {
                   <div className="pt-2">
                     <h4 className="text-sm font-semibold text-primary mb-2">CURRENT LESSON</h4>
                     <div className="bg-secondary/50 rounded-lg p-4">
-                      <h5 className="font-medium mb-1">1.2: Major Psychological Perspectives</h5>
-                      <p className="text-sm text-muted-foreground mb-3">
+                      <h5 className="font-medium mb-1 text-gray-900">1.2: Major Psychological Perspectives</h5>
+                      <p className="text-sm text-gray-700 mb-3">
                         Today we'll explore the major theoretical frameworks that guide psychological inquiry, including behaviorism, psychoanalysis, cognitivism, humanism, and the biopsychosocial model.
                       </p>
                       <div className="flex justify-end">
@@ -132,7 +132,7 @@ const HowItWorks: React.FC = () => {
                 </div>
                 
                 <div className="bg-secondary/30 p-4 flex justify-between items-center border-t border-border">
-                  <button className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <button className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
                     Previous Lesson
                   </button>
                   <button 
