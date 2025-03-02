@@ -27,7 +27,11 @@ const Hero: React.FC = () => {
         </AnimatedSection>
         
         <AnimatedSection animation="fade-in-up" delay={0.2} className="mt-8 space-x-4">
-          <Button size="lg" className="rounded-full px-8 py-6 text-base">
+          <Button 
+            size="lg" 
+            className="rounded-full px-8 py-6 text-base"
+            onClick={() => window.open('https://www.AiWebTools.Ai', '_blank')}
+          >
             Start Learning Now
           </Button>
           <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-base">
