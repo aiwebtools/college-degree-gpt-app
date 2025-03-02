@@ -1,10 +1,16 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import GlassMorphism from './ui/GlassMorphism';
 import AnimatedSection from './AnimatedSection';
 
 const Hero: React.FC = () => {
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  
+  const handlePlayVideo = () => {
+    setVideoPlaying(true);
+  };
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-background py-16 md:py-20">
       <div className="absolute inset-0 bg-hero-pattern opacity-10"></div>
@@ -42,29 +48,45 @@ const Hero: React.FC = () => {
         <AnimatedSection animation="fade-in-up" delay={0.4} className="mt-16 w-full max-w-5xl">
           <GlassMorphism className="p-2 md:p-4 overflow-hidden rounded-2xl">
             <div className="relative rounded-xl overflow-hidden bg-slate-900 aspect-video w-full">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center cursor-pointer hover:bg-primary transition-colors duration-300">
-                  <svg 
-                    width="24" 
-                    height="24" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="text-white ml-1"
-                  >
-                    <path 
-                      d="M5 3L19 12L5 21V3Z" 
-                      fill="currentColor"
-                    />
-                  </svg>
-                </div>
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-              
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <h3 className="text-xl font-bold">See How College Degree GPT Works</h3>
-                <p className="text-white/80">Your personalized educational journey starts here</p>
-              </div>
+              {!videoPlaying ? (
+                <>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div 
+                      className="w-16 h-16 rounded-full bg-primary/90 flex items-center justify-center cursor-pointer hover:bg-primary transition-colors duration-300"
+                      onClick={handlePlayVideo}
+                    >
+                      <svg 
+                        width="24" 
+                        height="24" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="text-white ml-1"
+                      >
+                        <path 
+                          d="M5 3L19 12L5 21V3Z" 
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                  
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 className="text-xl font-bold">See How College Degree GPT Works</h3>
+                    <p className="text-white/80">Your personalized educational journey starts here</p>
+                  </div>
+                </>
+              ) : (
+                <iframe 
+                  src="https://www.youtube.com/embed/5cqDDGt1yn8?autoplay=1" 
+                  className="absolute top-0 left-0 w-full h-full"
+                  title="College Degree GPT Tutorial"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              )}
             </div>
           </GlassMorphism>
         </AnimatedSection>
