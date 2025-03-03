@@ -2,19 +2,22 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
+
 interface StepProps {
   number: number;
   title: string;
   description: string;
   delay?: number;
 }
+
 const Step: React.FC<StepProps> = ({
   number,
   title,
   description,
   delay = 0
 }) => {
-  return <AnimatedSection animation="fade-in-right" delay={delay} className="relative">
+  return (
+    <AnimatedSection animation="fade-in-right" delay={delay} className="relative">
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-xl font-semibold z-10">
           {number}
@@ -27,13 +30,27 @@ const Step: React.FC<StepProps> = ({
       </div>
       
       {number < 5 && <div className="absolute left-6 top-12 w-0.5 h-16 bg-gradient-to-b from-primary to-primary/10 ml-0"></div>}
-    </AnimatedSection>;
+    </AnimatedSection>
+  );
 };
+
 const HowItWorks: React.FC = () => {
-  return <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
+  return (
+    <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
       <div className="absolute inset-0 bg-hero-pattern opacity-5"></div>
       
       <div className="section-container relative z-10">
+        <AnimatedSection animation="fade-in" className="mb-16">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-yellow-100/20 border border-yellow-300/30 rounded-lg p-5 backdrop-blur-sm">
+              <h3 className="text-lg font-semibold mb-2 text-yellow-300">Disclaimer</h3>
+              <p className="text-white/90">
+                College Degree GPT provides educational content for every college degree from any institution. While it is not a substitute for an accredited degree, it serves as a valuable resource for self-study and an opportunity for those who may not have access to traditional higher education.
+              </p>
+            </div>
+          </div>
+        </AnimatedSection>
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <AnimatedSection className="mb-8">
@@ -116,6 +133,8 @@ const HowItWorks: React.FC = () => {
           </AnimatedSection>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default HowItWorks;
