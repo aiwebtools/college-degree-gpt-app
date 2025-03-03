@@ -110,6 +110,17 @@
     background-image: radial-gradient(circle at center, rgba(37, 38, 43, 0.7) 0%, rgba(2, 8, 23, 1) 100%);
   }
   
+  /* Mobile menu transition */
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Add animation for mobile menu */
+  .nav-menu-mobile {
+    animation: slideDown 0.2s ease-out forwards;
+  }
+  
   .starry-background {
     background-image: 
       radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.9), rgba(0, 0, 0, 0)),
