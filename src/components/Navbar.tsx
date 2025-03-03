@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import GlassMorphism from './ui/GlassMorphism';
 import { Button } from '@/components/ui/button';
+
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -12,6 +14,7 @@ const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   return <div className={cn('fixed top-0 left-0 right-0 z-50 transition-all duration-300', isScrolled ? 'py-3' : 'py-5')}>
       <GlassMorphism intensity={isScrolled ? 'high' : 'low'} className={cn('mx-4 sm:mx-6 lg:mx-8 transition-all duration-300', isScrolled && 'shadow-lg')}>
         <div className="flex items-center justify-between px-4 sm:px-6 py-3">
@@ -23,7 +26,7 @@ const Navbar: React.FC = () => {
             </svg>
             <div className="flex flex-col">
               <span className="font-bold text-lg tracking-tight text-gray-900 dark:text-white">College Degree GPT</span>
-              <span className="text-xs text-gray-700 dark:text-gray-300">Presented by Ai Web Tools LLC</span>
+              <a href="https://www.AiWebTools.Ai" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-700 dark:text-gray-300 hover:underline">Presented by Ai Web Tools LLC</a>
             </div>
           </div>
           
@@ -43,4 +46,5 @@ const Navbar: React.FC = () => {
       </GlassMorphism>
     </div>;
 };
+
 export default Navbar;
