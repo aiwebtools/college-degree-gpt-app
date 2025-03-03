@@ -1,19 +1,20 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
-
 interface StepProps {
   number: number;
   title: string;
   description: string;
   delay?: number;
 }
-
-const Step: React.FC<StepProps> = ({ number, title, description, delay = 0 }) => {
-  return (
-    <AnimatedSection animation="fade-in-right" delay={delay} className="relative">
+const Step: React.FC<StepProps> = ({
+  number,
+  title,
+  description,
+  delay = 0
+}) => {
+  return <AnimatedSection animation="fade-in-right" delay={delay} className="relative">
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-xl font-semibold z-10">
           {number}
@@ -25,16 +26,11 @@ const Step: React.FC<StepProps> = ({ number, title, description, delay = 0 }) =>
         </div>
       </div>
       
-      {number < 5 && (
-        <div className="absolute left-6 top-12 w-0.5 h-16 bg-gradient-to-b from-primary to-primary/10 ml-0"></div>
-      )}
-    </AnimatedSection>
-  );
+      {number < 5 && <div className="absolute left-6 top-12 w-0.5 h-16 bg-gradient-to-b from-primary to-primary/10 ml-0"></div>}
+    </AnimatedSection>;
 };
-
 const HowItWorks: React.FC = () => {
-  return (
-    <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
+  return <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
       <div className="absolute inset-0 bg-hero-pattern opacity-5"></div>
       
       <div className="section-container relative z-10">
@@ -42,47 +38,20 @@ const HowItWorks: React.FC = () => {
           <div>
             <AnimatedSection className="mb-8">
               <span className="chip mb-3">How It Works</span>
-              <h2 className="heading text-3xl md:text-4xl mb-4 text-white">Your Educational Journey, Step by Step</h2>
-              <p className="subheading text-gray-200">
-                College Degree GPT guides you through a complete educational experience, from curriculum planning to comprehensive instruction.
-              </p>
+              <h2 className="heading text-3xl md:text-4xl mb-4 text-white">Your Self-Paced Debt Free Educational Journey, Begins...</h2>
+              <p className="subheading text-gray-200">College Degree GPT provides a full self-paced learning experience, guiding you from curriculum planning to detailed instructions and personalized answers to your questions.</p>
             </AnimatedSection>
             
             <div className="space-y-12 mt-10">
-              <Step 
-                number={1} 
-                title="Select Your Degree" 
-                description="Choose any college degree program that interests you, and specify your college of choice if desired."
-                delay={0.1}
-              />
+              <Step number={1} title="Select Your Degree" description="Choose any college degree program that interests you, and specify your college of choice if desired." delay={0.1} />
               
-              <Step 
-                number={2} 
-                title="Review Course List" 
-                description="Receive a comprehensive list of all required and elective courses organized by year and semester."
-                delay={0.2}
-              />
+              <Step number={2} title="Review Course List" description="Receive a comprehensive list of all required and elective courses organized by year and semester." delay={0.2} />
               
-              <Step 
-                number={3} 
-                title="Explore Course Outlines" 
-                description="Each course begins with a detailed outline covering learning objectives and module structure."
-                delay={0.3}
-              />
+              <Step number={3} title="Explore Course Outlines" description="Each course begins with a detailed outline covering learning objectives and module structure." delay={0.3} />
               
-              <Step 
-                number={4} 
-                title="Complete Individual Lessons" 
-                description="Move through each lesson sequentially, with clear explanations, examples, and visual aids."
-                delay={0.4}
-              />
+              <Step number={4} title="Complete Individual Lessons" description="Move through each lesson sequentially, with clear explanations, examples, and visual aids." delay={0.4} />
               
-              <Step 
-                number={5} 
-                title="Progress Through Your Degree" 
-                description="Advance from course to course, building a comprehensive education on your schedule."
-                delay={0.5}
-              />
+              <Step number={5} title="Progress Through Your Degree" description="Advance from course to course, building a comprehensive education on your schedule." delay={0.5} />
             </div>
           </div>
           
@@ -135,10 +104,7 @@ const HowItWorks: React.FC = () => {
                   <button className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
                     Previous Lesson
                   </button>
-                  <button 
-                    className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors"
-                    onClick={() => window.open('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', '_blank')}
-                  >
+                  <button className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors" onClick={() => window.open('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', '_blank')}>
                     Access College Degree GPT
                   </button>
                 </div>
@@ -150,8 +116,6 @@ const HowItWorks: React.FC = () => {
           </AnimatedSection>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HowItWorks;
