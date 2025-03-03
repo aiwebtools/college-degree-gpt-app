@@ -34,8 +34,10 @@ const Navbar: React.FC = () => {
           </nav>
           
           <div>
-            <Button size="sm" className="rounded-full px-6" onClick={() => window.open('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', '_blank')}>
-              Get Started
+            <Button size="sm" className="rounded-full px-6" asChild>
+              <a href="https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt" target="_blank" rel="noopener noreferrer">
+                Get Started
+              </a>
             </Button>
           </div>
         </div>
