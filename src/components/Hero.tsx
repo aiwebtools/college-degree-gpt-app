@@ -81,9 +81,9 @@ const Hero: React.FC = () => {
                       </svg>
                     </div>
                   </button>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
                   
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white pointer-events-none">
                     <h3 className="text-xl font-bold">See How College Degree GPT Works</h3>
                     <p className="text-white font-medium">Your personalized educational journey starts here</p>
                   </div>
@@ -91,7 +91,7 @@ const Hero: React.FC = () => {
               ) : (
                 <iframe 
                   src="https://www.youtube.com/embed/5cqDDGt1yn8?autoplay=1" 
-                  className="w-full h-full"
+                  className="w-full h-full aspect-video"
                   title="College Degree GPT Tutorial"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
