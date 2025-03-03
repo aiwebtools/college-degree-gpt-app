@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -62,7 +61,7 @@ const Footer: React.FC = () => {
         
         <div className="mt-12 pt-6 border-t border-border text-center">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} College Degree GPT. All rights reserved.
+            &copy; 2025 AI WEB TOOLS LLC. All rights reserved.
           </p>
         </div>
       </div>
