@@ -37,9 +37,11 @@ const Hero: React.FC = () => {
           <Button 
             size="lg" 
             className="rounded-full px-8 py-6 text-base font-semibold bg-white text-slate-900 hover:bg-white/90"
-            onClick={() => window.open('https://www.AiWebTools.Ai', '_blank')}
+            asChild
           >
-            Start Learning Now
+            <a href="https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt" target="_blank" rel="noopener noreferrer">
+              Start Learning Now
+            </a>
           </Button>
           <Button 
             size="lg" 
