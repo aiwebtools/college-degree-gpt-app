@@ -1,5 +1,7 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { Button } from './ui/button';
 
 const Footer: React.FC = () => {
   return <footer className="bg-secondary/30 py-12 border-t border-border">
@@ -33,6 +35,13 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a href="https://docs.google.com/document/d/1qtDKo3XN_EsspgrQD72Cpq2qh83H5xSd/edit?usp=sharing&ouid=116187507271950139405&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Ai Tools Free Downloadable List</a>
+              </li>
+              <li className="pt-2">
+                <a href="https://www.aiwebtools.ai" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="sm" className="w-full">
+                    MORE AI TOOLS
+                  </Button>
+                </a>
               </li>
             </ul>
           </div>
@@ -69,3 +78,4 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+
