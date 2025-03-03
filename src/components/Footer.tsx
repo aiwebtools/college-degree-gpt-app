@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 
@@ -53,7 +52,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a href="tel:4758008096" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
+                  Contact Our 24/7 Ai Agent
                 </a>
               </li>
             </ul>
