@@ -45,8 +45,9 @@ const Hero: React.FC = () => {
             size="lg" 
             variant="outline" 
             className="rounded-full px-8 py-6 text-base border-white text-white hover:bg-white/20 font-semibold"
+            onClick={() => window.open('https://www.aiwebtools.ai', '_blank')}
           >
-            Explore Features
+            Explore AiWebTools.Ai
           </Button>
         </AnimatedSection>
         
