@@ -33,7 +33,10 @@ const FacebookCompatibilityProvider = ({ children }: { children: React.ReactNode
       `;
       document.head.appendChild(style);
       
-      return () => document.head.removeChild(style);
+      // Proper cleanup function that returns void
+      return () => {
+        document.head.removeChild(style);
+      };
     }
   }, []);
   

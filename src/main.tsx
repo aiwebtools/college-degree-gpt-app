@@ -16,7 +16,7 @@ const isFacebookBrowser = () => {
 // Apply Facebook-specific fixes if needed
 if (isFacebookBrowser()) {
   // Force redraw on Facebook browser
-  document.body.style.WebkitTransform = 'scale(1)';
+  document.body.style.webkitTransform = 'scale(1)';
   
   // Additional workaround for Facebook browser rendering issues
   window.addEventListener('load', () => {
