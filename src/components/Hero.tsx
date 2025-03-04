@@ -5,6 +5,12 @@ import GlassMorphism from './ui/GlassMorphism';
 import AnimatedSection from './AnimatedSection';
 
 const Hero: React.FC = () => {
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  
+  const handlePlayVideo = () => {
+    setVideoPlaying(true);
+  };
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-starry-night py-16 md:py-20">
       <div className="absolute inset-0 bg-hero-pattern opacity-5"></div>
@@ -45,6 +51,58 @@ const Hero: React.FC = () => {
           >
             Explore AiWebTools.Ai
           </Button>
+        </AnimatedSection>
+        
+        <AnimatedSection animation="fade-in-up" delay={0.4} className="mt-16 w-full max-w-5xl">
+          <GlassMorphism className="p-2 md:p-4 overflow-hidden rounded-2xl bg-black/50 border-white/20">
+            <div className="relative rounded-xl overflow-hidden bg-slate-900 aspect-video w-full">
+              {!videoPlaying ? (
+                <div className="relative aspect-video w-full">
+                  <img 
+                    src="https://img.youtube.com/vi/5cqDDGt1yn8/maxresdefault.jpg" 
+                    alt="Video thumbnail" 
+                    className="w-full h-full object-cover"
+                  />
+                  <button 
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer w-full h-full"
+                    onClick={handlePlayVideo}
+                    aria-label="Play video"
+                  >
+                    <div className="w-20 h-20 rounded-full bg-white flex items-center justify-center hover:bg-white/90 transition-colors duration-300">
+                      <svg 
+                        width="28" 
+                        height="28" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="text-slate-900 ml-1"
+                      >
+                        <path 
+                          d="M5 3L19 12L5 21V3Z" 
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+                  
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white pointer-events-none">
+                    <h3 className="text-xl font-bold">See How College Degree GPT Works</h3>
+                    <p className="text-white font-medium">Your personalized educational journey starts here</p>
+                  </div>
+                </div>
+              ) : (
+                <iframe 
+                  src="https://www.youtube.com/embed/5cqDDGt1yn8?autoplay=1" 
+                  className="w-full h-full aspect-video"
+                  title="College Degree GPT Tutorial"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowFullScreen
+                ></iframe>
+              )}
+            </div>
+          </GlassMorphism>
         </AnimatedSection>
       </div>
     </section>
