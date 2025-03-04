@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <a href="https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">College Degree GPT</a>
             <a href="https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT</a>
-            <a href="https://chatgpt.com/g/g-677690e9535c81919b3acbd5ec088644-learn-any-skill-gpt" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT</a>
+            <a href="https://learnanyskillgpt.lovable.app/" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT</a>
             <a href="https://talk-to-history-gpt.lovable.app/" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Talk to History GPT</a>
           </nav>
           
@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
               className="block py-2 text-sm font-medium text-gray-900 dark:text-white">
               Learn Any Course GPT
             </a>
-            <a href="https://chatgpt.com/g/g-677690e9535c81919b3acbd5ec088644-learn-any-skill-gpt" target="_blank" rel="noopener noreferrer" 
+            <a href="https://learnanyskillgpt.lovable.app/" target="_blank" rel="noopener noreferrer" 
               className="block py-2 text-sm font-medium text-gray-900 dark:text-white">
               Learn Any Skill GPT
             </a>
