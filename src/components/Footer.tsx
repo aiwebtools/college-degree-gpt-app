@@ -36,6 +36,9 @@ const Footer: React.FC = () => {
               <li>
                 <a href="https://docs.google.com/document/d/1qtDKo3XN_EsspgrQD72Cpq2qh83H5xSd/edit?usp=sharing&ouid=116187507271950139405&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Ai Tools Free Downloadable List</a>
               </li>
+              <li>
+                <a href="https://chatgpt.com/g/g-cUahkn19i-quiz-maker-ai" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Quiz Maker GPT</a>
+              </li>
               <li className="pt-2">
                 <a href="https://www.aiwebtools.ai" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="sm" className="w-full">
@@ -62,6 +65,13 @@ const Footer: React.FC = () => {
               <li>
                 <a href="tel:+14758008096" className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact Our 24/7 Ai Agent
+                </a>
+              </li>
+              <li className="pt-2">
+                <a href="https://chatgpt.com/g/g-cUahkn19i-quiz-maker-ai" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="sm" className="w-full">
+                    QUIZ MAKER GPT
+                  </Button>
                 </a>
               </li>
             </ul>
