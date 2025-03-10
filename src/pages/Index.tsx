@@ -6,6 +6,7 @@ import Features from '@/components/Features';
 import HowItWorks from '@/components/HowItWorks';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
+import Disclaimer from '@/components/Disclaimer';
 
 const Index = () => {
   // Ensure smooth scrolling for anchor links
@@ -44,6 +45,7 @@ const Index = () => {
         <Features />
       </main>
       <Footer />
+      <Disclaimer />
     </div>
   );
 };
