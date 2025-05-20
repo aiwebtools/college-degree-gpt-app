@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
       
       <div className="section-container relative z-10 flex flex-col items-center justify-center">
         <AnimatedSection animation="fade-in-down" className="mb-6">
-          <span className="chip bg-white/20 text-white font-medium">Your Personal College Educator</span>
+          <span className="chip bg-white/20 text-white font-medium">Self-Paced, Non-Accredited Learning</span>
         </AnimatedSection>
         
         <AnimatedSection animation="fade-in" className="text-center mb-6">
@@ -32,6 +32,9 @@ const Hero: React.FC = () => {
           </h1>
           <p className="subheading text-lg md:text-xl max-w-2xl mx-auto text-white bg-black/30 backdrop-blur-sm p-4 rounded-lg">
             Comprehensive courses on any subject, taught step-by-step with the personalized attention of a dedicated AI professor.
+          </p>
+          <p className="mt-4 text-sm text-white/80 max-w-3xl mx-auto">
+            <em>Note: College Degree GPT provides a self-taught approach to learning and is not an accredited degree program.</em>
           </p>
         </AnimatedSection>
         
