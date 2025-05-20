@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import GlassMorphism from './ui/GlassMorphism';
 import AnimatedSection from './AnimatedSection';
-import { Download, Swords, Chain } from 'lucide-react';
+import { Download, Swords, Link, Unlink } from 'lucide-react';
 
 const Hero: React.FC = () => {
   // Set video playing to true by default
