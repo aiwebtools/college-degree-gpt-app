@@ -70,7 +70,7 @@ const Hero: React.FC = () => {
               aria-label="Download College Education & Learn Anything Prompt"
             >
               <Download size={18} />
-              Save Prompt For Your Kids
+              The future isn't promised...Save Prompt For Your Yourself & Your Kids & secure the opportunity to learn forever
             </a>
           </Button>
         </AnimatedSection>
