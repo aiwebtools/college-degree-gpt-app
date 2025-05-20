@@ -34,7 +34,7 @@ const Hero: React.FC = () => {
             Comprehensive courses on any subject, taught step-by-step with the personalized attention of a dedicated AI professor.
           </p>
           <p className="mt-4 text-sm text-white/80 max-w-3xl mx-auto">
-            <em>Note: College Degree GPT provides a self-taught approach to learning and is not an accredited degree program.</em>
+            <em>Note: College Degree GPT provides a self-taught approach to learning and is not an accredited degree program. This is not affiliated with any academic institution and does not grant official college credits or degrees.</em>
           </p>
         </AnimatedSection>
         
