@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import GlassMorphism from './ui/GlassMorphism';
 import AnimatedSection from './AnimatedSection';
+import { Download } from 'lucide-react';
 
 const Hero: React.FC = () => {
   // Set video playing to true by default
@@ -38,10 +39,10 @@ const Hero: React.FC = () => {
           </p>
         </AnimatedSection>
         
-        <AnimatedSection animation="fade-in-up" delay={0.2} className="mt-8 space-x-4">
+        <AnimatedSection animation="fade-in-up" delay={0.2} className="mt-8 space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-center">
           <Button 
             size="lg" 
-            className="rounded-full px-8 py-6 text-base font-semibold bg-white text-slate-900 hover:bg-white/90"
+            className="rounded-full px-8 py-6 text-base font-semibold bg-white text-slate-900 hover:bg-white/90 w-full md:w-auto"
             asChild
           >
             <a href="https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt" target="_blank" rel="noopener noreferrer">
@@ -51,10 +52,26 @@ const Hero: React.FC = () => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="rounded-full px-8 py-6 text-base border-white text-white hover:bg-white/20 font-semibold"
+            className="rounded-full px-8 py-6 text-base border-white text-white hover:bg-white/20 font-semibold w-full md:w-auto"
             onClick={() => window.open('https://www.aiwebtools.ai', '_blank')}
           >
             Explore AiWebTools.Ai
+          </Button>
+          <Button 
+            size="lg" 
+            variant="secondary" 
+            className="rounded-full px-8 py-6 text-base font-semibold flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white w-full md:w-auto"
+            asChild
+          >
+            <a 
+              href="https://docs.google.com/document/u/0/d/1TpVG9pncULpkHy9IhAjyXIgScyTW703Lf-IQKkXeJs4/pub?pli=1" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Download College Education & Learn Anything Prompt"
+            >
+              <Download size={18} />
+              Save Prompt For Your Kids
+            </a>
           </Button>
         </AnimatedSection>
         
