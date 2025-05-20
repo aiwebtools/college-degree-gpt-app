@@ -37,7 +37,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main>
+      <main className="rebellion-theme">
         <Hero />
         <HowItWorks />
         <CTA />

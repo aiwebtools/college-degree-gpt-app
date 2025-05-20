@@ -14,7 +14,7 @@
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 100% 50%;
+    --primary: 0 84% 60%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 217 33% 17%;
@@ -31,7 +31,7 @@
 
     --border: 217 33% 17%;
     --input: 217 33% 17%;
-    --ring: 210 100% 50%;
+    --ring: 0 84% 60%;
 
     --radius: 0.75rem;
 
@@ -109,6 +109,23 @@
     @apply bg-slate-900;
     background-image: radial-gradient(circle at center, rgba(37, 38, 43, 0.7) 0%, rgba(2, 8, 23, 1) 100%);
   }
+
+  .bg-liberation-night {
+    @apply bg-slate-900;
+    background-image: radial-gradient(circle at center, rgba(43, 37, 37, 0.7) 0%, rgba(23, 2, 2, 1) 100%);
+  }
+  
+  /* Broken chain animation */
+  @keyframes chain-break {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-5px) rotate(-2deg); }
+    75% { transform: translateX(5px) rotate(2deg); }
+    100% { transform: translateX(0); }
+  }
+  
+  .chain-link {
+    animation: chain-break 2s ease-in-out infinite;
+  }
   
   /* Mobile menu transition */
   @keyframes slideDown {
@@ -140,7 +157,9 @@
       radial-gradient(2px 2px at 450px 40px, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0)),
       radial-gradient(2px 2px at 480px 60px, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0)),
       radial-gradient(2px 2px at 510px 90px, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0)),
-      radial-gradient(2px 2px at 540px 120px, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0));
+      radial-gradient(2px 2px at 540px 120px, rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0)),
+      radial-gradient(2px 2px at 280px 100px, rgba(255, 120, 120, 0.9), rgba(0, 0, 0, 0)),
+      radial-gradient(2px 2px at 180px 200px, rgba(255, 120, 120, 0.9), rgba(0, 0, 0, 0));
     background-repeat: repeat;
     background-size: 600px 600px;
     animation: drift 60s linear infinite;
@@ -149,5 +168,28 @@
   @keyframes drift {
     from { background-position: 0 0; }
     to { background-position: 600px 600px; }
+  }
+
+  /* Broken chain styling */
+  .broken-chain {
+    @apply relative;
+  }
+  
+  .broken-chain::before, .broken-chain::after {
+    content: '';
+    @apply absolute bg-red-500;
+    width: 20px;
+    height: 3px;
+    top: 50%;
+  }
+  
+  .broken-chain::before {
+    left: -10px;
+    transform: rotate(45deg);
+  }
+  
+  .broken-chain::after {
+    right: -10px;
+    transform: rotate(-45deg);
   }
 }

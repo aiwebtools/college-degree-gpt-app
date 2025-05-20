@@ -66,7 +66,15 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+        rebellion: {
+          red: '#ea384c',
+          darkred: '#8B0000',
+          blue: '#1EAEDB',
+          darkblue: '#0A4D68',
+          black: '#000000e6',
+          gray: '#221F26',
+        }
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -113,7 +121,13 @@ export default {
 				drift: {
 					'0%': { backgroundPosition: '0 0' },
 					'100%': { backgroundPosition: '600px 600px' }
-				}
+				},
+        'chain-break': {
+          '0%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(-5px) rotate(-2deg)' },
+          '75%': { transform: 'translateX(5px) rotate(2deg)' },
+          '100%': { transform: 'translateX(0)' }
+        }
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -125,12 +139,15 @@ export default {
 				'fade-in-down': 'fade-in-down 0.5s ease-out forwards',
 				'scale-in': 'scale-in 0.5s ease-out forwards',
 				'float': 'float 6s ease-in-out infinite',
-				'drift': 'drift 60s linear infinite'
+				'drift': 'drift 60s linear infinite',
+        'chain-break': 'chain-break 2s ease-in-out infinite',
+        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'hero-pattern': 'url("data:image/svg+xml,%3Csvg width=\'100%25\' height=\'100%25\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cdefs%3E%3Cpattern id=\'smallGrid\' width=\'8\' height=\'8\' patternUnits=\'userSpaceOnUse\'%3E%3Cpath d=\'M 8 0 L 0 0 0 8\' fill=\'none\' stroke=\'%23f0f0f0\' stroke-width=\'0.5\'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width=\'100%25\' height=\'100%25\' fill=\'url(%23smallGrid)\'/%3E%3C/svg%3E")',
 				'starry-night': 'radial-gradient(circle at center, rgba(37, 38, 43, 0.7) 0%, rgba(2, 8, 23, 1) 100%)',
+        'liberation-night': 'radial-gradient(circle at center, rgba(43, 37, 37, 0.7) 0%, rgba(23, 2, 2, 1) 100%)',
 			}
 		}
 	},
