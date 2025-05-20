@@ -31,7 +31,7 @@ const Hero: React.FC = () => {
             Experience a Complete College Education, Powered by AI
           </h1>
           <p className="subheading text-lg md:text-xl max-w-2xl mx-auto text-white bg-black/30 backdrop-blur-sm p-4 rounded-lg">
-            Comprehensive courses on any subject, taught step-by-step with the personalized attention of a dedicated professor.
+            Comprehensive courses on any subject, taught step-by-step with the personalized attention of a dedicated AI professor.
           </p>
         </AnimatedSection>
         
