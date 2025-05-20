@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import GlassMorphism from './ui/GlassMorphism';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ExternalLink } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,8 +45,13 @@ const Navbar: React.FC = () => {
             <a href="https://talk-to-history-gpt.lovable.app/" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Talk to History GPT</a>
           </nav>
           
-          {/* Mobile menu button */}
+          {/* Mobile menu button and More AI Tools button */}
           <div className="flex items-center space-x-2">
+            <Button size="sm" variant="outline" className="rounded-full hidden md:flex items-center gap-1.5 bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100" asChild>
+              <a href="https://aiwebtools.ai" target="_blank" rel="noopener noreferrer">
+                More AI Tools <ExternalLink className="h-3.5 w-3.5" />
+              </a>
+            </Button>
             <div className="hidden md:block">
               <Button size="sm" className="rounded-full px-6" asChild>
                 <a href="https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt" target="_blank" rel="noopener noreferrer">
@@ -81,6 +86,10 @@ const Navbar: React.FC = () => {
             <a href="https://talk-to-history-gpt.lovable.app/" target="_blank" rel="noopener noreferrer" 
               className="block py-2 text-sm font-medium text-gray-900 dark:text-white">
               Talk to History GPT
+            </a>
+            <a href="https://aiwebtools.ai" target="_blank" rel="noopener noreferrer" 
+              className="block py-2 text-sm font-medium text-purple-700">
+              More AI Tools
             </a>
             <Button size="sm" className="w-full rounded-full mt-2" asChild>
               <a href="https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt" target="_blank" rel="noopener noreferrer">
