@@ -27,6 +27,13 @@ const Hero: React.FC = () => {
         </svg>
       </div>
 
+      {/* IT'S FREE! badge */}
+      <div className="absolute top-4 right-4 md:top-10 md:right-10 transform rotate-12 z-20">
+        <div className="bg-red-500 text-white font-black text-xl md:text-3xl uppercase py-2 px-4 md:py-3 md:px-6 rounded-lg shadow-lg border-2 border-white animate-pulse">
+          IT'S FREE!
+        </div>
+      </div>
+
       <div className="section-container relative z-10 flex flex-col items-center justify-center">
         <AnimatedSection animation="fade-in-down" className="mb-6">
           <span className="chip bg-red-500/20 text-white font-medium border border-red-500/30 flex items-center gap-2">
@@ -53,7 +60,7 @@ const Hero: React.FC = () => {
             asChild
           >
             <a href="https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt" target="_blank" rel="noopener noreferrer">
-              Liberate Your Learning Now
+              USE COLLEGE DEGREE GPT
             </a>
           </Button>
           <Button 
