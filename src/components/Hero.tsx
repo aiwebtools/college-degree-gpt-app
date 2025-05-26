@@ -93,7 +93,7 @@ const Hero: React.FC = () => {
             <div className="relative rounded-xl overflow-hidden bg-slate-900 aspect-video w-full">
               {/* Always render the iframe since videoPlaying is true by default */}
               <iframe 
-                src="https://www.youtube.com/embed/Cd8uvD-smlM?autoplay=1&mute=0&hd=1&vq=hd1080" 
+                src="https://www.youtube.com/embed/Cd8uvD-smlM?autoplay=1&mute=0&loop=1&playlist=Cd8uvD-smlM&controls=1&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3" 
                 className="w-full h-full aspect-video"
                 title="College Degree GPT Tutorial"
                 frameBorder="0"
