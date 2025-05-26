@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import GlassMorphism from './ui/GlassMorphism';
@@ -94,7 +93,7 @@ const Hero: React.FC = () => {
             <div className="relative rounded-xl overflow-hidden bg-slate-900 aspect-video w-full">
               {/* Always render the iframe since videoPlaying is true by default */}
               <iframe 
-                src="https://www.youtube.com/embed/5cqDDGt1yn8?autoplay=1&mute=0&hd=1&vq=hd1080" 
+                src="https://www.youtube.com/embed/Cd8uvD-smlM?autoplay=1&mute=0&hd=1&vq=hd1080" 
                 className="w-full h-full aspect-video"
                 title="College Degree GPT Tutorial"
                 frameBorder="0"
