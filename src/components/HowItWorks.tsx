@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
@@ -44,8 +45,11 @@ const HowItWorks: React.FC = () => {
           <div className="max-w-4xl mx-auto">
             <div className="bg-yellow-100/20 border border-yellow-300/30 rounded-lg p-5 backdrop-blur-sm">
               <h3 className="text-lg font-semibold mb-2 text-yellow-300">Disclaimer</h3>
-              <p className="text-white/90">
+              <p className="text-white/90 mb-3">
                 College Degree GPT provides educational content for every college degree from any institution. While it is not a substitute for an accredited degree, it serves as a valuable resource for self-study and an opportunity for those who may not have access to traditional higher education.
+              </p>
+              <p className="text-white/90">
+                This service cannot be used as a substitute for formal education requirements on job applications, professional licensing, or graduate school admissions.
               </p>
             </div>
           </div>
