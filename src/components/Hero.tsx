@@ -47,9 +47,14 @@ const Hero: React.FC = () => {
           <p className="subheading text-lg md:text-xl max-w-2xl mx-auto text-white bg-black/30 backdrop-blur-sm p-4 rounded-lg border border-red-500/20">
             Complete college-level education on any subject, with no tuition, no debt, and no restrictions. The revolution in learning starts now.
           </p>
-          <p className="mt-4 text-sm text-white/80 max-w-3xl mx-auto">
-            <em>Note: College Degree GPT provides a self-taught approach to learning and is not an accredited degree program. This is not affiliated with any academic institution and does not grant official college credits or degrees, but it does grant you <span className="text-red-400 font-semibold">freedom</span>.</em>
-          </p>
+          <div className="mt-4 text-sm text-white/80 max-w-3xl mx-auto space-y-2">
+            <p>
+              <em>Note: College Degree GPT provides a self-taught approach to learning and is not an accredited degree program. This is not affiliated with any academic institution and does not grant official college credits or degrees, but it does grant you <span className="text-red-400 font-semibold">freedom</span>.</em>
+            </p>
+            <p>
+              <em>This service cannot be used as a substitute for formal education requirements on job applications, professional licensing, or graduate school admissions.</em>
+            </p>
+          </div>
         </AnimatedSection>
         
         <AnimatedSection animation="fade-in-up" delay={0.2} className="mt-8 space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-center">

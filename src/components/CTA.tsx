@@ -32,6 +32,15 @@ const CTA: React.FC = () => {
               Access comprehensive college-level education on any subject, on your schedule, with personalized instruction from College Degree GPT.
             </p>
             
+            <div className="mb-6 bg-yellow-100/80 border border-yellow-300 rounded-lg p-4 text-sm text-gray-800">
+              <p className="mb-2">
+                <strong>Important:</strong> College Degree GPT provides educational content for self-study and is not an accredited degree program.
+              </p>
+              <p>
+                This service cannot be used as a substitute for formal education requirements on job applications, professional licensing, or graduate school admissions.
+              </p>
+            </div>
+            
             <div className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
               <Button 
                 size="lg" 
