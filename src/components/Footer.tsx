@@ -48,8 +48,12 @@ const Footer: React.FC = () => {
               </li>
               <li className="pt-2">
                 <a href="https://www.aiwebtools.ai" target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" size="sm" className="w-full">
-                    MORE AI TOOLS
+                  <Button 
+                    variant="default" 
+                    size="sm" 
+                    className="w-full rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 text-white font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse border-2 border-white/20"
+                  >
+                    🚀 MORE AI TOOLS 🚀
                   </Button>
                 </a>
               </li>

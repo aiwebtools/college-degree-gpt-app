@@ -1,9 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import GlassMorphism from './ui/GlassMorphism';
 import { Button } from '@/components/ui/button';
-import { Menu, X, ExternalLink } from 'lucide-react';
+import { Menu, X, ExternalLink, Home } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,6 +39,10 @@ const Navbar: React.FC = () => {
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
+            <a href="https://www.aiwebtools.ai" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-sm font-medium text-gray-900 dark:text-white hover:text-primary transition-colors">
+              <Home className="h-4 w-4" />
+              AiWebTools Home
+            </a>
             <a href="https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT</a>
             <a href="https://learnanyskillgpt.lovable.app/" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT</a>
             <a href="https://talk-to-history-gpt.lovable.app/" target="_blank" rel="noopener noreferrer" className="link-underline text-sm font-medium text-gray-900 dark:text-white">Talk to History GPT</a>
@@ -71,6 +74,11 @@ const Navbar: React.FC = () => {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="md:hidden px-4 pt-2 pb-4 space-y-3 border-t border-gray-300 dark:border-gray-700">
+            <a href="https://www.aiwebtools.ai" target="_blank" rel="noopener noreferrer" 
+              className="flex items-center gap-1.5 py-2 text-sm font-medium text-gray-900 dark:text-white">
+              <Home className="h-4 w-4" />
+              AiWebTools Home
+            </a>
             <a href="https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt" target="_blank" rel="noopener noreferrer" 
               className="block py-2 text-sm font-medium text-gray-900 dark:text-white">
               Learn Any Course GPT
