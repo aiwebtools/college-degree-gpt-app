@@ -136,64 +136,129 @@ export const createTimePortalEffect = (destinationUrl: string) => {
   document.body.style.filter = 'hue-rotate(0deg) saturate(1.5) brightness(1.2)';
   document.body.style.animation = 'time-warp 2.3s ease-in-out';
 
-  // Generate portal sounds using Web Audio API
-  const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-  
-  // Whoosh sound
-  const createWhooshSound = () => {
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    const filter = audioContext.createBiquadFilter();
-    
-    oscillator.connect(filter);
-    filter.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.type = 'sawtooth';
-    oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 1.5);
-    
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(2000, audioContext.currentTime);
-    filter.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 1.5);
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
-    
-    oscillator.start();
-    oscillator.stop(audioContext.currentTime + 1.5);
+  // Enhanced sound generation with proper audio context handling
+  const createSounds = async () => {
+    try {
+      // Create or resume audio context
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      const audioContext = new AudioContext();
+      
+      // Resume audio context if it's suspended (required by browsers)
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+
+      console.log('Audio context state:', audioContext.state);
+
+      // Whoosh sound - deep bass rumble
+      const createWhooshSound = () => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        const filter = audioContext.createBiquadFilter();
+        
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.type = 'sawtooth';
+        oscillator.frequency.setValueAtTime(80, audioContext.currentTime);
+        oscillator.frequency.exponentialRampToValueAtTime(20, audioContext.currentTime + 1.5);
+        
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, audioContext.currentTime);
+        filter.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 1.5);
+        
+        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 1.5);
+        
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 1.5);
+      };
+
+      // Portal opening sound - high-pitched energy
+      const createPortalSound = () => {
+        setTimeout(() => {
+          const oscillator = audioContext.createOscillator();
+          const gainNode = audioContext.createGain();
+          const filter = audioContext.createBiquadFilter();
+          
+          oscillator.connect(filter);
+          filter.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+          
+          oscillator.type = 'sine';
+          oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(1600, audioContext.currentTime + 0.8);
+          
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(1200, audioContext.currentTime);
+          filter.Q.setValueAtTime(15, audioContext.currentTime);
+          
+          gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+          
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 0.8);
+        }, 800);
+      };
+
+      // Zap sound - electrical discharge
+      const createZapSound = () => {
+        setTimeout(() => {
+          const oscillator = audioContext.createOscillator();
+          const gainNode = audioContext.createGain();
+          const filter = audioContext.createBiquadFilter();
+          
+          oscillator.connect(filter);
+          filter.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+          
+          oscillator.type = 'square';
+          oscillator.frequency.setValueAtTime(2000, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.2);
+          
+          filter.type = 'highpass';
+          filter.frequency.setValueAtTime(1000, audioContext.currentTime);
+          
+          gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+          
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 0.2);
+        }, 1500);
+      };
+
+      // Play all sounds
+      createWhooshSound();
+      createPortalSound();
+      createZapSound();
+
+    } catch (error) {
+      console.error('Audio creation failed:', error);
+      // Fallback: create simpler beep sound
+      try {
+        const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+        const audioContext = new AudioContext();
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+        
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + 0.5);
+      } catch (fallbackError) {
+        console.error('Fallback audio also failed:', fallbackError);
+      }
+    }
   };
 
-  // Portal opening sound
-  const createPortalSound = () => {
-    setTimeout(() => {
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      const filter = audioContext.createBiquadFilter();
-      
-      oscillator.connect(filter);
-      filter.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.8);
-      
-      filter.type = 'bandpass';
-      filter.frequency.setValueAtTime(1000, audioContext.currentTime);
-      filter.Q.setValueAtTime(10, audioContext.currentTime);
-      
-      gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
-      
-      oscillator.start();
-      oscillator.stop(audioContext.currentTime + 0.8);
-    }, 800);
-  };
-
-  // Play sounds
-  createWhooshSound();
-  createPortalSound();
+  // Start sound effects
+  createSounds();
 
   // Clean up and redirect after 2.3 seconds
   setTimeout(() => {
