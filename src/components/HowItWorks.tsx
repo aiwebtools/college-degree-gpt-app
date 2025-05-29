@@ -21,7 +21,23 @@ const Step: React.FC<StepProps> = ({
         </div>
         
         <div className="pt-1.5">
-          <h3 className="text-xl font-semibold mb-2">{title}</h3>
+          <h3 className="text-xl font-semibold mb-2 text-white cursor-pointer transition-all duration-300 hover:scale-105 relative group">
+            <span 
+              className="relative z-10 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent font-bold tracking-wide"
+              style={{
+                textShadow: '0 0 10px rgba(59, 130, 246, 0.8), 0 0 20px rgba(147, 51, 234, 0.6), 0 0 30px rgba(34, 211, 238, 0.4)',
+                filter: 'drop-shadow(0 0 8px rgba(59, 130, 246, 0.9))'
+              }}
+            >
+              {title}
+            </span>
+            <div 
+              className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 opacity-0 group-hover:opacity-30 blur-sm transition-opacity duration-300 rounded-lg"
+              style={{
+                boxShadow: '0 0 20px rgba(59, 130, 246, 0.8), 0 0 40px rgba(147, 51, 234, 0.6)'
+              }}
+            ></div>
+          </h3>
           <p className="text-muted-foreground">{description}</p>
         </div>
       </div>
