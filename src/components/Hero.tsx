@@ -1,12 +1,19 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import GlassMorphism from './ui/GlassMorphism';
 import AnimatedSection from './AnimatedSection';
 import { Download, Swords, Link, Unlink } from 'lucide-react';
+import { createTimePortalEffect } from '@/utils/timeEffects';
 
 const Hero: React.FC = () => {
   // Set video playing to true by default
   const [videoPlaying, setVideoPlaying] = useState(true);
+  
+  const handleExternalLink = (url: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    createTimePortalEffect(url);
+  };
   
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-liberation-night py-16 md:py-20">
@@ -61,17 +68,15 @@ const Hero: React.FC = () => {
           <Button 
             size="lg" 
             className="rounded-full px-8 py-6 text-base font-semibold bg-red-500 text-white hover:bg-red-600 border border-red-400 shadow-lg shadow-red-500/20 w-full md:w-auto"
-            asChild
+            onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt')}
           >
-            <a href="https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt" target="_blank" rel="noopener noreferrer">
-              USE COLLEGE DEGREE GPT
-            </a>
+            USE COLLEGE DEGREE GPT
           </Button>
           <Button 
             size="lg" 
             variant="outline" 
             className="rounded-full px-8 py-6 text-base border-white text-white hover:bg-white/20 font-semibold w-full md:w-auto"
-            onClick={() => window.open('https://www.aiwebtools.ai', '_blank')}
+            onClick={handleExternalLink('https://www.aiwebtools.ai')}
           >
             Explore AiWebTools.Ai
           </Button>
@@ -79,17 +84,10 @@ const Hero: React.FC = () => {
             size="lg" 
             variant="secondary" 
             className="rounded-full px-8 py-6 text-base font-semibold flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white w-full md:w-auto border border-blue-500"
-            asChild
+            onClick={handleExternalLink('https://docs.google.com/document/u/0/d/1TpVG9pncULpkHy9IhAjyXIgScyTW703Lf-IQKkXeJs4/pub?pli=1')}
           >
-            <a 
-              href="https://docs.google.com/document/u/0/d/1TpVG9pncULpkHy9IhAjyXIgScyTW703Lf-IQKkXeJs4/pub?pli=1" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label="Download College Education & Learn Anything Prompt"
-            >
-              <Download size={18} />
-              Save This Prompt For Future Learning
-            </a>
+            <Download size={18} />
+            Save This Prompt For Future Learning
           </Button>
         </AnimatedSection>
         

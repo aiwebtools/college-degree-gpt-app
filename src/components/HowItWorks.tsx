@@ -1,13 +1,17 @@
+
 import React from 'react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
+import { createTimePortalEffect } from '@/utils/timeEffects';
+
 interface StepProps {
   number: number;
   title: string;
   description: string;
   delay?: number;
 }
+
 const Step: React.FC<StepProps> = ({
   number,
   title,
@@ -45,7 +49,13 @@ const Step: React.FC<StepProps> = ({
       {number < 5 && <div className="absolute left-6 top-12 w-0.5 h-16 bg-gradient-to-b from-primary to-primary/10 ml-0"></div>}
     </AnimatedSection>;
 };
+
 const HowItWorks: React.FC = () => {
+  const handleExternalLink = (url: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    createTimePortalEffect(url);
+  };
+
   return <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
       <div className="absolute inset-0 bg-hero-pattern opacity-5"></div>
       
@@ -134,7 +144,7 @@ const HowItWorks: React.FC = () => {
                   <button className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
                     Previous Lesson
                   </button>
-                  <button className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors" onClick={() => window.open('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', '_blank')}>
+                  <button className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt')}>
                     Access College Degree GPT
                   </button>
                 </div>

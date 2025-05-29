@@ -3,8 +3,14 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
+import { createTimePortalEffect } from '@/utils/timeEffects';
 
 const CTA: React.FC = () => {
+  const handleExternalLink = (url: string) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    createTimePortalEffect(url);
+  };
+
   return (
     <section className="py-24 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent"></div>
@@ -15,7 +21,7 @@ const CTA: React.FC = () => {
         <Button 
           size="lg" 
           className="px-8 py-6 text-lg font-semibold bg-gray-800 hover:bg-gray-700 rounded-md shadow-lg transition-all"
-          onClick={() => window.open('https://www.aiwebtools.ai', '_blank')}
+          onClick={handleExternalLink('https://www.aiwebtools.ai')}
         >
           Explore AiWebTools.Ai
         </Button>
@@ -45,7 +51,7 @@ const CTA: React.FC = () => {
               <Button 
                 size="lg" 
                 className="rounded-full px-8 py-6 text-base w-full md:w-auto"
-                onClick={() => window.open('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', '_blank')}
+                onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt')}
               >
                 Start Learning Now
               </Button>
@@ -53,7 +59,7 @@ const CTA: React.FC = () => {
                 size="lg" 
                 variant="outline" 
                 className="rounded-full px-8 py-6 text-base w-full md:w-auto"
-                onClick={() => window.open('https://www.AiWebTools.Ai', '_blank')}
+                onClick={handleExternalLink('https://www.AiWebTools.Ai')}
               >
                 Explore More AI Tools
               </Button>
