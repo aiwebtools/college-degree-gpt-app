@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from './AnimatedSection';
@@ -6,9 +5,9 @@ import GlassMorphism from './ui/GlassMorphism';
 import { createTimePortalEffect } from '@/utils/timeEffects';
 
 const CTA: React.FC = () => {
-  const handleExternalLink = (url: string) => (e: React.MouseEvent) => {
+  const handleExternalLink = (url: string, buttonText: string) => (e: React.MouseEvent) => {
     e.preventDefault();
-    createTimePortalEffect(url);
+    createTimePortalEffect(url, buttonText);
   };
 
   return (
@@ -21,7 +20,7 @@ const CTA: React.FC = () => {
         <Button 
           size="lg" 
           className="px-8 py-6 text-lg font-semibold bg-gray-800 hover:bg-gray-700 rounded-md shadow-lg transition-all"
-          onClick={handleExternalLink('https://www.aiwebtools.ai')}
+          onClick={handleExternalLink('https://www.aiwebtools.ai', 'Explore AiWebTools.Ai')}
         >
           Explore AiWebTools.Ai
         </Button>
@@ -51,7 +50,7 @@ const CTA: React.FC = () => {
               <Button 
                 size="lg" 
                 className="rounded-full px-8 py-6 text-base w-full md:w-auto"
-                onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt')}
+                onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'Start Learning Now')}
               >
                 Start Learning Now
               </Button>
@@ -59,7 +58,7 @@ const CTA: React.FC = () => {
                 size="lg" 
                 variant="outline" 
                 className="rounded-full px-8 py-6 text-base w-full md:w-auto"
-                onClick={handleExternalLink('https://www.AiWebTools.Ai')}
+                onClick={handleExternalLink('https://www.AiWebTools.Ai', 'Explore More AI Tools')}
               >
                 Explore More AI Tools
               </Button>

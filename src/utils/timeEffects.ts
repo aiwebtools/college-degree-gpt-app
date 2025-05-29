@@ -3,7 +3,7 @@ import { createPortalSounds } from './soundEffects';
 import { createPortalVisuals, createFlashEffect } from './visualEffects';
 import { addTimePortalStyles } from './portalStyles';
 
-export const createTimePortalEffect = (destinationUrl: string) => {
+export const createTimePortalEffect = (destinationUrl: string, buttonText?: string) => {
   // Initialize styles
   addTimePortalStyles();
 
@@ -34,8 +34,8 @@ export const createTimePortalEffect = (destinationUrl: string) => {
   document.body.style.filter = 'hue-rotate(0deg) saturate(1.5) brightness(1.2)';
   document.body.style.animation = 'time-warp 2.3s ease-in-out';
 
-  // Start sound effects
-  createPortalSounds();
+  // Start sound effects with button context
+  createPortalSounds(buttonText);
 
   // Clean up and redirect after 2.3 seconds
   setTimeout(() => {

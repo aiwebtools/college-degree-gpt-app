@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from './AnimatedSection';
@@ -9,9 +8,9 @@ import { createTimePortalEffect } from '@/utils/timeEffects';
 const CourseExample: React.FC = () => {
   const [showVideo, setShowVideo] = React.useState(false);
 
-  const handleExternalLink = (url: string) => (e: React.MouseEvent) => {
+  const handleExternalLink = (url: string, buttonText: string) => (e: React.MouseEvent) => {
     e.preventDefault();
-    createTimePortalEffect(url);
+    createTimePortalEffect(url, buttonText);
   };
 
   // Fixed PlayButton component that returns JSX
@@ -25,7 +24,7 @@ const CourseExample: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-radial from-primary/5 to-transparent"></div>
       <div className="section-container relative z-10">
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-16">
-          <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt')} className="inline-block">
+          <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'See It In Action')} className="inline-block">
             <span className="chip mb-6 cursor-pointer hover:bg-primary/90 transition-colors">See It In Action</span>
           </a>
           <h2 className="heading mb-6">Experience a College-Level Education Cost Free</h2>

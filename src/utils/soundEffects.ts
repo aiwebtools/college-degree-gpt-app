@@ -1,9 +1,38 @@
 
-export const createPortalSounds = async () => {
+export const createPortalSounds = async (buttonText?: string) => {
   try {
     // Check if speech synthesis is available
     if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance('ACTIVE');
+      // Determine robot voice response based on button text
+      let robotMessage = 'ACTIVE'; // Default message
+      
+      if (buttonText) {
+        const lowerText = buttonText.toLowerCase();
+        
+        if (lowerText.includes('start learning') || lowerText.includes('college degree gpt')) {
+          robotMessage = 'Loading College Degree GPT Now Master';
+        } else if (lowerText.includes('explore more ai tools') || lowerText.includes('more ai tools')) {
+          robotMessage = 'Loading More AI Tools Now Master';
+        } else if (lowerText.includes('aiwebtools') || lowerText.includes('ai web tools')) {
+          robotMessage = 'Accessing AI Web Tools Portal Master';
+        } else if (lowerText.includes('quiz maker')) {
+          robotMessage = 'Initializing Quiz Maker GPT Master';
+        } else if (lowerText.includes('learn any course')) {
+          robotMessage = 'Loading Learn Any Course GPT Master';
+        } else if (lowerText.includes('learn any skill')) {
+          robotMessage = 'Activating Learn Any Skill GPT Master';
+        } else if (lowerText.includes('talk to history')) {
+          robotMessage = 'Connecting to Talk to History GPT Master';
+        } else if (lowerText.includes('save') || lowerText.includes('download')) {
+          robotMessage = 'Downloading Educational Resources Master';
+        } else if (lowerText.includes('google') || lowerText.includes('certificate')) {
+          robotMessage = 'Redirecting to Google Certification Portal Master';
+        } else {
+          robotMessage = 'Portal Activated Master';
+        }
+      }
+      
+      const utterance = new SpeechSynthesisUtterance(robotMessage);
       
       // Configure robot-like voice settings
       utterance.rate = 0.7; // Slower speech rate for robot effect
@@ -22,12 +51,13 @@ export const createPortalSounds = async () => {
         utterance.voice = robotVoice;
       }
       
-      console.log('Playing robot voice: ACTIVE');
+      console.log('Playing robot voice:', robotMessage);
       speechSynthesis.speak(utterance);
       
-      // Add a second "ACTIVE" with slight delay for emphasis
+      // Add a second confirmation with slight delay for emphasis
       setTimeout(() => {
-        const utterance2 = new SpeechSynthesisUtterance('ACTIVE');
+        const confirmationMessage = 'Portal Sequence Complete';
+        const utterance2 = new SpeechSynthesisUtterance(confirmationMessage);
         utterance2.rate = 0.6;
         utterance2.pitch = 0.2;
         utterance2.volume = 0.8;
@@ -35,7 +65,7 @@ export const createPortalSounds = async () => {
           utterance2.voice = robotVoice;
         }
         speechSynthesis.speak(utterance2);
-      }, 800);
+      }, 1200);
       
     } else {
       // Fallback to a simple beep if speech synthesis not available

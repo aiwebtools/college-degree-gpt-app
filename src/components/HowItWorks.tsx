@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
@@ -51,9 +50,9 @@ const Step: React.FC<StepProps> = ({
 };
 
 const HowItWorks: React.FC = () => {
-  const handleExternalLink = (url: string) => (e: React.MouseEvent) => {
+  const handleExternalLink = (url: string, buttonText: string) => (e: React.MouseEvent) => {
     e.preventDefault();
-    createTimePortalEffect(url);
+    createTimePortalEffect(url, buttonText);
   };
 
   return <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
@@ -144,7 +143,7 @@ const HowItWorks: React.FC = () => {
                   <button className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
                     Previous Lesson
                   </button>
-                  <button className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt')}>
+                  <button className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'Access College Degree GPT')}>
                     Access College Degree GPT
                   </button>
                 </div>
