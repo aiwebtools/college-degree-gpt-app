@@ -40,6 +40,13 @@ const Footer: React.FC = () => {
                 <a href="https://chatgpt.com/g/g-cUahkn19i-quiz-maker-ai" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">Quiz Maker GPT</a>
               </li>
               <li className="pt-2">
+                <a href="https://www.coursera.org/google-certificates/data-analytics-certificate?action=enroll&gwg_campaign_id=null&gwg_exp=null&utm_campaign=sou--google__med--hpp__cam--2025-gwg-brand__geo--US__con--join-one-million-gcc-grads__ter--null&utm_medium=institutions&utm_source=google" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="sm" className="w-full">
+                    Enroll In Free Google AI Certificate Program
+                  </Button>
+                </a>
+              </li>
+              <li className="pt-2">
                 <a href="https://www.aiwebtools.ai" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="sm" className="w-full">
                     MORE AI TOOLS
