@@ -40,7 +40,7 @@ export const createPortalSounds = async () => {
     } else {
       // Fallback to a simple beep if speech synthesis not available
       console.log('Speech synthesis not available, using fallback');
-      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      const AudioContext = (window as any).AudioContext || (window as any).webkitAudioContext;
       const audioContext = new AudioContext();
       
       if (audioContext.state === 'suspended') {
