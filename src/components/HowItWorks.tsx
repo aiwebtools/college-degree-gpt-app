@@ -1,24 +1,20 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
-
 interface StepProps {
   number: number;
   title: string;
   description: string;
   delay?: number;
 }
-
 const Step: React.FC<StepProps> = ({
   number,
   title,
   description,
   delay = 0
 }) => {
-  return (
-    <AnimatedSection animation="fade-in-right" delay={delay} className="relative">
+  return <AnimatedSection animation="fade-in-right" delay={delay} className="relative">
       <div className="flex items-start gap-4">
         <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white text-xl font-semibold z-10">
           {number}
@@ -31,13 +27,10 @@ const Step: React.FC<StepProps> = ({
       </div>
       
       {number < 5 && <div className="absolute left-6 top-12 w-0.5 h-16 bg-gradient-to-b from-primary to-primary/10 ml-0"></div>}
-    </AnimatedSection>
-  );
+    </AnimatedSection>;
 };
-
 const HowItWorks: React.FC = () => {
-  return (
-    <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
+  return <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
       <div className="absolute inset-0 bg-hero-pattern opacity-5"></div>
       
       <div className="section-container relative z-10">
@@ -60,7 +53,7 @@ const HowItWorks: React.FC = () => {
             <AnimatedSection className="mb-8">
               <span className="chip mb-3">How It Works</span>
               <h2 className="heading text-3xl md:text-4xl mb-4 text-white">Your Self-Paced Debt Free Educational Journey, Begins...</h2>
-              <p className="subheading text-gray-200">College Degree GPT provides a full self-paced learning experience, guiding you from curriculum planning to detailed instructions and personalized answers to your questions.</p>
+              <p className="subheading text-gray-200">College Degree GPT offers a complete self-paced learning experience, guiding you through everything from curriculum planning to step-by-step instructions and 24/7 personalized answers to your questions. Study on your own schedule, in your own way, at your own pace—without the risk of defaulting on student loans.</p>
             </AnimatedSection>
             
             <div className="space-y-12 mt-10">
@@ -137,8 +130,6 @@ const HowItWorks: React.FC = () => {
           </AnimatedSection>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HowItWorks;
