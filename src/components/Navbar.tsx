@@ -1,8 +1,9 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import GlassMorphism from './ui/GlassMorphism';
 import { Button } from '@/components/ui/button';
-import { Menu, X, ExternalLink, Home } from 'lucide-react';
+import { Menu, X, ExternalLink, Home, BookOpen, Wrench, MessageCircle, MoreHorizontal } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -75,24 +76,28 @@ const Navbar: React.FC = () => {
         {mobileMenuOpen && (
           <div className="md:hidden px-4 pt-2 pb-4 space-y-3 border-t border-gray-300 dark:border-gray-700">
             <a href="https://www.aiwebtools.ai" target="_blank" rel="noopener noreferrer" 
-              className="flex items-center gap-1.5 py-2 text-sm font-medium text-gray-900 dark:text-white">
-              <Home className="h-4 w-4" />
+              className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-800 hover:from-blue-100 hover:to-blue-200 hover:shadow-lg hover:shadow-blue-200/50 transition-all duration-300 transform hover:scale-105 glow-blue">
+              <Home className="h-5 w-5" />
               AiWebTools Home
             </a>
             <a href="https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt" target="_blank" rel="noopener noreferrer" 
-              className="block py-2 text-sm font-medium text-gray-900 dark:text-white">
+              className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-green-200 bg-gradient-to-r from-green-50 to-green-100 text-green-800 hover:from-green-100 hover:to-green-200 hover:shadow-lg hover:shadow-green-200/50 transition-all duration-300 transform hover:scale-105 glow-green">
+              <BookOpen className="h-5 w-5" />
               Learn Any Course GPT
             </a>
             <a href="https://learnanyskillgpt.lovable.app/" target="_blank" rel="noopener noreferrer" 
-              className="block py-2 text-sm font-medium text-gray-900 dark:text-white">
+              className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-purple-100 text-purple-800 hover:from-purple-100 hover:to-purple-200 hover:shadow-lg hover:shadow-purple-200/50 transition-all duration-300 transform hover:scale-105 glow-purple">
+              <Wrench className="h-5 w-5" />
               Learn Any Skill GPT
             </a>
             <a href="https://talk-to-history-gpt.lovable.app/" target="_blank" rel="noopener noreferrer" 
-              className="block py-2 text-sm font-medium text-gray-900 dark:text-white">
+              className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-orange-200 bg-gradient-to-r from-orange-50 to-orange-100 text-orange-800 hover:from-orange-100 hover:to-orange-200 hover:shadow-lg hover:shadow-orange-200/50 transition-all duration-300 transform hover:scale-105 glow-orange">
+              <MessageCircle className="h-5 w-5" />
               Talk to History GPT
             </a>
             <a href="https://aiwebtools.ai" target="_blank" rel="noopener noreferrer" 
-              className="block py-2 text-sm font-medium text-purple-700">
+              className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-pink-200 bg-gradient-to-r from-pink-50 to-pink-100 text-pink-800 hover:from-pink-100 hover:to-pink-200 hover:shadow-lg hover:shadow-pink-200/50 transition-all duration-300 transform hover:scale-105 glow-pink">
+              <MoreHorizontal className="h-5 w-5" />
               More AI Tools
             </a>
             <Button size="sm" className="w-full rounded-full mt-2" asChild>
