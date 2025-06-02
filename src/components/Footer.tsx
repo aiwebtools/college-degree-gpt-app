@@ -72,7 +72,7 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="#" onClick={handleExternalLink('https://aiwebtools.ai/terms-of-services', 'Terms of Service')} className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="#" onClick={handleExternalLink('https://aiwebtools.lovable.app/disclaimers', 'Terms of Service')} className="text-muted-foreground hover:text-foreground transition-colors">
                   Terms of Service
                 </a>
               </li>
