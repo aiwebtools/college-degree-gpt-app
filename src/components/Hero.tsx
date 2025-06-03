@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import GlassMorphism from './ui/GlassMorphism';
@@ -16,6 +17,13 @@ const Hero: React.FC = () => {
   
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-liberation-night py-16 md:py-20">
+      {/* SEO-optimized hidden content for search engines */}
+      <div className="sr-only">
+        <h1>Free AI Tools - AI Web Tools - College Degree GPT</h1>
+        <p>Discover the best free AI tools and AI web tools. College Degree GPT is a revolutionary AI education tool that provides free college-level learning on any subject. Our AI professor helps students break free from student debt while accessing comprehensive educational content. Perfect for self-study, research, and educational purposes.</p>
+        <p>Keywords: free ai tools, ai web tools, ai tools, artificial intelligence tools, educational ai, ai learning platform, student debt freedom, online education, ai professor, machine learning tools</p>
+      </div>
+
       <div className="absolute inset-0 bg-hero-pattern opacity-5"></div>
       <div className="starry-background absolute inset-0"></div>
       
@@ -50,15 +58,15 @@ const Hero: React.FC = () => {
           <h1 className="heading text-4xl md:text-6xl lg:text-7xl mb-6 max-w-4xl font-bold text-white drop-shadow-md">
             Break Free From The <span className="text-red-500">Education Debt Cycle</span>
           </h1>
-          <p className="subheading text-lg md:text-xl max-w-2xl mx-auto text-white bg-black/30 backdrop-blur-sm p-4 rounded-lg border border-red-500/20">
+          <h2 className="subheading text-lg md:text-xl max-w-2xl mx-auto text-white bg-black/30 backdrop-blur-sm p-4 rounded-lg border border-red-500/20">
             Complete college-level education on any subject, with no tuition, no debt, and no restrictions. The revolution in learning starts now.
-          </p>
+          </h2>
           <div className="mt-4 text-sm text-white/80 max-w-3xl mx-auto space-y-2">
             <p>
               <em>Note: College Degree GPT provides a self-taught approach to learning and is not an accredited degree program. This is not affiliated with any academic institution and does not grant official college credits or degrees, but it does grant you <span className="text-red-400 font-semibold">freedom</span>.</em>
             </p>
             <p>
-              <em>This service cannot be used as a substitute for formal education requirements on job applications, professional licensing, or graduate school admissions.</em>
+              <em>This service cannot be used as a substitute for formal education requirements on job applications, professional licensing, or graduate school admissions. For informational, educational, and research purposes only.</em>
             </p>
           </div>
         </AnimatedSection>
@@ -75,9 +83,9 @@ const Hero: React.FC = () => {
             size="lg" 
             variant="outline" 
             className="rounded-full px-8 py-6 text-base border-white text-white hover:bg-white/20 font-semibold w-full md:w-auto"
-            onClick={handleExternalLink('https://www.aiwebtools.ai', 'Explore AiWebTools.Ai')}
+            onClick={handleExternalLink('https://www.aiwebtools.ai', 'Explore AI Web Tools')}
           >
-            Explore AiWebTools.Ai
+            Explore AI Web Tools
           </Button>
           <Button 
             size="lg" 
@@ -97,7 +105,7 @@ const Hero: React.FC = () => {
               <iframe 
                 src="https://www.youtube.com/embed/Cd8uvD-smlM?autoplay=1&mute=0&loop=1&playlist=Cd8uvD-smlM&controls=1&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3" 
                 className="w-full h-full aspect-video"
-                title="College Degree GPT Tutorial"
+                title="College Degree GPT Tutorial - Free AI Education Tools"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen

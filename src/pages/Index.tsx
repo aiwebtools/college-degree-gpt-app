@@ -6,6 +6,7 @@ import Features from '@/components/Features';
 import HowItWorks from '@/components/HowItWorks';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
+import SEOHelpers from '@/components/SEOHelpers';
 
 const Index = () => {
   // Ensure smooth scrolling for anchor links
@@ -36,6 +37,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHelpers />
       <Navbar />
       <main className="rebellion-theme">
         <Hero />
