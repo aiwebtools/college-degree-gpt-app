@@ -97,7 +97,7 @@ const Navbar: React.FC = () => {
               <MessageCircle className="h-5 w-5" />
               Talk to History GPT
             </a>
-            <a href="#" onClick={handleExternalLink('https://aiwebtools.ai', 'More AI Tools')}
+            <a href="#" <a href="#" onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'More AI Tools')}
               className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-pink-200 bg-gradient-to-r from-pink-50 to-pink-100 text-pink-800 hover:from-pink-100 hover:to-pink-200 hover:shadow-lg hover:shadow-pink-200/50 transition-all duration-300 transform hover:scale-105 glow-pink">
               <MoreHorizontal className="h-5 w-5" />
               More AI Tools

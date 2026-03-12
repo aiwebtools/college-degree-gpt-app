@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
             <h3 className="font-semibold mb-3 text-sm">AI Web Tools LLC</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" <a href="#" onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'About AI Web Tools')} className="text-muted-foreground hover:text-foreground transition-colors"> className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="#" onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'About AI Web Tools')} className="text-muted-foreground hover:text-foreground transition-colors"> onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'About AI Web Tools')} className="text-muted-foreground hover:text-foreground transition-colors"> className="text-muted-foreground hover:text-foreground transition-colors">
                   About AI Web Tools
                 </a>
               </li>
