@@ -10,6 +10,8 @@ const Footer: React.FC = () => {
     createTimePortalEffect(url, buttonText);
   };
 
+  const AIWEBTOOLS_URL = 'https://aiwebtools.lovable.app/?via=aiwebtools';
+
   return <footer className="bg-secondary/30 py-12 border-t border-border">
       <div className="section-container py-0">
         {/* SEO-optimized hidden content */}
@@ -61,7 +63,7 @@ const Footer: React.FC = () => {
                   variant="default" 
                   size="sm" 
                   className="w-full rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 text-white font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse border-2 border-white/20"
-                  onClick={handleExternalLink('https://www.aiwebtools.ai', 'MORE FREE AI TOOLS')}
+                  onClick={handleExternalLink(AIWEBTOOLS_URL, 'MORE FREE AI TOOLS')}
                 >
                   🚀 MORE FREE AI TOOLS 🚀
                 </Button>
@@ -73,7 +75,7 @@ const Footer: React.FC = () => {
             <h3 className="font-semibold mb-3 text-sm">AI Web Tools LLC</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="#" onClick={handleExternalLink('https://www.aiwebtools.ai', 'About AI Web Tools')} className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'About AI Web Tools')} className="text-muted-foreground hover:text-foreground transition-colors">
                   About AI Web Tools
                 </a>
               </li>

@@ -20,7 +20,7 @@ const CTA: React.FC = () => {
         <Button 
           size="lg" 
           className="px-8 py-6 text-lg font-semibold bg-gray-800 hover:bg-gray-700 rounded-md shadow-lg transition-all"
-          onClick={handleExternalLink('https://www.aiwebtools.ai', 'Explore AiWebTools.Ai')}
+          onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'Explore AiWebTools.Ai')}
         >
           Explore AiWebTools.Ai
         </Button>
@@ -58,7 +58,7 @@ const CTA: React.FC = () => {
                 size="lg" 
                 variant="outline" 
                 className="rounded-full px-8 py-6 text-base w-full md:w-auto"
-                onClick={handleExternalLink('https://www.AiWebTools.Ai', 'Explore More AI Tools')}
+                onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'Explore More AI Tools')}
               >
                 Explore More AI Tools
               </Button>
