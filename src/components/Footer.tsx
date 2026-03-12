@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
                   variant="default" 
                   size="sm" 
                   className="w-full rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 text-white font-bold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse border-2 border-white/20"
-                  onClick={handleExternalLink('https://www.aiwebtools.ai', 'MORE FREE AI TOOLS')}
+                  onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'MORE FREE AI TOOLS')}
                 >
                   🚀 MORE FREE AI TOOLS 🚀
                 </Button>
