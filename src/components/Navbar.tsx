@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
             <div className="flex flex-col">
               <span className="font-bold text-lg tracking-tight text-gray-900 dark:text-white">College Degree GPT</span>
               <span className="text-xs text-gray-700 dark:text-gray-300">Self-Taught Learning Experience</span>
-              <a href="#" onClick={handleExternalLink('https://www.AiWebTools.Ai', 'Presented by Ai Web Tools LLC')} className="text-xs text-gray-700 dark:text-gray-300 hover:underline">Presented by Ai Web Tools LLC</a>
+              <a href="#" <a href="#" onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'Presented by Ai Web Tools LLC')} className="text-xs text-gray-700 dark:text-gray-300 hover:underline">Presented by Ai Web Tools LLC</a> className="text-xs text-gray-700 dark:text-gray-300 hover:underline">Presented by Ai Web Tools LLC</a>
             </div>
           </div>
           
