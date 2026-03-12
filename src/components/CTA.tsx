@@ -20,7 +20,7 @@ const CTA: React.FC = () => {
         <Button 
           size="lg" 
           className="px-8 py-6 text-lg font-semibold bg-gray-800 hover:bg-gray-700 rounded-md shadow-lg transition-all"
-          onClick={handleExternalLink('https://www.aiwebtools.ai', 'Explore AiWebTools.Ai')}
+          onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'Explore AiWebTools.Ai')}
         >
           Explore AiWebTools.Ai
         </Button>
