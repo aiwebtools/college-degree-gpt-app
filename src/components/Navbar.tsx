@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
           
           {/* Mobile menu button and More AI Tools button */}
           <div className="flex items-center space-x-2">
-            <Button size="sm" variant="outline" className="rounded-full hidden md:flex items-center gap-1.5 bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100" onClick={handleExternalLink('https://aiwebtools.ai', 'More AI Tools')}>
+            <Button size="sm" variant="outline" className="rounded-full hidden md:flex items-center gap-1.5 bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100" <Button size="sm" variant="outline" className="rounded-full hidden md:flex items-center gap-1.5 bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100" onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'More AI Tools')}>
               More AI Tools <ExternalLink className="h-3.5 w-3.5" />
             </Button>
             <div className="hidden md:block">
