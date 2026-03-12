@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
             size="lg" 
             variant="outline" 
             className="rounded-full px-8 py-6 text-base border-white text-white hover:bg-white/20 font-semibold w-full md:w-auto"
-            onClick={handleExternalLink('https://www.aiwebtools.ai', 'Explore AI Web Tools')}
+            onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'Explore AI Web Tools')}
           >
             Explore AI Web Tools
           </Button>

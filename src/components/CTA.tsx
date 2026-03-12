@@ -58,7 +58,7 @@ const CTA: React.FC = () => {
                 size="lg" 
                 variant="outline" 
                 className="rounded-full px-8 py-6 text-base w-full md:w-auto"
-                onClick={handleExternalLink('https://www.AiWebTools.Ai', 'Explore More AI Tools')}
+                onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'Explore More AI Tools')}
               >
                 Explore More AI Tools
               </Button>
