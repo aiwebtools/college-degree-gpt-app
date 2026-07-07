@@ -62,7 +62,10 @@ const Navbar: React.FC = () => {
             <Button size="sm" variant="outline" className="rounded-full hidden md:flex items-center gap-1.5 bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100" onClick={handleExternalLink(AIWEBTOOLS_URL, 'More AI Tools')}>
               More AI Tools <ExternalLink className="h-3.5 w-3.5" />
             </Button>
-            <div className="hidden md:block">
+            <div className="hidden md:flex items-center gap-2">
+              <Button size="sm" variant="secondary" className="rounded-full px-4" asChild>
+                <a href="/chat">🎓 Free AI Class Chat</a>
+              </Button>
               <Button size="sm" className="rounded-full px-6" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'USE COLLEGE DEGREE GPT')}>
                 USE COLLEGE DEGREE GPT
               </Button>
@@ -104,6 +107,9 @@ const Navbar: React.FC = () => {
               <MoreHorizontal className="h-5 w-5" />
               More AI Tools
             </a>
+            <Button size="sm" variant="secondary" className="w-full rounded-full mt-2" asChild>
+              <a href="/chat">🎓 Free AI Class Chat (in-site)</a>
+            </Button>
             <Button size="sm" className="w-full rounded-full mt-2" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'USE COLLEGE DEGREE GPT')}>
               USE COLLEGE DEGREE GPT
             </Button>
