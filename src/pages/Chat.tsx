@@ -34,12 +34,15 @@ export default function Chat() {
   }, [navigate]);
 
   // --- Thread list ---
-  const loadThreads = async () => {
+  const loadThreads = async (): Promise<Thread[]> => {
     const { data, error } = await supabase
       .from("threads")
       .select("id,title,updated_at")
       .order("updated_at", { ascending: false });
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return [];
+    }
     setThreads(data ?? []);
     return data ?? [];
   };
