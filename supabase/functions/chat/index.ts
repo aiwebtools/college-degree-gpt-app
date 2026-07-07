@@ -28,7 +28,7 @@ Deno.serve(async (req) => {
     const gateway = createLovableAiGatewayProvider(apiKey);
     const model = gateway("google/gemini-3-flash-preview");
 
-    const modelMessages = convertToModelMessages(messages);
+    const modelMessages = await convertToModelMessages(messages);
     console.log("modelMessages type:", Array.isArray(modelMessages), "count:", modelMessages?.length);
 
     const result = streamText({
