@@ -84,7 +84,15 @@ const Hero: React.FC = () => {
             className="rounded-full px-8 py-6 text-base font-semibold bg-red-500 text-white hover:bg-red-600 border border-red-400 shadow-lg shadow-red-500/20 w-full md:w-auto"
             onClick={handleInternalChat}
           >
-            USE COLLEGE DEGREE GPT
+            USE COLLEGE DEGREE GPT (IN-SITE AI)
+          </Button>
+          <Button 
+            size="lg" 
+            variant="outline"
+            className="rounded-full px-8 py-6 text-base font-semibold border-white text-white hover:bg-white/20 w-full md:w-auto"
+            onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}
+          >
+            CHATGPT CUSTOM GPT VERSION
           </Button>
           <Button 
             size="lg" 

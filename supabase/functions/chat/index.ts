@@ -20,15 +20,18 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { messages }: { messages: UIMessage[] } = await req.json();
+    const body = await req.json();
+    const messages: UIMessage[] = Array.isArray(body?.messages) ? body.messages : [];
 
     const gateway = createLovableAiGatewayProvider(apiKey);
     const model = gateway("google/gemini-3-flash-preview");
 
+    const modelMessages = await convertToModelMessages(messages);
+
     const result = streamText({
       model,
       system: SYSTEM_PROMPT,
-      messages: convertToModelMessages(messages),
+      messages: modelMessages,
     });
 
     return result.toUIMessageStreamResponse({ headers: corsHeaders });

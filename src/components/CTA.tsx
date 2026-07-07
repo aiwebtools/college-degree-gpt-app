@@ -46,13 +46,21 @@ const CTA: React.FC = () => {
               </p>
             </div>
             
-            <div className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+            <div className="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center md:flex-wrap">
               <Button 
                 size="lg" 
-                className="rounded-full px-8 py-6 text-base w-full md:w-auto"
-                onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'Start Learning Now')}
+                className="rounded-full px-8 py-6 text-base w-full md:w-auto bg-red-500 hover:bg-red-600 text-white"
+                asChild
               >
-                Start Learning Now
+                <a href="/chat">Start Learning Now (In-Site AI)</a>
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="rounded-full px-8 py-6 text-base w-full md:w-auto"
+                onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}
+              >
+                ChatGPT Custom GPT Version
               </Button>
               <Button 
                 size="lg" 
