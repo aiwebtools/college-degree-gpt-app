@@ -21,15 +21,12 @@ Deno.serve(async (req) => {
     }
 
     const body = await req.json();
-    console.log("chat body keys:", Object.keys(body ?? {}));
     const messages: UIMessage[] = Array.isArray(body?.messages) ? body.messages : [];
-    console.log("messages count:", messages.length, "sample:", JSON.stringify(messages[0])?.slice(0, 200));
 
     const gateway = createLovableAiGatewayProvider(apiKey);
     const model = gateway("google/gemini-3-flash-preview");
 
     const modelMessages = await convertToModelMessages(messages);
-    console.log("modelMessages type:", Array.isArray(modelMessages), "count:", modelMessages?.length);
 
     const result = streamText({
       model,
