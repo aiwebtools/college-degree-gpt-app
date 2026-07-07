@@ -10,10 +10,16 @@ import { createTimePortalEffect } from '@/utils/timeEffects';
 const Hero: React.FC = () => {
   // Set video playing to true by default
   const [videoPlaying, setVideoPlaying] = useState(true);
+  const navigate = useNavigate();
   
   const handleExternalLink = (url: string, buttonText: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     createTimePortalEffect(url, buttonText);
+  };
+
+  const handleInternalChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/chat');
   };
   
   return (
