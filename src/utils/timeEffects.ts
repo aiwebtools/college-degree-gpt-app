@@ -4,12 +4,23 @@ import { createPortalVisuals, createFlashEffect } from './visualEffects';
 import { addTimePortalStyles } from './portalStyles';
 
 export const createTimePortalEffect = (destinationUrl: string, buttonText?: string) => {
-  // Open the window IMMEDIATELY within the user gesture to avoid popup blockers.
-  // We navigate it to the destination after the animation completes.
-  const newWindow = window.open('about:blank', '_blank', 'noopener,noreferrer');
-
-  // If the popup was still blocked, fall back to same-tab navigation after the animation.
-  const popupBlocked = !newWindow;
+  // Open the destination directly in a new tab within the user gesture.
+  // Using an anchor click avoids about:blank intermediate pages that some
+  // sites (e.g. chatgpt.com) refuse to be navigated into via popup.location
+  // (ERR_BLOCKED_BY_RESPONSE).
+  let opened = false;
+  try {
+    const a = document.createElement('a');
+    a.href = destinationUrl;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    opened = true;
+  } catch {
+    opened = false;
+  }
 
   // Initialize styles
   addTimePortalStyles();
@@ -31,20 +42,15 @@ export const createTimePortalEffect = (destinationUrl: string, buttonText?: stri
     justify-content: center;
   `;
 
-  // Create visual effects
   createPortalVisuals(overlay);
   createFlashEffect(overlay);
-
   document.body.appendChild(overlay);
 
-  // Apply time warp effect to body
   document.body.style.filter = 'hue-rotate(0deg) saturate(1.5) brightness(1.2)';
   document.body.style.animation = 'time-warp 2.3s ease-in-out';
 
-  // Start sound effects with button context
   createPortalSounds(buttonText);
 
-  // Clean up and redirect after 2.3 seconds
   setTimeout(() => {
     if (overlay.parentNode) {
       document.body.removeChild(overlay);
@@ -52,16 +58,8 @@ export const createTimePortalEffect = (destinationUrl: string, buttonText?: stri
     document.body.style.filter = '';
     document.body.style.animation = '';
 
-    if (newWindow && !newWindow.closed) {
-      // Navigate the already-opened window to the destination
-      try {
-        newWindow.location.href = destinationUrl;
-      } catch {
-        // If cross-origin write is blocked for some reason, fall back
-        window.location.href = destinationUrl;
-      }
-    } else if (popupBlocked) {
-      // Popup blocker denied our window — fall back to same-tab navigation
+    // Fallback: if the anchor click somehow failed, navigate in same tab.
+    if (!opened) {
       window.location.href = destinationUrl;
     }
   }, 2300);
