@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import GlassMorphism from './ui/GlassMorphism';
 import AnimatedSection from './AnimatedSection';
@@ -9,10 +10,16 @@ import { createTimePortalEffect } from '@/utils/timeEffects';
 const Hero: React.FC = () => {
   // Set video playing to true by default
   const [videoPlaying, setVideoPlaying] = useState(true);
+  const navigate = useNavigate();
   
   const handleExternalLink = (url: string, buttonText: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     createTimePortalEffect(url, buttonText);
+  };
+
+  const handleInternalChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate('/chat');
   };
   
   return (
@@ -75,7 +82,7 @@ const Hero: React.FC = () => {
           <Button 
             size="lg" 
             className="rounded-full px-8 py-6 text-base font-semibold bg-red-500 text-white hover:bg-red-600 border border-red-400 shadow-lg shadow-red-500/20 w-full md:w-auto"
-            onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'USE COLLEGE DEGREE GPT')}
+            onClick={handleInternalChat}
           >
             USE COLLEGE DEGREE GPT
           </Button>
