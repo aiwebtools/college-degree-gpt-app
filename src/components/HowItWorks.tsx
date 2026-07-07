@@ -139,12 +139,12 @@ const HowItWorks: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="bg-secondary/30 p-4 flex justify-between items-center border-t border-border">
-                  <button className="text-sm text-gray-700 hover:text-gray-900 transition-colors">
-                    Previous Lesson
-                  </button>
-                  <button className="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'Access College Degree GPT')}>
-                    Access College Degree GPT
+                <div className="bg-secondary/30 p-4 flex flex-wrap justify-between items-center gap-2 border-t border-border">
+                  <a href="/chat" className="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition-colors">
+                    Use College Degree GPT (In-Site AI)
+                  </a>
+                  <button className="border border-primary text-primary px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/10 transition-colors" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}>
+                    ChatGPT Custom GPT Version
                   </button>
                 </div>
               </div>
