@@ -56,9 +56,9 @@ const CTA: React.FC = () => {
               <Button 
                 size="lg" 
                 className="rounded-full px-8 py-6 text-base w-full md:w-auto bg-red-500 hover:bg-red-600 text-white"
-                asChild
+                onClick={handleInternalChat}
               >
-                <a href="/chat">Start Learning Now (In-Site AI)</a>
+                Start Learning Now (In-Site AI)
               </Button>
               <Button 
                 size="lg" 
