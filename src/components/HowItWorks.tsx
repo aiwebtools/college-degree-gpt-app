@@ -51,9 +51,14 @@ const Step: React.FC<StepProps> = ({
 };
 
 const HowItWorks: React.FC = () => {
+  const navigate = useNavigate();
   const handleExternalLink = (url: string, buttonText: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     createTimePortalEffect(url, buttonText);
+  };
+  const handleInternalChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    createInternalPortalEffect(navigate, '/chat', 'Open College Degree GPT');
   };
 
   return <section id="how-it-works" className="py-24 relative overflow-hidden bg-gray-800">
