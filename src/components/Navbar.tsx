@@ -1,10 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import GlassMorphism from './ui/GlassMorphism';
 import { Button } from '@/components/ui/button';
 import { Menu, X, ExternalLink, Home, BookOpen, Wrench, MessageCircle, MoreHorizontal } from 'lucide-react';
-import { createTimePortalEffect } from '@/utils/timeEffects';
+import { createTimePortalEffect, createInternalPortalEffect } from '@/utils/timeEffects';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
