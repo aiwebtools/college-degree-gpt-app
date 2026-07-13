@@ -1,8 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
-import { createTimePortalEffect } from '@/utils/timeEffects';
+import { createTimePortalEffect, createInternalPortalEffect } from '@/utils/timeEffects';
 
 interface StepProps {
   number: number;
