@@ -115,8 +115,8 @@ const Navbar: React.FC = () => {
               <MoreHorizontal className="h-5 w-5" />
               More AI Tools
             </a>
-            <Button size="sm" className="w-full rounded-full mt-2 bg-red-500 hover:bg-red-600 text-white" asChild>
-              <a href="/chat">USE COLLEGE DEGREE GPT (IN-SITE AI)</a>
+            <Button size="sm" className="w-full rounded-full mt-2 bg-red-500 hover:bg-red-600 text-white" onClick={handleInternalChat}>
+              USE COLLEGE DEGREE GPT (IN-SITE AI)
             </Button>
             <Button size="sm" variant="outline" className="w-full rounded-full mt-2" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}>
               CHATGPT CUSTOM GPT VERSION
