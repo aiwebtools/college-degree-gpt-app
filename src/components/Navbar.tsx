@@ -71,8 +71,8 @@ const Navbar: React.FC = () => {
               More AI Tools <ExternalLink className="h-3.5 w-3.5" />
             </Button>
             <div className="hidden md:flex items-center gap-2">
-              <Button size="sm" className="rounded-full px-6 bg-red-500 hover:bg-red-600 text-white" asChild>
-                <a href="/chat">USE COLLEGE DEGREE GPT (IN-SITE AI)</a>
+              <Button size="sm" className="rounded-full px-6 bg-red-500 hover:bg-red-600 text-white" onClick={handleInternalChat}>
+                USE COLLEGE DEGREE GPT (IN-SITE AI)
               </Button>
               <Button size="sm" variant="outline" className="rounded-full px-6" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}>
                 CHATGPT CUSTOM GPT VERSION
