@@ -1,13 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
-import { createTimePortalEffect } from '@/utils/timeEffects';
+import { createTimePortalEffect, createInternalPortalEffect } from '@/utils/timeEffects';
 
 const CTA: React.FC = () => {
+  const navigate = useNavigate();
   const handleExternalLink = (url: string, buttonText: string) => (e: React.MouseEvent) => {
     e.preventDefault();
     createTimePortalEffect(url, buttonText);
+  };
+  const handleInternalChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    createInternalPortalEffect(navigate, '/chat', 'Open College Degree GPT');
   };
 
   return (
