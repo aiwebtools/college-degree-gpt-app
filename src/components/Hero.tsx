@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import GlassMorphism from './ui/GlassMorphism';
 import AnimatedSection from './AnimatedSection';
 import { Download, Swords, Link, Unlink } from 'lucide-react';
-import { createTimePortalEffect } from '@/utils/timeEffects';
+import { createTimePortalEffect, createInternalPortalEffect } from '@/utils/timeEffects';
 
 const Hero: React.FC = () => {
   // Set video playing to true by default
@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
 
   const handleInternalChat = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate('/chat');
+    createInternalPortalEffect(navigate, '/chat', 'Open College Degree GPT');
   };
   
   return (
