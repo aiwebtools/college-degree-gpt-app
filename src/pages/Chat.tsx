@@ -293,10 +293,8 @@ function ChatWindow({
           )}
 
           {messages.map((m) => {
-            const text = m.parts
-              .map((p) => (p.type === "text" ? p.text : ""))
-              .join("");
             if (m.role === "user") {
+              const text = m.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
               return (
                 <div key={m.id} className="flex justify-end">
                   <div className="max-w-[80%] rounded-2xl bg-primary text-primary-foreground px-4 py-2.5">
@@ -306,8 +304,65 @@ function ChatWindow({
               );
             }
             return (
-              <div key={m.id} className="prose prose-sm dark:prose-invert max-w-none">
-                <ReactMarkdown>{text}</ReactMarkdown>
+              <div key={m.id} className="space-y-3">
+                {m.parts.map((p, i) => {
+                  if (p.type === "text") {
+                    return (
+                      <div key={i} className="prose prose-sm dark:prose-invert max-w-none">
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            a: ({ node, ...props }) => (
+                              <a
+                                {...props}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-primary underline hover:opacity-80"
+                              />
+                            ),
+                          }}
+                        >
+                          {p.text}
+                        </ReactMarkdown>
+                      </div>
+                    );
+                  }
+                  // Tool call for image generation
+                  const anyPart = p as any;
+                  if (anyPart.type === "tool-generate_image" || anyPart.type?.startsWith?.("tool-generate_image")) {
+                    const output = anyPart.output ?? anyPart.result;
+                    const state = anyPart.state;
+                    if (output?.dataUrl) {
+                      return (
+                        <figure key={i} className="rounded-xl overflow-hidden border border-border bg-card">
+                          <img
+                            src={output.dataUrl}
+                            alt={output.prompt ?? "Generated lesson image"}
+                            className="w-full h-auto"
+                          />
+                          {output.prompt && (
+                            <figcaption className="text-xs text-muted-foreground px-3 py-2">
+                              {output.prompt}
+                            </figcaption>
+                          )}
+                        </figure>
+                      );
+                    }
+                    if (output?.error) {
+                      return (
+                        <div key={i} className="text-xs text-destructive">Image failed: {output.error}</div>
+                      );
+                    }
+                    if (state === "input-available" || state === "call" || state === "partial-call") {
+                      return (
+                        <div key={i} className="flex items-center gap-2 text-sm text-muted-foreground italic">
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Generating lesson image…
+                        </div>
+                      );
+                    }
+                  }
+                  return null;
+                })}
               </div>
             );
           })}
