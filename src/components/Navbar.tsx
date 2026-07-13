@@ -10,6 +10,13 @@ import { createTimePortalEffect, createInternalPortalEffect } from '@/utils/time
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleInternalChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    createInternalPortalEffect(navigate, '/chat', 'Open College Degree GPT');
+  };
 
   useEffect(() => {
     const handleScroll = () => {
