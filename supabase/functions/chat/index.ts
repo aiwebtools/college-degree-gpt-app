@@ -1,4 +1,5 @@
-import { convertToModelMessages, streamText, type UIMessage } from "npm:ai";
+import { convertToModelMessages, streamText, stepCountIs, tool, type UIMessage } from "npm:ai";
+import { z } from "npm:zod";
 import { createLovableAiGatewayProvider } from "../_shared/ai-gateway.ts";
 import { SYSTEM_PROMPT } from "./system-prompt.ts";
 
@@ -28,10 +29,44 @@ Deno.serve(async (req) => {
 
     const modelMessages = await convertToModelMessages(messages);
 
+    const generateImage = tool({
+      description:
+        "Generate an educational image (DALL-E style) that visually sums up the current lesson segment. Use this after teaching each lesson segment, and for course cover images. Returns an image the user will see inline.",
+      inputSchema: z.object({
+        prompt: z.string().describe("Detailed visual description of the image to generate. No text in the image."),
+      }),
+      execute: async ({ prompt }) => {
+        const res = await fetch("https://ai.gateway.lovable.dev/v1/images/generations", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Lovable-API-Key": apiKey,
+          },
+          body: JSON.stringify({
+            model: "google/gemini-2.5-flash-image",
+            prompt,
+            size: "1024x1024",
+          }),
+        });
+        if (!res.ok) {
+          const txt = await res.text();
+          console.error("image gen failed", res.status, txt);
+          return { error: `Image generation failed (${res.status})` };
+        }
+        const data = await res.json();
+        const b64 = data?.data?.[0]?.b64_json;
+        if (!b64) return { error: "No image returned" };
+        return { dataUrl: `data:image/png;base64,${b64}`, prompt };
+      },
+    });
+
     const result = streamText({
       model,
-      system: SYSTEM_PROMPT,
+      system: SYSTEM_PROMPT +
+        "\n\nIMAGE TOOL: When your instructions call for a DALL-E image (course cover, end-of-segment recap image, degree completion cert), call the tool `generate_image` with a vivid descriptive prompt. Do not describe the image in text — actually call the tool so the user sees it. YOUTUBE LINKS: When sharing YouTube resources, ALWAYS include them as full clickable markdown links like [Title](https://youtube.com/watch?v=...) so the user can click them.",
       messages: modelMessages,
+      tools: { generate_image: generateImage },
+      stopWhen: stepCountIs(20),
     });
 
     return result.toUIMessageStreamResponse({ headers: corsHeaders });
