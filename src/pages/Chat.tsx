@@ -20,6 +20,7 @@ export default function Chat() {
   const [threads, setThreads] = useState<Thread[]>([]);
   const [initialMessages, setInitialMessages] = useState<UIMessage[] | null>(null);
   const [loadingThread, setLoadingThread] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // --- Auth gate ---
   useEffect(() => {
