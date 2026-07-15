@@ -60,10 +60,17 @@ export default function Auth() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-md space-y-6 bg-card border border-border rounded-2xl p-8 shadow-xl">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-            <GraduationCap className="h-7 w-7 text-primary" />
-          </div>
+          <img
+            src={logo}
+            alt="College Degree GPT logo"
+            width={1024}
+            height={1024}
+            className="h-28 w-28 object-contain drop-shadow-[0_0_25px_rgba(239,68,68,0.35)]"
+          />
           <h1 className="text-2xl font-bold">College Degree GPT</h1>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground">
+            by <a href="https://aiwebtools.ai" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">aiwebtools.ai</a>
+          </p>
           <p className="text-sm text-muted-foreground">
             Sign in to start your free virtual college education
           </p>
