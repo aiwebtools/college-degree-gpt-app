@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { GraduationCap } from "lucide-react";
+import logo from "@/assets/college-degree-gpt-logo.png";
 
 export default function Auth() {
   const navigate = useNavigate();
