@@ -49,6 +49,7 @@ const Navbar: React.FC = () => {
             </svg>
             <div className="flex flex-col">
               <span className="font-bold text-lg tracking-tight text-gray-900 dark:text-white">College Degree GPT</span>
+              <span className="italic text-[11px] text-primary/80 font-serif" style={{ fontFamily: '"Great Vibes","Pinyon Script","Dancing Script",cursive' }}>a product of imagination</span>
               <span className="text-xs text-gray-700 dark:text-gray-300">Self-Taught Learning Experience</span>
               <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'Presented by Ai Web Tools LLC')} className="text-xs text-gray-700 dark:text-gray-300 hover:underline">Presented by Ai Web Tools LLC</a>
             </div>
