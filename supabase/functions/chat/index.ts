@@ -36,27 +36,34 @@ Deno.serve(async (req) => {
         prompt: z.string().describe("Detailed visual description of the image to generate. No text in the image."),
       }),
       execute: async ({ prompt }) => {
-        const res = await fetch("https://ai.gateway.lovable.dev/v1/images/generations", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Lovable-API-Key": apiKey,
-          },
-          body: JSON.stringify({
-            model: "google/gemini-2.5-flash-image",
-            prompt,
-            size: "1024x1024",
-          }),
-        });
-        if (!res.ok) {
-          const txt = await res.text();
-          console.error("image gen failed", res.status, txt);
-          return { error: `Image generation failed (${res.status})` };
+        try {
+          const res = await fetch("https://ai.gateway.lovable.dev/v1/images/generations", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+              model: "openai/gpt-image-2",
+              prompt,
+              size: "1024x1024",
+              quality: "low",
+              n: 1,
+            }),
+          });
+          if (!res.ok) {
+            const txt = await res.text();
+            console.error("image gen failed", res.status, txt);
+            return { error: `Image generation failed (${res.status})` };
+          }
+          const data = await res.json();
+          const b64 = data?.data?.[0]?.b64_json;
+          if (!b64) return { error: "No image returned" };
+          return { dataUrl: `data:image/png;base64,${b64}`, prompt };
+        } catch (e) {
+          console.error("image gen exception", e);
+          return { error: e instanceof Error ? e.message : String(e) };
         }
-        const data = await res.json();
-        const b64 = data?.data?.[0]?.b64_json;
-        if (!b64) return { error: "No image returned" };
-        return { dataUrl: `data:image/png;base64,${b64}`, prompt };
       },
     });
 

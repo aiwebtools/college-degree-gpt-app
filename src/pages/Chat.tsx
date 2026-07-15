@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { GraduationCap, Plus, LogOut, Trash2, Send, Loader2, ArrowLeft, Menu, X } from "lucide-react";
+import { GraduationCap, Plus, LogOut, Trash2, Send, Loader2, ArrowLeft, Menu, X, Play, Pause, Sparkles } from "lucide-react";
 import type { Session } from "@supabase/supabase-js";
 
 type Thread = { id: string; title: string; updated_at: string };
@@ -121,7 +121,13 @@ export default function Chat() {
   };
 
   return (
-    <div className="h-screen flex bg-background text-foreground overflow-hidden">
+    <div className="h-[100dvh] flex bg-background text-foreground overflow-hidden">
+      {/* Magical background */}
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-primary/20 blur-3xl animate-pulse" />
+        <div className="absolute top-1/2 -right-32 h-96 w-96 rounded-full bg-red-500/10 blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
+      </div>
       {/* Mobile backdrop */}
       {sidebarOpen && (
         <div
@@ -313,17 +319,66 @@ function ChatWindow({
 
   const isLoading = status === "submitted" || status === "streaming";
 
+  const [speakingId, setSpeakingId] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const speakMessage = async (id: string, text: string) => {
+    try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+      if (speakingId === id) {
+        setSpeakingId(null);
+        return;
+      }
+      setSpeakingId(id);
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        },
+        body: JSON.stringify({ text, voice: "onyx" }),
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err || `TTS failed (${res.status})`);
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onended = () => {
+        setSpeakingId((cur) => (cur === id ? null : cur));
+        URL.revokeObjectURL(url);
+      };
+      audio.onerror = () => {
+        setSpeakingId((cur) => (cur === id ? null : cur));
+        URL.revokeObjectURL(url);
+      };
+      await audio.play();
+    } catch (e) {
+      console.error("tts error", e);
+      toast.error(e instanceof Error ? e.message : "Voice playback failed");
+      setSpeakingId(null);
+    }
+  };
+
+  useEffect(() => () => { audioRef.current?.pause(); }, []);
+
   return (
     <>
-      <div ref={scrollRef} className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="max-w-3xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-6 w-full">
           {messages.length === 0 && (
             <div className="text-center py-16 space-y-3">
-              <div className="mx-auto h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center">
-                <GraduationCap className="h-8 w-8 text-primary" />
+              <div className="mx-auto h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center animate-pulse">
+                <Sparkles className="h-8 w-8 text-primary" />
               </div>
               <h2 className="text-2xl font-bold">Ready for class, Master?</h2>
-              <p className="text-muted-foreground max-w-md mx-auto">
+              <p className="text-muted-foreground max-w-md mx-auto px-2">
                 Say hi to start. I'll ask what degree you want and what college to base it on,
                 then teach the entire program lesson by lesson.
               </p>
@@ -335,18 +390,23 @@ function ChatWindow({
               const text = m.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
               return (
                 <div key={m.id} className="flex justify-end">
-                  <div className="max-w-[80%] rounded-2xl bg-primary text-primary-foreground px-4 py-2.5">
+                  <div className="max-w-[85%] rounded-2xl bg-primary text-primary-foreground px-4 py-2.5 shadow-lg shadow-primary/20">
                     <div className="whitespace-pre-wrap break-words">{text}</div>
                   </div>
                 </div>
               );
             }
+            const assistantText = m.parts
+              .map((p) => (p.type === "text" ? (p as any).text : ""))
+              .join("\n")
+              .trim();
+            const isSpeaking = speakingId === m.id;
             return (
-              <div key={m.id} className="space-y-3">
+              <div key={m.id} className="space-y-3 group animate-fade-in">
                 {m.parts.map((p, i) => {
                   if (p.type === "text") {
                     return (
-                      <div key={i} className="prose prose-sm dark:prose-invert max-w-none">
+                      <div key={i} className="prose prose-sm dark:prose-invert max-w-none break-words">
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
                           components={{
@@ -360,19 +420,18 @@ function ChatWindow({
                             ),
                           }}
                         >
-                          {p.text}
+                          {(p as any).text}
                         </ReactMarkdown>
                       </div>
                     );
                   }
-                  // Tool call for image generation
                   const anyPart = p as any;
                   if (anyPart.type === "tool-generate_image" || anyPart.type?.startsWith?.("tool-generate_image")) {
                     const output = anyPart.output ?? anyPart.result;
                     const state = anyPart.state;
                     if (output?.dataUrl) {
                       return (
-                        <figure key={i} className="rounded-xl overflow-hidden border border-border bg-card">
+                        <figure key={i} className="rounded-xl overflow-hidden border border-primary/30 bg-card shadow-xl shadow-primary/10 animate-scale-in">
                           <img
                             src={output.dataUrl}
                             alt={output.prompt ?? "Generated lesson image"}
@@ -391,22 +450,40 @@ function ChatWindow({
                         <div key={i} className="text-xs text-destructive">Image failed: {output.error}</div>
                       );
                     }
-                    if (state === "input-available" || state === "call" || state === "partial-call") {
+                    if (state === "input-available" || state === "call" || state === "partial-call" || state === "input-streaming") {
                       return (
                         <div key={i} className="flex items-center gap-2 text-sm text-muted-foreground italic">
-                          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Generating lesson image…
+                          <Loader2 className="h-3.5 w-3.5 animate-spin" /> Conjuring lesson image…
                         </div>
                       );
                     }
                   }
                   return null;
                 })}
+                {assistantText && (
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => speakMessage(m.id, assistantText)}
+                      className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary transition-all hover:scale-105"
+                      aria-label={isSpeaking ? "Stop voice" : "Play professor voice"}
+                    >
+                      {isSpeaking ? (
+                        <><Pause className="h-3.5 w-3.5" /> Stop</>
+                      ) : (
+                        <><Play className="h-3.5 w-3.5" /> Play professor voice</>
+                      )}
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}
 
           {isLoading && messages[messages.length - 1]?.role === "user" && (
-            <div className="text-muted-foreground text-sm italic">Professor is thinking…</div>
+            <div className="text-muted-foreground text-sm italic flex items-center gap-2">
+              <Sparkles className="h-4 w-4 animate-pulse text-primary" /> Professor is thinking…
+            </div>
           )}
 
           {error && (
@@ -415,15 +492,15 @@ function ChatWindow({
         </div>
       </div>
 
-      <form onSubmit={submit} className="border-t border-border bg-card">
-        <div className="max-w-3xl mx-auto p-4 flex gap-2 items-end">
+      <form onSubmit={submit} className="border-t border-border bg-card/80 backdrop-blur">
+        <div className="max-w-3xl mx-auto p-3 sm:p-4 flex gap-2 items-end">
           <Textarea
             ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type YES to begin, or ask anything…"
             rows={1}
-            className="resize-none min-h-[44px] max-h-40"
+            className="resize-none min-h-[44px] max-h-40 flex-1 min-w-0"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -432,7 +509,7 @@ function ChatWindow({
             }}
             disabled={isLoading}
           />
-          <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+          <Button type="submit" size="icon" disabled={isLoading || !input.trim()} className="shrink-0">
             {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           </Button>
         </div>
@@ -440,3 +517,4 @@ function ChatWindow({
     </>
   );
 }
+
