@@ -99,6 +99,9 @@ const Footer: React.FC = () => {
         </div>
         
         <div className="mt-12 pt-6 border-t border-border text-center">
+          <p className="text-3xl md:text-4xl text-primary mb-3" style={{ fontFamily: '"Great Vibes","Pinyon Script","Dancing Script",cursive' }}>
+            a product of imagination
+          </p>
           <p className="text-sm text-muted-foreground">
             &copy; 2025 AI WEB TOOLS LLC. All rights reserved. | Free AI Tools | AI Web Tools | Educational AI Resources
           </p>
