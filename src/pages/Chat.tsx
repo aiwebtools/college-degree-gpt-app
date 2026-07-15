@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { GraduationCap, Plus, LogOut, Trash2, Send, Loader2, ArrowLeft, Menu, X } from "lucide-react";
+import { GraduationCap, Plus, LogOut, Trash2, Send, Loader2, ArrowLeft, Menu, X, Play, Pause, Sparkles } from "lucide-react";
 import type { Session } from "@supabase/supabase-js";
 
 type Thread = { id: string; title: string; updated_at: string };
