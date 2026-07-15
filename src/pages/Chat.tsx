@@ -8,7 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { GraduationCap, Plus, LogOut, Trash2, Send, Loader2, ArrowLeft } from "lucide-react";
+import { GraduationCap, Plus, LogOut, Trash2, Send, Loader2, ArrowLeft, Menu, X } from "lucide-react";
 import type { Session } from "@supabase/supabase-js";
 
 type Thread = { id: string; title: string; updated_at: string };
@@ -20,6 +20,7 @@ export default function Chat() {
   const [threads, setThreads] = useState<Thread[]>([]);
   const [initialMessages, setInitialMessages] = useState<UIMessage[] | null>(null);
   const [loadingThread, setLoadingThread] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // --- Auth gate ---
   useEffect(() => {
@@ -114,10 +115,27 @@ export default function Chat() {
     navigate("/", { replace: true });
   };
 
+  const selectThread = (id: string) => {
+    setSidebarOpen(false);
+    navigate(`/chat/${id}`);
+  };
+
   return (
-    <div className="h-screen flex bg-background text-foreground">
+    <div className="h-screen flex bg-background text-foreground overflow-hidden">
+      {/* Mobile backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-72 border-r border-border flex flex-col bg-card">
+      <aside
+        className={`fixed md:static inset-y-0 left-0 z-40 w-72 border-r border-border flex flex-col bg-card transform transition-transform duration-200 md:transform-none ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        }`}
+      >
         <div className="p-4 border-b border-border flex items-center gap-2">
           <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center">
             <GraduationCap className="h-5 w-5 text-primary" />
@@ -126,9 +144,16 @@ export default function Chat() {
             <div className="font-semibold text-sm truncate">College Degree GPT</div>
             <div className="text-xs text-muted-foreground truncate">{session?.user.email}</div>
           </div>
+          <button
+            className="md:hidden text-muted-foreground"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Close sidebar"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
         <div className="p-3">
-          <Button onClick={createThread} className="w-full" size="sm">
+          <Button onClick={() => { setSidebarOpen(false); void createThread(); }} className="w-full" size="sm">
             <Plus className="h-4 w-4 mr-2" /> New conversation
           </Button>
         </div>
@@ -139,13 +164,13 @@ export default function Chat() {
               className={`group flex items-center gap-1 rounded-md px-2 py-2 text-sm cursor-pointer hover:bg-accent ${
                 t.id === threadId ? "bg-accent" : ""
               }`}
-              onClick={() => navigate(`/chat/${t.id}`)}
+              onClick={() => selectThread(t.id)}
             >
               <span className="flex-1 truncate">{t.title || "New conversation"}</span>
               <button
                 type="button"
                 aria-label="Delete conversation"
-                className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive"
+                className="md:opacity-0 md:group-hover:opacity-100 text-muted-foreground hover:text-destructive"
                 onClick={(e) => {
                   e.stopPropagation();
                   if (confirm("Delete this conversation?")) void deleteThread(t.id);
@@ -167,7 +192,21 @@ export default function Chat() {
       </aside>
 
       {/* Main */}
-      <main className="flex-1 flex flex-col min-w-0">
+      <main className="flex-1 flex flex-col min-w-0 w-full">
+        {/* Mobile top bar */}
+        <div className="md:hidden flex items-center gap-2 p-3 border-b border-border bg-card">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open sidebar"
+            className="p-1.5 rounded-md hover:bg-accent"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+          <div className="flex items-center gap-2 min-w-0">
+            <GraduationCap className="h-5 w-5 text-primary shrink-0" />
+            <span className="font-semibold text-sm truncate">College Degree GPT</span>
+          </div>
+        </div>
         {threadId && !loadingThread && initialMessages ? (
           <ChatWindow
             key={threadId}
@@ -175,7 +214,6 @@ export default function Chat() {
             userId={session!.user.id}
             initialMessages={initialMessages}
             onFirstUserMessage={async (text) => {
-              // Set thread title from first user message
               const title = text.slice(0, 60);
               await supabase.from("threads").update({ title }).eq("id", threadId);
               setThreads((prev) =>
