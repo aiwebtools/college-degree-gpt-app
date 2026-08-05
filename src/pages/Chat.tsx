@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
@@ -6,9 +6,25 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { GraduationCap, Plus, LogOut, Trash2, Send, Loader2, ArrowLeft, Menu, X, Play, Pause, Sparkles } from "lucide-react";
+import {
+  GraduationCap,
+  Plus,
+  LogOut,
+  Trash2,
+  Send,
+  Loader2,
+  ArrowLeft,
+  Menu,
+  X,
+  Play,
+  Pause,
+  Sparkles,
+  ArrowDown,
+  Copy,
+  Check,
+  Square,
+} from "lucide-react";
 import type { Session } from "@supabase/supabase-js";
 
 type Thread = { id: string; title: string; updated_at: string };
@@ -34,6 +50,23 @@ export default function Chat() {
     });
     return () => sub.subscription.unsubscribe();
   }, [navigate]);
+
+  // Lock body scroll so the chat owns the viewport on mobile
+  useEffect(() => {
+    const prev = document.body.style.overscrollBehavior;
+    document.body.style.overscrollBehavior = "none";
+    return () => {
+      document.body.style.overscrollBehavior = prev;
+    };
+  }, []);
+
+  // Close the drawer when returning to desktop widths
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 768px)");
+    const onChange = () => mql.matches && setSidebarOpen(false);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
 
   // --- Thread list ---
   const loadThreads = async (): Promise<Thread[]> => {
@@ -128,22 +161,24 @@ export default function Chat() {
         <div className="absolute top-1/2 -right-32 h-96 w-96 rounded-full bg-red-500/10 blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
         <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
       </div>
+
       {/* Mobile backdrop */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-30 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar / mobile drawer */}
       <aside
-        className={`fixed md:static inset-y-0 left-0 z-40 w-72 border-r border-border flex flex-col bg-card transform transition-transform duration-200 md:transform-none ${
+        className={`fixed md:static inset-y-0 left-0 z-40 w-[84vw] max-w-[20rem] md:w-72 border-r border-border flex flex-col bg-card transform transition-transform duration-200 md:transform-none ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
+        style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <div className="p-4 border-b border-border flex items-center gap-2">
-          <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center">
+          <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
             <GraduationCap className="h-5 w-5 text-primary" />
           </div>
           <div className="flex-1 min-w-0">
@@ -151,7 +186,7 @@ export default function Chat() {
             <div className="text-xs text-muted-foreground truncate">{session?.user.email}</div>
           </div>
           <button
-            className="md:hidden text-muted-foreground"
+            className="md:hidden text-muted-foreground h-10 w-10 -mr-2 flex items-center justify-center rounded-md hover:bg-accent"
             onClick={() => setSidebarOpen(false)}
             aria-label="Close sidebar"
           >
@@ -159,7 +194,7 @@ export default function Chat() {
           </button>
         </div>
         <div className="p-3">
-          <Button onClick={() => { setSidebarOpen(false); void createThread(); }} className="w-full" size="sm">
+          <Button onClick={() => { setSidebarOpen(false); void createThread(); }} className="w-full h-11">
             <Plus className="h-4 w-4 mr-2" /> New conversation
           </Button>
         </div>
@@ -167,7 +202,7 @@ export default function Chat() {
           {threads.map((t) => (
             <div
               key={t.id}
-              className={`group flex items-center gap-1 rounded-md px-2 py-2 text-sm cursor-pointer hover:bg-accent ${
+              className={`group flex items-center gap-1 rounded-md px-2 py-3 md:py-2 text-sm cursor-pointer hover:bg-accent ${
                 t.id === threadId ? "bg-accent" : ""
               }`}
               onClick={() => selectThread(t.id)}
@@ -176,7 +211,7 @@ export default function Chat() {
               <button
                 type="button"
                 aria-label="Delete conversation"
-                className="md:opacity-0 md:group-hover:opacity-100 text-muted-foreground hover:text-destructive"
+                className="md:opacity-0 md:group-hover:opacity-100 text-muted-foreground hover:text-destructive h-9 w-9 flex items-center justify-center shrink-0"
                 onClick={(e) => {
                   e.stopPropagation();
                   if (confirm("Delete this conversation?")) void deleteThread(t.id);
@@ -188,31 +223,42 @@ export default function Chat() {
           ))}
         </div>
         <div className="p-3 border-t border-border space-y-2">
-          <Button variant="outline" size="sm" className="w-full" onClick={() => navigate("/")}>
+          <Button variant="outline" className="w-full h-11" onClick={() => navigate("/")}>
             <ArrowLeft className="h-4 w-4 mr-2" /> Back to site
           </Button>
-          <Button variant="ghost" size="sm" className="w-full" onClick={signOut}>
+          <Button variant="ghost" className="w-full h-11" onClick={signOut}>
             <LogOut className="h-4 w-4 mr-2" /> Sign out
           </Button>
         </div>
       </aside>
 
       {/* Main */}
-      <main className="flex-1 flex flex-col min-w-0 w-full">
+      <main className="relative flex-1 flex flex-col min-w-0 w-full">
         {/* Mobile top bar */}
-        <div className="md:hidden flex items-center gap-2 p-3 border-b border-border bg-card">
+        <div
+          className="md:hidden flex items-center gap-2 px-2 py-2 border-b border-border bg-card/90 backdrop-blur shrink-0"
+          style={{ paddingTop: "calc(env(safe-area-inset-top) + 0.5rem)" }}
+        >
           <button
             onClick={() => setSidebarOpen(true)}
-            aria-label="Open sidebar"
-            className="p-1.5 rounded-md hover:bg-accent"
+            aria-label="Open conversations"
+            className="h-11 w-11 flex items-center justify-center rounded-lg hover:bg-accent active:scale-95 transition"
           >
             <Menu className="h-5 w-5" />
           </button>
-          <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
             <GraduationCap className="h-5 w-5 text-primary shrink-0" />
             <span className="font-semibold text-sm truncate">College Degree GPT</span>
           </div>
+          <button
+            onClick={() => void createThread()}
+            aria-label="New conversation"
+            className="h-11 w-11 flex items-center justify-center rounded-lg hover:bg-accent active:scale-95 transition text-primary"
+          >
+            <Plus className="h-5 w-5" />
+          </button>
         </div>
+
         {threadId && !loadingThread && initialMessages ? (
           <ChatWindow
             key={threadId}
@@ -237,6 +283,19 @@ export default function Chat() {
   );
 }
 
+const QUICK_ACTIONS = [
+  "YES — begin",
+  "Continue the next lesson",
+  "Quiz me on this lesson",
+  "Explain that more simply",
+];
+
+const STARTERS = [
+  "I want a Bachelor of Computer Science based on MIT",
+  "Teach me a Business Administration degree from Harvard",
+  "Psychology degree based on Stanford",
+];
+
 function ChatWindow({
   threadId,
   userId,
@@ -251,6 +310,8 @@ function ChatWindow({
   const [input, setInput] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [atBottom, setAtBottom] = useState(true);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const persistedIdsRef = useRef<Set<string>>(new Set(initialMessages.map((m) => m.id)));
   const hadUserMessageRef = useRef<boolean>(
     initialMessages.some((m) => m.role === "user"),
@@ -266,22 +327,49 @@ function ChatWindow({
     }),
   ).current;
 
-  const { messages, sendMessage, status, error } = useChat({
+  const { messages, sendMessage, status, error, stop } = useChat({
     id: threadId,
     messages: initialMessages,
     transport,
     onError: (e) => toast.error(e.message),
   });
 
-  // Auto-scroll
+  const isLoading = status === "submitted" || status === "streaming";
+
+  // Track whether the user is pinned to the bottom
+  const onScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setAtBottom(el.scrollHeight - el.scrollTop - el.clientHeight < 120);
+  }, []);
+
+  const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
+    const el = scrollRef.current;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior });
+  }, []);
+
+  // Auto-scroll only while pinned to the bottom (never yank the page away from a reader)
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+    if (atBottom) scrollToBottom(isLoading ? "auto" : "smooth");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages, status]);
 
-  // Focus composer
+  useLayoutEffect(() => {
+    scrollToBottom("auto");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [threadId]);
+
+  // Auto-grow composer
+  const autoGrow = useCallback(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
+  }, []);
+
   useEffect(() => {
-    textareaRef.current?.focus();
-  }, [threadId, status]);
+    autoGrow();
+  }, [input, autoGrow]);
 
   // Persist new messages once they finish streaming
   useEffect(() => {
@@ -305,11 +393,11 @@ function ChatWindow({
     })();
   }, [messages, status, threadId, userId]);
 
-  const submit = async (e?: React.FormEvent) => {
-    e?.preventDefault();
-    const text = input.trim();
-    if (!text || status === "streaming" || status === "submitted") return;
+  const send = async (raw: string) => {
+    const text = raw.trim();
+    if (!text || isLoading) return;
     setInput("");
+    setAtBottom(true);
     if (!hadUserMessageRef.current) {
       hadUserMessageRef.current = true;
       onFirstUserMessage(text);
@@ -317,9 +405,23 @@ function ChatWindow({
     await sendMessage({ text });
   };
 
-  const isLoading = status === "submitted" || status === "streaming";
+  const submit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
+    await send(input);
+  };
+
+  const copyMessage = async (id: string, text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId((c) => (c === id ? null : c)), 1500);
+    } catch {
+      toast.error("Couldn't copy");
+    }
+  };
 
   const [speakingId, setSpeakingId] = useState<string | null>(null);
+  const [loadingVoiceId, setLoadingVoiceId] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const speakMessage = async (id: string, text: string) => {
@@ -332,7 +434,7 @@ function ChatWindow({
         setSpeakingId(null);
         return;
       }
-      setSpeakingId(id);
+      setLoadingVoiceId(id);
       const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tts`, {
         method: "POST",
         headers: {
@@ -359,10 +461,13 @@ function ChatWindow({
         URL.revokeObjectURL(url);
       };
       await audio.play();
+      setLoadingVoiceId(null);
+      setSpeakingId(id);
     } catch (e) {
       console.error("tts error", e);
       toast.error(e instanceof Error ? e.message : "Voice playback failed");
       setSpeakingId(null);
+      setLoadingVoiceId(null);
     }
   };
 
@@ -370,18 +475,34 @@ function ChatWindow({
 
   return (
     <>
-      <div ref={scrollRef} className="flex-1 overflow-y-auto overflow-x-hidden">
-        <div className="max-w-3xl mx-auto px-3 sm:px-4 py-6 sm:py-8 space-y-6 w-full">
+      <div
+        ref={scrollRef}
+        onScroll={onScroll}
+        className="relative flex-1 overflow-y-auto overflow-x-hidden overscroll-contain [-webkit-overflow-scrolling:touch]"
+      >
+        <div className="max-w-3xl mx-auto px-3 sm:px-4 py-5 sm:py-8 space-y-5 sm:space-y-6 w-full">
           {messages.length === 0 && (
-            <div className="text-center py-16 space-y-3">
+            <div className="text-center py-10 sm:py-16 space-y-3">
               <div className="mx-auto h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center animate-pulse">
                 <Sparkles className="h-8 w-8 text-primary" />
               </div>
-              <h2 className="text-2xl font-bold">Ready for class, Master?</h2>
-              <p className="text-muted-foreground max-w-md mx-auto px-2">
-                Say hi to start. I'll ask what degree you want and what college to base it on,
-                then teach the entire program lesson by lesson.
+              <h2 className="text-xl sm:text-2xl font-bold">Ready for class, Master?</h2>
+              <p className="text-muted-foreground max-w-md mx-auto px-2 text-sm sm:text-base">
+                Tap a starter below or say hi. I'll ask what degree you want and what college to
+                base it on, then teach the entire program lesson by lesson.
               </p>
+              <div className="flex flex-col gap-2 pt-2 max-w-md mx-auto">
+                {STARTERS.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => void send(s)}
+                    className="text-left text-sm rounded-xl border border-primary/30 bg-primary/5 hover:bg-primary/10 active:scale-[0.99] transition px-4 py-3"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
@@ -390,8 +511,8 @@ function ChatWindow({
               const text = m.parts.map((p) => (p.type === "text" ? p.text : "")).join("");
               return (
                 <div key={m.id} className="flex justify-end">
-                  <div className="max-w-[85%] rounded-2xl bg-primary text-primary-foreground px-4 py-2.5 shadow-lg shadow-primary/20">
-                    <div className="whitespace-pre-wrap break-words">{text}</div>
+                  <div className="max-w-[88%] sm:max-w-[85%] rounded-2xl bg-primary text-primary-foreground px-4 py-2.5 shadow-lg shadow-primary/20">
+                    <div className="whitespace-pre-wrap break-words text-[15px] leading-relaxed">{text}</div>
                   </div>
                 </div>
               );
@@ -401,12 +522,16 @@ function ChatWindow({
               .join("\n")
               .trim();
             const isSpeaking = speakingId === m.id;
+            const isVoiceLoading = loadingVoiceId === m.id;
             return (
               <div key={m.id} className="space-y-3 group animate-fade-in">
                 {m.parts.map((p, i) => {
                   if (p.type === "text") {
                     return (
-                      <div key={i} className="prose prose-sm dark:prose-invert max-w-none break-words">
+                      <div
+                        key={i}
+                        className="prose prose-sm sm:prose-base dark:prose-invert max-w-none break-words prose-pre:overflow-x-auto prose-pre:text-xs prose-img:rounded-xl prose-headings:scroll-mt-16 [&_table]:block [&_table]:overflow-x-auto [&_table]:whitespace-nowrap"
+                      >
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm]}
                           components={{
@@ -415,7 +540,7 @@ function ChatWindow({
                                 {...props}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-primary underline hover:opacity-80"
+                                className="text-primary underline hover:opacity-80 break-all"
                               />
                             ),
                           }}
@@ -435,10 +560,11 @@ function ChatWindow({
                           <img
                             src={output.dataUrl}
                             alt={output.prompt ?? "Generated lesson image"}
+                            loading="lazy"
                             className="w-full h-auto"
                           />
                           {output.prompt && (
-                            <figcaption className="text-xs text-muted-foreground px-3 py-2">
+                            <figcaption className="text-xs text-muted-foreground px-3 py-2 line-clamp-3">
                               {output.prompt}
                             </figcaption>
                           )}
@@ -461,17 +587,31 @@ function ChatWindow({
                   return null;
                 })}
                 {assistantText && (
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <button
                       type="button"
                       onClick={() => speakMessage(m.id, assistantText)}
-                      className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary transition-all hover:scale-105"
+                      className="inline-flex items-center gap-1.5 text-xs px-3 h-9 rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/10 text-primary transition-all active:scale-95"
                       aria-label={isSpeaking ? "Stop voice" : "Play professor voice"}
                     >
-                      {isSpeaking ? (
+                      {isVoiceLoading ? (
+                        <><Loader2 className="h-3.5 w-3.5 animate-spin" /> Loading voice…</>
+                      ) : isSpeaking ? (
                         <><Pause className="h-3.5 w-3.5" /> Stop</>
                       ) : (
                         <><Play className="h-3.5 w-3.5" /> Play professor voice</>
+                      )}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => copyMessage(m.id, assistantText)}
+                      className="inline-flex items-center gap-1.5 text-xs px-3 h-9 rounded-full border border-border bg-muted/40 hover:bg-muted text-muted-foreground transition-all active:scale-95"
+                      aria-label="Copy lesson text"
+                    >
+                      {copiedId === m.id ? (
+                        <><Check className="h-3.5 w-3.5" /> Copied</>
+                      ) : (
+                        <><Copy className="h-3.5 w-3.5" /> Copy</>
                       )}
                     </button>
                   </div>
@@ -492,29 +632,80 @@ function ChatWindow({
         </div>
       </div>
 
-      <form onSubmit={submit} className="border-t border-border bg-card/80 backdrop-blur">
-        <div className="max-w-3xl mx-auto p-3 sm:p-4 flex gap-2 items-end">
-          <Textarea
-            ref={textareaRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Type YES to begin, or ask anything…"
-            rows={1}
-            className="resize-none min-h-[44px] max-h-40 flex-1 min-w-0"
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                void submit();
-              }
-            }}
-            disabled={isLoading}
-          />
-          <Button type="submit" size="icon" disabled={isLoading || !input.trim()} className="shrink-0">
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-          </Button>
+      {/* Jump to latest */}
+      {!atBottom && (
+        <button
+          type="button"
+          onClick={() => { setAtBottom(true); scrollToBottom(); }}
+          aria-label="Jump to latest message"
+          className="absolute left-1/2 -translate-x-1/2 bottom-32 z-20 h-10 px-4 rounded-full bg-card/95 border border-primary/30 shadow-lg text-xs text-primary flex items-center gap-1.5 backdrop-blur active:scale-95"
+        >
+          <ArrowDown className="h-4 w-4" /> Latest
+        </button>
+      )}
+
+      <form
+        onSubmit={submit}
+        className="border-t border-border bg-card/90 backdrop-blur shrink-0"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
+        <div className="max-w-3xl mx-auto px-3 sm:px-4 pt-2 pb-3 space-y-2">
+          {/* One-tap quick actions — no typing needed on phone */}
+          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {QUICK_ACTIONS.map((q) => (
+              <button
+                key={q}
+                type="button"
+                disabled={isLoading}
+                onClick={() => void send(q)}
+                className="shrink-0 text-xs h-9 px-3 rounded-full border border-primary/30 bg-primary/5 text-primary hover:bg-primary/10 disabled:opacity-40 active:scale-95 transition whitespace-nowrap"
+              >
+                {q}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-2 items-end">
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Type YES to begin, or ask anything…"
+              rows={1}
+              enterKeyHint="send"
+              inputMode="text"
+              className="flex-1 min-w-0 resize-none rounded-2xl border border-input bg-background px-4 py-3 text-base leading-snug min-h-[48px] max-h-40 outline-none focus-visible:ring-2 focus-visible:ring-ring placeholder:text-muted-foreground"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  void submit();
+                }
+              }}
+            />
+            {isLoading ? (
+              <Button
+                type="button"
+                size="icon"
+                variant="outline"
+                onClick={() => stop()}
+                aria-label="Stop generating"
+                className="shrink-0 h-12 w-12 rounded-2xl"
+              >
+                <Square className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                size="icon"
+                disabled={!input.trim()}
+                aria-label="Send message"
+                className="shrink-0 h-12 w-12 rounded-2xl"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
         </div>
       </form>
     </>
   );
 }
-

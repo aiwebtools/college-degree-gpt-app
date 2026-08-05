@@ -78,10 +78,10 @@ const Hero: React.FC = () => {
           </div>
         </AnimatedSection>
         
-        <AnimatedSection animation="fade-in-up" delay={0.2} className="mt-8 space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-center">
+        <AnimatedSection animation="fade-in-up" delay={0.2} className="mt-8 space-y-3 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-stretch md:items-center w-full">
           <Button 
             size="lg" 
-            className="rounded-full px-8 py-6 text-base font-semibold bg-red-500 text-white hover:bg-red-600 border border-red-400 shadow-lg shadow-red-500/20 w-full md:w-auto"
+            className="rounded-full px-5 sm:px-8 py-6 text-sm sm:text-base font-semibold leading-tight whitespace-normal text-center h-auto min-h-[52px] bg-red-500 text-white hover:bg-red-600 border border-red-400 shadow-lg shadow-red-500/20 w-full md:w-auto"
             onClick={handleInternalChat}
           >
             USE COLLEGE DEGREE GPT (IN-SITE AI)
@@ -89,7 +89,7 @@ const Hero: React.FC = () => {
           <Button 
             size="lg" 
             variant="outline"
-            className="rounded-full px-8 py-6 text-base font-semibold border-white text-white hover:bg-white/20 w-full md:w-auto"
+            className="rounded-full px-5 sm:px-8 py-6 text-sm sm:text-base font-semibold leading-tight whitespace-normal text-center h-auto min-h-[52px] border-white text-white hover:bg-white/20 w-full md:w-auto"
             onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}
           >
             CHATGPT CUSTOM GPT VERSION
