@@ -233,7 +233,7 @@ export default function Chat() {
       </aside>
 
       {/* Main */}
-      <main className="flex-1 flex flex-col min-w-0 w-full">
+      <main className="relative flex-1 flex flex-col min-w-0 w-full">
         {/* Mobile top bar */}
         <div
           className="md:hidden flex items-center gap-2 px-2 py-2 border-b border-border bg-card/90 backdrop-blur shrink-0"
