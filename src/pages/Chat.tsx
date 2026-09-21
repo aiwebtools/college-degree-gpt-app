@@ -5,6 +5,7 @@ import { DefaultChatTransport, type UIMessage } from "ai";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { supabase } from "@/integrations/supabase/client";
+import PageMeta from "@/components/PageMeta";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import {
@@ -155,6 +156,12 @@ export default function Chat() {
 
   return (
     <div className="h-[100dvh] flex bg-background text-foreground overflow-hidden">
+      <PageMeta
+        title="Free AI Class Chat — Learn Any Degree | College Degree GPT"
+        description="Start a free class with your AI professor. Any college degree, course, or lesson taught step by step at no cost."
+        path="/chat"
+        noindex
+      />
       <h1 className="sr-only">College Degree GPT — Free AI Professor Virtual Classroom</h1>
       {/* Magical background */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
