@@ -66,7 +66,42 @@ Deno.serve(async (req) => {
     }
 
     const body = await req.json();
-    const messages: UIMessage[] = Array.isArray(body?.messages) ? body.messages : [];
+    const rawMessages: UIMessage[] = Array.isArray(body?.messages) ? body.messages : [];
+
+    // Base64 lesson images and long transcripts blow past the model's context window.
+    // Strip image payloads out of history and keep only the most recent turns.
+    const MAX_HISTORY_MESSAGES = 24;
+    const MAX_TEXT_CHARS = 6000;
+
+    const sanitize = (msg: any) => {
+      const parts = Array.isArray(msg?.parts) ? msg.parts : [];
+      const cleaned = parts
+        .map((part: any) => {
+          if (part?.type === "text" && typeof part.text === "string") {
+            return part.text.length > MAX_TEXT_CHARS
+              ? { ...part, text: `${part.text.slice(0, MAX_TEXT_CHARS)}\n\n[…earlier lesson text trimmed…]` }
+              : part;
+          }
+          if (typeof part?.type === "string" && part.type.startsWith("tool-")) {
+            const output = part.output ?? part.result;
+            if (output && typeof output === "object" && (output as any).dataUrl) {
+              return {
+                ...part,
+                output: { generated: true, prompt: String((output as any).prompt ?? "").slice(0, 300) },
+                result: undefined,
+              };
+            }
+            return part;
+          }
+          if (part?.type === "reasoning") return null;
+          return part;
+        })
+        .filter(Boolean);
+      return { ...msg, parts: cleaned.length ? cleaned : [{ type: "text", text: "" }] };
+    };
+
+    const trimmed = rawMessages.slice(-MAX_HISTORY_MESSAGES);
+    const messages: UIMessage[] = trimmed.map(sanitize) as UIMessage[];
 
     const initialRunId = getLovableAiGatewayRunId(req);
     const runIdFetch = createLovableAiGatewayRunIdFetch(initialRunId);
