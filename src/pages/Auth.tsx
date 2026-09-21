@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import logo from "@/assets/college-degree-gpt-logo.png";
+import PageMeta from "@/components/PageMeta";
 
 export default function Auth() {
   const navigate = useNavigate();

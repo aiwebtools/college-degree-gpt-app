@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import PageMeta from "@/components/PageMeta";
 
 const NotFound = () => {
   const location = useLocation();
