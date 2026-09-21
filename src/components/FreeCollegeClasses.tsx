@@ -104,8 +104,8 @@ const FreeCollegeClasses: React.FC = () => {
           {subjects.map((s, i) => (
             <AnimatedSection key={s.title} animation="fade-in-up" delay={0.05 * i} className="h-full">
               <GlassMorphism className="h-full p-6 card-hover">
-                <h3 className="text-xl font-semibold mb-2 text-white">{s.title}</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">{s.topics}</p>
+                <h3 className="text-xl font-semibold mb-2 text-gray-900">{s.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{s.topics}</p>
               </GlassMorphism>
             </AnimatedSection>
           ))}
@@ -128,12 +128,12 @@ const FreeCollegeClasses: React.FC = () => {
 
           <AnimatedSection animation="fade-in-left" delay={0.2}>
             <GlassMorphism className="p-6 md:p-8">
-              <h3 className="heading text-2xl md:text-3xl mb-4 text-white">Questions People Ask</h3>
+              <h3 className="heading text-2xl md:text-3xl mb-4 text-gray-900">Questions People Ask</h3>
               <div className="space-y-6">
                 {faqs.map((f) => (
                   <div key={f.q}>
-                    <h4 className="font-semibold text-red-400 mb-1">{f.q}</h4>
-                    <p className="text-gray-300 text-sm leading-relaxed">{f.a}</p>
+                    <h4 className="font-semibold text-red-600 mb-1">{f.q}</h4>
+                    <p className="text-gray-700 text-sm leading-relaxed">{f.a}</p>
                   </div>
                 ))}
               </div>
