@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Features from '@/components/Features';
 import HowItWorks from '@/components/HowItWorks';
+import FreeCollegeClasses from '@/components/FreeCollegeClasses';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
 import SEOHelpers from '@/components/SEOHelpers';
@@ -39,8 +40,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <PageMeta
-        title="Free College Education — No Cost | College Degree GPT"
-        description="Free college education at no cost. A free AI professor teaches any college degree, course, or lesson — zero tuition, zero debt."
+        title="Free College Classes Online — No Cost | College Degree GPT"
+        description="Take free college classes online in any subject. A free AI professor teaches full courses lesson by lesson — no tuition, no fees, no student debt."
         path="/"
       />
       <SEOHelpers />
@@ -48,6 +49,7 @@ const Index = () => {
       <main className="rebellion-theme">
         <Hero />
         <HowItWorks />
+        <FreeCollegeClasses />
         <CTA />
         <Features />
       </main>
