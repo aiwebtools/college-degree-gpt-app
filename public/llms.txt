@@ -1,0 +1,7 @@
+# College Degree GPT
+
+> Free college education at no cost: an AI professor that teaches any college degree, course, or lesson, with zero tuition and zero debt. Learning is self-taught and not accredited.
+
+## Pages
+
+- [Home](/): What College Degree GPT is, how the free AI professor teaches full degree programs, and how to start a class at no cost.

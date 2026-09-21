@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /auth
+Disallow: /chat
+
+Sitemap: https://college-degree-gpt.lovable.app/sitemap.xml
