@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
@@ -25,10 +25,28 @@ import {
   Copy,
   Check,
   Square,
+  ExternalLink,
 } from "lucide-react";
 import type { Session } from "@supabase/supabase-js";
+import { createTimePortalEffect } from "@/utils/timeEffects";
 
 type Thread = { id: string; title: string; updated_at: string };
+
+const CHATGPT_VERSION_URL = "https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt";
+
+const CREDIT_FALLBACK_COPY =
+  "Sorry, community credits have run out for today. Please try the ChatGPT version of College Degree GPT while credits refresh.";
+
+const isCreditFallbackError = (message: string) => {
+  const normalized = message.toLowerCase();
+  return normalized.includes("credits_exhausted") || (
+    normalized.includes("credit") &&
+    /(run out|insufficient|limit|quota|billing|balance|spending cap)/.test(normalized)
+  );
+};
+
+const stripCreditPrefix = (message: string) =>
+  message.replace(/^credits_exhausted:\s*/i, "").trim();
 
 export default function Chat() {
   const { threadId } = useParams<{ threadId?: string }>();
@@ -320,26 +338,45 @@ function ChatWindow({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [atBottom, setAtBottom] = useState(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [creditFallbackMessage, setCreditFallbackMessage] = useState<string | null>(null);
   const persistedIdsRef = useRef<Set<string>>(new Set(initialMessages.map((m) => m.id)));
   const hadUserMessageRef = useRef<boolean>(
     initialMessages.some((m) => m.role === "user"),
   );
 
-  const transport = useRef(
-    new DefaultChatTransport({
+  const transport = useMemo(
+    () => new DefaultChatTransport({
       api: `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`,
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
         apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
       },
+      fetch: async (input: RequestInfo | URL, init?: RequestInit) => {
+        const response = await fetch(input, init);
+        if (response.status === 402 || response.status === 403 || response.status === 429) {
+          const text = await response.clone().text();
+          if (response.status === 402 || isCreditFallbackError(text)) {
+            setCreditFallbackMessage(stripCreditPrefix(text) || CREDIT_FALLBACK_COPY);
+          }
+        }
+        return response;
+      },
     }),
-  ).current;
+    [],
+  );
 
   const { messages, sendMessage, status, error, stop } = useChat({
     id: threadId,
     messages: initialMessages,
     transport,
-    onError: (e) => toast.error(e.message),
+    onError: (e) => {
+      if (isCreditFallbackError(e.message)) {
+        setCreditFallbackMessage(stripCreditPrefix(e.message) || CREDIT_FALLBACK_COPY);
+        toast.error("Community credits have run out for today.");
+        return;
+      }
+      toast.error(e.message);
+    },
   });
 
   const isLoading = status === "submitted" || status === "streaming";
@@ -404,6 +441,7 @@ function ChatWindow({
   const send = async (raw: string) => {
     const text = raw.trim();
     if (!text || isLoading) return;
+    setCreditFallbackMessage(null);
     setInput("");
     setAtBottom(true);
     if (!hadUserMessageRef.current) {
@@ -480,6 +518,10 @@ function ChatWindow({
   };
 
   useEffect(() => () => { audioRef.current?.pause(); }, []);
+
+  const openChatGptVersion = () => {
+    createTimePortalEffect(CHATGPT_VERSION_URL, "College Degree GPT ChatGPT Version (External)");
+  };
 
   return (
     <>
@@ -634,8 +676,24 @@ function ChatWindow({
             </div>
           )}
 
-          {error && (
-            <div className="text-destructive text-sm">Error: {error.message}</div>
+          {(creditFallbackMessage || (error && !isCreditFallbackError(error.message))) && (
+            <div className={creditFallbackMessage ? "rounded-2xl border border-amber-300 bg-amber-100/90 p-4 text-amber-950 shadow-lg" : "text-destructive text-sm"}>
+              {creditFallbackMessage ? (
+                <div className="space-y-3">
+                  <p className="text-sm font-semibold">{creditFallbackMessage}</p>
+                  <Button
+                    type="button"
+                    size="sm"
+                    onClick={openChatGptVersion}
+                    className="rounded-full bg-red-500 hover:bg-red-600 text-white"
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" /> Open College Degree GPT (CHATGPT VERSION / EXTERNAL)
+                  </Button>
+                </div>
+              ) : (
+                <>Error: {error?.message}</>
+              )}
+            </div>
           )}
         </div>
       </div>

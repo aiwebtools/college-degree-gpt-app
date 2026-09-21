@@ -163,9 +163,9 @@ const FreeCollegeClasses: React.FC = () => {
               size="lg"
               variant="outline"
               className="rounded-full px-8 py-6 text-base w-full md:w-auto border-white text-white hover:bg-white/20"
-              onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Version (External)')}
+              onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'College Degree GPT ChatGPT Version (External)')}
             >
-              ChatGPT Version (External)
+              CHATGPT VERSION / EXTERNAL
             </Button>
           </div>
         </AnimatedSection>

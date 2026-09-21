@@ -90,26 +90,26 @@ const Hero: React.FC = () => {
             size="lg" 
             variant="outline"
             className="rounded-full px-5 sm:px-8 py-6 text-sm sm:text-base font-semibold leading-tight whitespace-normal text-center h-auto min-h-[52px] border-white text-white hover:bg-white/20 w-full md:w-auto"
-            onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Version (External)')}
+            onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'College Degree GPT ChatGPT Version (External)')}
           >
-            CHATGPT VERSION (EXTERNAL)
+            CHATGPT VERSION / EXTERNAL
           </Button>
           <Button 
             size="lg" 
             variant="outline" 
             className="rounded-full px-8 py-6 text-base border-white text-white hover:bg-white/20 font-semibold w-full md:w-auto"
-            onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'Explore AI Web Tools')}
+            onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'Explore AI Web Tools (External Site)')}
           >
-            Explore AI Web Tools
+            Explore AI Web Tools (EXTERNAL SITE)
           </Button>
           <Button 
             size="lg" 
             variant="secondary" 
             className="rounded-full px-8 py-6 text-base font-semibold flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white w-full md:w-auto border border-blue-500"
-            onClick={handleExternalLink('https://docs.google.com/document/u/0/d/1TpVG9pncULpkHy9IhAjyXIgScyTW703Lf-IQKkXeJs4/pub?pli=1', 'Save This Prompt For Future Learning')}
+            onClick={handleExternalLink('https://docs.google.com/document/u/0/d/1TpVG9pncULpkHy9IhAjyXIgScyTW703Lf-IQKkXeJs4/pub?pli=1', 'Save This Prompt For Future Learning (External Document)')}
           >
             <Download size={18} />
-            Save This Prompt For Future Learning
+            Save This Prompt For Future Learning (EXTERNAL DOCUMENT)
           </Button>
         </AnimatedSection>
         

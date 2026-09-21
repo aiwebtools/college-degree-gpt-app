@@ -1,12 +1,56 @@
 import { convertToModelMessages, streamText, stepCountIs, tool, type UIMessage } from "npm:ai";
+import { createOpenAI } from "npm:@ai-sdk/openai";
 import { z } from "npm:zod";
-import { createLovableAiGatewayProvider } from "../_shared/ai-gateway.ts";
+import {
+  createLovableAiGatewayRunIdFetch,
+  getLovableAiGatewayResponseHeaders,
+  getLovableAiGatewayRunId,
+  withLovableAiGatewayRunIdHeader,
+} from "../_shared/ai-gateway.ts";
 import { SYSTEM_PROMPT } from "./system-prompt.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
+};
+
+const CREDIT_FALLBACK_MESSAGE =
+  "CREDITS_EXHAUSTED: Sorry, community credits have run out for today. Please try the ChatGPT version of College Degree GPT while credits refresh.";
+
+const getErrorStatus = (error: unknown) => {
+  if (!error || typeof error !== "object") return undefined;
+  const err = error as Record<string, unknown>;
+  const status = err.status ?? err.statusCode ?? err.code;
+  return typeof status === "number" ? status : undefined;
+};
+
+const getErrorText = (error: unknown) => {
+  if (error instanceof Error) return error.message;
+  if (typeof error === "string") return error;
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return "";
+  }
+};
+
+const isCreditOrLimitError = (status: number | undefined, text: string) => {
+  const normalized = text.toLowerCase();
+  return (
+    status === 402 ||
+    ((status === 403 || status === 429) &&
+      /(credit|credits|balance|limit|quota|billing|spending cap|insufficient)/.test(normalized))
+  );
+};
+
+const safeGatewayErrorMessage = (error: unknown) => {
+  const status = getErrorStatus(error);
+  const text = getErrorText(error);
+  if (isCreditOrLimitError(status, text)) return CREDIT_FALLBACK_MESSAGE;
+  if (status === 429) return "Lovable AI is receiving too many requests right now. Please wait a moment and try again.";
+  if (status && status >= 500) return "Lovable AI is temporarily unavailable. Please try again shortly.";
+  return text || "The AI lesson could not finish. Please try again.";
 };
 
 Deno.serve(async (req) => {
@@ -24,8 +68,18 @@ Deno.serve(async (req) => {
     const body = await req.json();
     const messages: UIMessage[] = Array.isArray(body?.messages) ? body.messages : [];
 
-    const gateway = createLovableAiGatewayProvider(apiKey);
-    const model = gateway("google/gemini-3-flash-preview");
+    const initialRunId = getLovableAiGatewayRunId(req);
+    const runIdFetch = createLovableAiGatewayRunIdFetch(initialRunId);
+    const lovable = createOpenAI({
+      baseURL: "https://ai.gateway.lovable.dev/v1",
+      apiKey,
+      headers: {
+        "Lovable-API-Key": apiKey,
+        "X-Lovable-AIG-SDK": "vercel-ai-sdk",
+      },
+      fetch: runIdFetch.fetch,
+    });
+    const model = lovable.responses("openai/gpt-6-astra");
 
     const modelMessages = await convertToModelMessages(messages);
 
@@ -41,25 +95,29 @@ Deno.serve(async (req) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${apiKey}`,
+              "Lovable-API-Key": apiKey,
+              "X-Lovable-AIG-SDK": "fetch",
             },
             body: JSON.stringify({
-              model: "openai/gpt-image-2",
-              prompt,
+              model: "openai/gpt-image-2.5-sunburst",
+              prompt: `${prompt}\n\nVisual style: magical, inspiring, clear educational illustration. Include a small non-readable College Degree GPT / AI Web Tools logo mark in one corner. No readable text in the image.`,
               size: "1024x1024",
-              quality: "low",
               n: 1,
             }),
           });
           if (!res.ok) {
             const txt = await res.text();
             console.error("image gen failed", res.status, txt);
+            if (isCreditOrLimitError(res.status, txt)) return { error: CREDIT_FALLBACK_MESSAGE };
             return { error: `Image generation failed (${res.status})` };
           }
           const data = await res.json();
-          const b64 = data?.data?.[0]?.b64_json;
-          if (!b64) return { error: "No image returned" };
-          return { dataUrl: `data:image/png;base64,${b64}`, prompt };
+          const image = data?.data?.[0];
+          const b64 = image?.b64_json;
+          const url = image?.url;
+          if (b64) return { dataUrl: `data:image/png;base64,${b64}`, prompt };
+          if (url) return { dataUrl: url, prompt };
+          return { error: "No image returned" };
         } catch (e) {
           console.error("image gen exception", e);
           return { error: e instanceof Error ? e.message : String(e) };
@@ -74,14 +132,33 @@ Deno.serve(async (req) => {
       messages: modelMessages,
       tools: { generate_image: generateImage },
       stopWhen: stepCountIs(20),
+      providerOptions: {
+        openai: {
+          forceReasoning: true,
+          reasoningEffort: "medium",
+          reasoningSummary: "auto",
+          store: false,
+          include: ["reasoning.encrypted_content"],
+        },
+      },
     });
 
-    return result.toUIMessageStreamResponse({ headers: corsHeaders });
+    const response = result.toUIMessageStreamResponse({
+      sendReasoning: true,
+      headers: getLovableAiGatewayResponseHeaders(undefined, {
+        ...corsHeaders,
+        ...(initialRunId ? { "X-Lovable-AIG-Run-ID": initialRunId } : {}),
+      }),
+      onError: safeGatewayErrorMessage,
+    });
+
+    return withLovableAiGatewayRunIdHeader(response, runIdFetch, corsHeaders);
   } catch (err) {
     console.error("chat error", err);
-    const msg = err instanceof Error ? err.message : String(err);
+    const msg = safeGatewayErrorMessage(err);
+    const status = msg.startsWith("CREDITS_EXHAUSTED") ? 402 : 500;
     return new Response(JSON.stringify({ error: msg }), {
-      status: 500,
+      status,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
