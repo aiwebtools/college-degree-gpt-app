@@ -7,6 +7,7 @@ import HowItWorks from '@/components/HowItWorks';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
 import SEOHelpers from '@/components/SEOHelpers';
+import PageMeta from '@/components/PageMeta';
 
 const Index = () => {
   // Ensure smooth scrolling for anchor links
@@ -37,6 +38,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <PageMeta
+        title="Free College Education — No Cost | College Degree GPT"
+        description="Free college education at no cost. A free AI professor teaches any college degree, course, or lesson — zero tuition, zero debt."
+        path="/"
+      />
       <SEOHelpers />
       <Navbar />
       <main className="rebellion-theme">
