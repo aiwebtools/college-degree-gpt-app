@@ -42,20 +42,20 @@ const Footer: React.FC = () => {
                 <a href="#" onClick={handleExternalLink('https://docs.google.com/document/d/1TpVG9pncULpkHy9IhAjyXIgScyTW703Lf-IQKkXeJs4/edit?tab=t.0', 'Open Source College Degree GPT Prompt')} className="text-muted-foreground hover:text-foreground transition-colors">Open Source College Degree GPT Prompt</a>
               </li>
               <li>
-                <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt', 'Learn Any Course GPT')} className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Course GPT</a>
+                <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt', 'Learn Any Course GPT')} className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Course GPT (ChatGPT Version)</a>
               </li>
               <li>
-                <a href="#" onClick={handleExternalLink('https://learnanyskillgpt.lovable.app/', 'Learn Any Skill GPT')} className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Skill GPT</a>
+                <a href="#" onClick={handleExternalLink('https://learnanyskillgpt.lovable.app/', 'Learn Any Skill GPT')} className="text-muted-foreground hover:text-foreground transition-colors">Learn Any Skill GPT (External Site)</a>
               </li>
               <li>
                 <a href="#" onClick={handleExternalLink('https://docs.google.com/document/d/1qtDKo3XN_EsspgrQD72Cpq2qh83H5xSd/edit?usp=sharing&ouid=116187507271950139405&rtpof=true&sd=true', 'Free AI Tools List Download')} className="text-muted-foreground hover:text-foreground transition-colors">Free AI Tools List Download</a>
               </li>
               <li>
-                <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-cUahkn19i-quiz-maker-ai', 'Quiz Maker AI Tool')} className="text-muted-foreground hover:text-foreground transition-colors">Quiz Maker AI Tool</a>
+                <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-cUahkn19i-quiz-maker-ai', 'Quiz Maker AI Tool')} className="text-muted-foreground hover:text-foreground transition-colors">Quiz Maker AI Tool (ChatGPT Version)</a>
               </li>
               <li className="pt-2">
                 <Button variant="outline" size="sm" className="w-full" onClick={handleExternalLink('https://www.coursera.org/google-certificates/data-analytics-certificate?action=enroll&gwg_campaign_id=null&gwg_exp=null&utm_campaign=sou--google__med--hpp__cam--2025-gwg-brand__geo--US__con--join-one-million-gcc-grads__ter--null&utm_medium=institutions&utm_source=google', 'Free Google AI Certificate Program')}>
-                  Free Google AI Certificate Program
+                  Free Google AI Certificate Program (External)
                 </Button>
               </li>
               <li className="pt-2">
@@ -91,7 +91,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="pt-2">
                 <Button variant="outline" size="sm" className="w-full" onClick={handleExternalLink('https://chatgpt.com/g/g-cUahkn19i-quiz-maker-ai', 'QUIZ MAKER AI TOOL')}>
-                  QUIZ MAKER AI TOOL
+                  QUIZ MAKER AI TOOL (CHATGPT VERSION)
                 </Button>
               </li>
             </ul>

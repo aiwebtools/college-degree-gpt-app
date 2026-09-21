@@ -61,8 +61,8 @@ const Navbar: React.FC = () => {
               <Home className="h-4 w-4" />
               AiWebTools Home
             </a>
-            <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt', 'Learn Any Course GPT')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT</a>
-            <a href="#" onClick={handleExternalLink('https://learnanyskillgpt.lovable.app/', 'Learn Any Skill GPT')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT</a>
+            <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt', 'Learn Any Course GPT')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT (ChatGPT Version)</a>
+            <a href="#" onClick={handleExternalLink('https://learnanyskillgpt.lovable.app/', 'Learn Any Skill GPT')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT (External Site)</a>
             <a href="#" onClick={handleExternalLink('https://talk-to-history-gpt.lovable.app/', 'Talk to History GPT')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Talk to History GPT</a>
           </nav>
           
@@ -73,10 +73,10 @@ const Navbar: React.FC = () => {
             </Button>
             <div className="hidden md:flex items-center gap-2">
               <Button size="sm" className="rounded-full px-6 bg-red-500 hover:bg-red-600 text-white" onClick={handleInternalChat}>
-                USE COLLEGE DEGREE GPT (IN-SITE AI)
+                USE COLLEGE DEGREE GPT (IN-SITE VERSION)
               </Button>
-              <Button size="sm" variant="outline" className="rounded-full px-6" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}>
-                CHATGPT CUSTOM GPT VERSION
+              <Button size="sm" variant="outline" className="rounded-full px-6" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Version (External)')}>
+                CHATGPT VERSION (EXTERNAL)
               </Button>
             </div>
             <button 
@@ -119,10 +119,10 @@ const Navbar: React.FC = () => {
               More AI Tools
             </a>
             <Button size="sm" className="w-full h-12 rounded-full mt-2 text-xs sm:text-sm whitespace-normal leading-tight bg-red-500 hover:bg-red-600 text-white" onClick={handleInternalChat}>
-              USE COLLEGE DEGREE GPT (IN-SITE AI)
+              USE COLLEGE DEGREE GPT (IN-SITE VERSION)
             </Button>
-            <Button size="sm" variant="outline" className="w-full h-12 rounded-full mt-2 text-xs sm:text-sm whitespace-normal leading-tight" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}>
-              CHATGPT CUSTOM GPT VERSION
+            <Button size="sm" variant="outline" className="w-full h-12 rounded-full mt-2 text-xs sm:text-sm whitespace-normal leading-tight" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Version (External)')}>
+              CHATGPT VERSION (EXTERNAL)
             </Button>
           </div>
         )}

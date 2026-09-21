@@ -58,15 +58,15 @@ const CTA: React.FC = () => {
                 className="rounded-full px-8 py-6 text-base w-full md:w-auto bg-red-500 hover:bg-red-600 text-white"
                 onClick={handleInternalChat}
               >
-                Start Learning Now (In-Site AI)
+                Start Learning Now (In-Site Version)
               </Button>
               <Button 
                 size="lg" 
                 variant="outline" 
                 className="rounded-full px-8 py-6 text-base w-full md:w-auto"
-                onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}
+                onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Version (External)')}
               >
-                ChatGPT Custom GPT Version
+                ChatGPT Version (External)
               </Button>
               <Button 
                 size="lg" 
