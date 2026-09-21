@@ -155,6 +155,7 @@ export default function Chat() {
 
   return (
     <div className="h-[100dvh] flex bg-background text-foreground overflow-hidden">
+      <h1 className="sr-only">College Degree GPT — Free AI Professor Virtual Classroom</h1>
       {/* Magical background */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-primary/20 blur-3xl animate-pulse" />
