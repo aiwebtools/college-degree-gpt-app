@@ -57,26 +57,26 @@ const Navbar: React.FC = () => {
           
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'AiWebTools Home')} className="flex items-center gap-1.5 text-sm font-medium text-gray-900 dark:text-white hover:text-primary transition-colors">
+            <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'AiWebTools Home (External Site)')} className="flex items-center gap-1.5 text-sm font-medium text-gray-900 dark:text-white hover:text-primary transition-colors">
               <Home className="h-4 w-4" />
-              AiWebTools Home
+              AiWebTools Home (EXTERNAL SITE)
             </a>
-            <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt', 'Learn Any Course GPT')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT (ChatGPT Version)</a>
-            <a href="#" onClick={handleExternalLink('https://learnanyskillgpt.lovable.app/', 'Learn Any Skill GPT')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT (External Site)</a>
-            <a href="#" onClick={handleExternalLink('https://talk-to-history-gpt.lovable.app/', 'Talk to History GPT')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Talk to History GPT</a>
+            <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt', 'Learn Any Course GPT (ChatGPT Version / External)')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT (CHATGPT VERSION / EXTERNAL)</a>
+            <a href="#" onClick={handleExternalLink('https://learnanyskillgpt.lovable.app/', 'Learn Any Skill GPT (External Site)')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT (EXTERNAL SITE)</a>
+            <a href="#" onClick={handleExternalLink('https://talk-to-history-gpt.lovable.app/', 'Talk to History GPT (External Site)')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Talk to History GPT (EXTERNAL SITE)</a>
           </nav>
           
           {/* Mobile menu button and More AI Tools button */}
           <div className="flex items-center space-x-2">
-            <Button size="sm" variant="outline" className="rounded-full hidden md:flex items-center gap-1.5 bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100" onClick={handleExternalLink(AIWEBTOOLS_URL, 'More AI Tools')}>
-              More AI Tools <ExternalLink className="h-3.5 w-3.5" />
+            <Button size="sm" variant="outline" className="rounded-full hidden md:flex items-center gap-1.5 bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100" onClick={handleExternalLink(AIWEBTOOLS_URL, 'More AI Tools (External Site)')}>
+              More AI Tools (EXTERNAL SITE) <ExternalLink className="h-3.5 w-3.5" />
             </Button>
             <div className="hidden md:flex items-center gap-2">
               <Button size="sm" className="rounded-full px-6 bg-red-500 hover:bg-red-600 text-white" onClick={handleInternalChat}>
                 USE COLLEGE DEGREE GPT (IN-SITE VERSION)
               </Button>
-              <Button size="sm" variant="outline" className="rounded-full px-6" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Version (External)')}>
-                CHATGPT VERSION (EXTERNAL)
+              <Button size="sm" variant="outline" className="rounded-full px-6" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'College Degree GPT ChatGPT Version (External)')}>
+                CHATGPT VERSION / EXTERNAL
               </Button>
             </div>
             <button 
@@ -93,36 +93,36 @@ const Navbar: React.FC = () => {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <div className="md:hidden px-4 pt-2 pb-4 space-y-3 border-t border-gray-300 dark:border-gray-700">
-            <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'AiWebTools Home')}
+            <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'AiWebTools Home (External Site)')}
               className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-800 hover:from-blue-100 hover:to-blue-200 hover:shadow-lg hover:shadow-blue-200/50 transition-all duration-300 transform hover:scale-105 glow-blue">
               <Home className="h-5 w-5" />
-              AiWebTools Home
+              AiWebTools Home (EXTERNAL SITE)
             </a>
-            <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt', 'Learn Any Course GPT')}
+            <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt', 'Learn Any Course GPT (ChatGPT Version / External)')}
               className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-green-200 bg-gradient-to-r from-green-50 to-green-100 text-green-800 hover:from-green-100 hover:to-green-200 hover:shadow-lg hover:shadow-green-200/50 transition-all duration-300 transform hover:scale-105 glow-green">
               <BookOpen className="h-5 w-5" />
-              Learn Any Course GPT
+              Learn Any Course GPT (CHATGPT VERSION / EXTERNAL)
             </a>
-            <a href="#" onClick={handleExternalLink('https://learnanyskillgpt.lovable.app/', 'Learn Any Skill GPT')}
+            <a href="#" onClick={handleExternalLink('https://learnanyskillgpt.lovable.app/', 'Learn Any Skill GPT (External Site)')}
               className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-purple-100 text-purple-800 hover:from-purple-100 hover:to-purple-200 hover:shadow-lg hover:shadow-purple-200/50 transition-all duration-300 transform hover:scale-105 glow-purple">
               <Wrench className="h-5 w-5" />
-              Learn Any Skill GPT
+              Learn Any Skill GPT (EXTERNAL SITE)
             </a>
-            <a href="#" onClick={handleExternalLink('https://talk-to-history-gpt.lovable.app/', 'Talk to History GPT')}
+            <a href="#" onClick={handleExternalLink('https://talk-to-history-gpt.lovable.app/', 'Talk to History GPT (External Site)')}
               className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-orange-200 bg-gradient-to-r from-orange-50 to-orange-100 text-orange-800 hover:from-orange-100 hover:to-orange-200 hover:shadow-lg hover:shadow-orange-200/50 transition-all duration-300 transform hover:scale-105 glow-orange">
               <MessageCircle className="h-5 w-5" />
-              Talk to History GPT
+              Talk to History GPT (EXTERNAL SITE)
             </a>
-            <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'More AI Tools')}
+            <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'More AI Tools (External Site)')}
               className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-pink-200 bg-gradient-to-r from-pink-50 to-pink-100 text-pink-800 hover:from-pink-100 hover:to-pink-200 hover:shadow-lg hover:shadow-pink-200/50 transition-all duration-300 transform hover:scale-105 glow-pink">
               <MoreHorizontal className="h-5 w-5" />
-              More AI Tools
+              More AI Tools (EXTERNAL SITE)
             </a>
             <Button size="sm" className="w-full h-12 rounded-full mt-2 text-xs sm:text-sm whitespace-normal leading-tight bg-red-500 hover:bg-red-600 text-white" onClick={handleInternalChat}>
               USE COLLEGE DEGREE GPT (IN-SITE VERSION)
             </Button>
-            <Button size="sm" variant="outline" className="w-full h-12 rounded-full mt-2 text-xs sm:text-sm whitespace-normal leading-tight" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Version (External)')}>
-              CHATGPT VERSION (EXTERNAL)
+            <Button size="sm" variant="outline" className="w-full h-12 rounded-full mt-2 text-xs sm:text-sm whitespace-normal leading-tight" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'College Degree GPT ChatGPT Version (External)')}>
+              CHATGPT VERSION / EXTERNAL
             </Button>
           </div>
         )}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import AnimatedSection from './AnimatedSection';
 import GlassMorphism from './ui/GlassMorphism';
+import { Button } from '@/components/ui/button';
 import { createTimePortalEffect, createInternalPortalEffect } from '@/utils/timeEffects';
 
 interface StepProps {
@@ -146,12 +147,12 @@ const HowItWorks: React.FC = () => {
                 </div>
                 
                 <div className="bg-secondary/30 p-4 flex flex-wrap justify-between items-center gap-2 border-t border-border">
-                  <button onClick={handleInternalChat} className="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition-colors">
-                    Use College Degree GPT (In-Site Version)
-                  </button>
-                  <button className="border border-primary text-primary px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/10 transition-colors" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Version (External)')}>
-                    ChatGPT Version (External)
-                  </button>
+                  <Button onClick={handleInternalChat} className="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-red-600 transition-colors">
+                    Use College Degree GPT (IN-SITE VERSION)
+                  </Button>
+                  <Button variant="outline" className="border border-primary text-primary px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/10 transition-colors" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'College Degree GPT ChatGPT Version (External)')}>
+                    CHATGPT VERSION / EXTERNAL
+                  </Button>
                 </div>
               </div>
             </GlassMorphism>
