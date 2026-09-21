@@ -58,6 +58,12 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <PageMeta
+        title="Sign In — College Degree GPT | Free College Education"
+        description="Sign in to College Degree GPT to start your free, no-cost college education with an AI professor."
+        path="/auth"
+        noindex
+      />
       <div className="w-full max-w-md space-y-6 bg-card border border-border rounded-2xl p-8 shadow-xl">
         <div className="flex flex-col items-center gap-3 text-center">
           <img
