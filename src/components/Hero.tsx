@@ -26,7 +26,7 @@ const Hero: React.FC = () => {
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-liberation-night py-16 md:py-20">
       {/* SEO-optimized hidden content for search engines */}
       <div className="sr-only">
-        <h1>Free AI Tools - AI Web Tools - College Degree GPT</h1>
+        <h2>Free College Education at No Cost — Free AI Tools by AI Web Tools</h2>
         <p>Discover the best free AI tools and AI web tools. College Degree GPT is a revolutionary AI education tool that provides free college-level learning on any subject. Our AI professor helps students break free from student debt while accessing comprehensive educational content. Perfect for self-study, research, and educational purposes.</p>
         <p>Keywords: free ai tools, ai web tools, ai tools, artificial intelligence tools, educational ai, ai learning platform, student debt freedom, online education, ai professor, machine learning tools</p>
       </div>
