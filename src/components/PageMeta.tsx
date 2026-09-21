@@ -21,7 +21,14 @@ const PageMeta = ({ title, description, path, noindex }: PageMetaProps) => (
     <meta property="og:url" content={`${SITE}${path}`} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta
+      name="robots"
+      content={
+        noindex
+          ? "noindex, follow"
+          : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      }
+    />
   </Helmet>
 );
 
