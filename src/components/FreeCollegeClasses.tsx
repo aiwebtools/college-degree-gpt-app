@@ -157,15 +157,15 @@ const FreeCollegeClasses: React.FC = () => {
               className="rounded-full px-8 py-6 text-base font-semibold w-full md:w-auto bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/20"
               onClick={handleInternalChat}
             >
-              Start Your Free College Classes
+              Start Your Free College Classes (In-Site Version)
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="rounded-full px-8 py-6 text-base w-full md:w-auto border-white text-white hover:bg-white/20"
-              onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Custom GPT Version')}
+              onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'ChatGPT Version (External)')}
             >
-              ChatGPT Custom GPT Version
+              ChatGPT Version (External)
             </Button>
           </div>
         </AnimatedSection>
