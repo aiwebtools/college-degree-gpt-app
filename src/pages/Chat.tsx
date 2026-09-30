@@ -26,6 +26,9 @@ import {
   Check,
   Square,
   ExternalLink,
+  Download,
+  Printer,
+  FileText,
 } from "lucide-react";
 import type { Session } from "@supabase/supabase-js";
 import { createTimePortalEffect } from "@/utils/timeEffects";
@@ -533,8 +536,107 @@ function ChatWindow({
     createTimePortalEffect(CHATGPT_VERSION_URL, "College Degree GPT ChatGPT Version (External)");
   };
 
+  // ---- Export helpers: take the whole class with you ----
+  const exportItems = () =>
+    messages.map((m) => {
+      const texts: string[] = [];
+      const images: string[] = [];
+      for (const p of m.parts as any[]) {
+        if (p?.type === "text" && p.text) texts.push(p.text);
+        if (typeof p?.type === "string" && p.type.startsWith("tool-")) {
+          const out = p.output ?? p.result;
+          if (out?.dataUrl) images.push(out.dataUrl);
+        }
+      }
+      return { role: m.role === "user" ? "You" : "Professor (College Degree GPT)", text: texts.join("\n\n"), images };
+    });
+
+  const fileBase = () =>
+    `college-degree-gpt-class-${new Date().toISOString().slice(0, 10)}`;
+
+  const saveBlob = (content: string, type: string, name: string) => {
+    const url = URL.createObjectURL(new Blob([content], { type }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  };
+
+  const DISCLAIMER =
+    "College Degree GPT — self-taught learning. Not accredited, not formal education. https://college-degree-gpt.lovable.app";
+
+  const buildMarkdown = () =>
+    `# My College Degree GPT Class\n\n_${DISCLAIMER}_\n\n---\n\n` +
+    exportItems()
+      .map((i) => `## ${i.role}\n\n${i.text}${i.images.length ? `\n\n_[${i.images.length} lesson image(s) — see the HTML download]_` : ""}`)
+      .join("\n\n---\n\n");
+
+  const escapeHtml = (s: string) =>
+    s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+  const buildHtml = () => {
+    const body = exportItems()
+      .map(
+        (i) => `<section class="${i.role === "You" ? "you" : "prof"}"><h2>${escapeHtml(i.role)}</h2><div class="t">${escapeHtml(i.text)
+          .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')}</div>${i.images
+          .map((src) => `<img src="${src}" alt="Lesson image"/>`)
+          .join("")}</section>`,
+      )
+      .join("");
+    return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My College Degree GPT Class</title><style>body{font-family:Georgia,serif;max-width:800px;margin:2rem auto;padding:0 1rem;line-height:1.6;color:#111}h1{color:#b91c1c}.note{font-size:.85rem;color:#555;border-left:3px solid #b91c1c;padding-left:.75rem}section{border-top:1px solid #ddd;padding:1rem 0;page-break-inside:auto}section.you h2{color:#b91c1c}h2{font-size:1rem;margin:0 0 .5rem}.t{white-space:pre-wrap}img{max-width:100%;border-radius:8px;margin-top:.75rem}</style></head><body><h1>My College Degree GPT Class</h1><p class="note">${DISCLAIMER}</p>${body}</body></html>`;
+  };
+
+  const downloadMarkdown = () => {
+    if (!messages.length) return toast.error("Nothing to download yet.");
+    saveBlob(buildMarkdown(), "text/markdown;charset=utf-8", `${fileBase()}.md`);
+    toast.success("Class notes downloaded");
+  };
+  const downloadHtml = () => {
+    if (!messages.length) return toast.error("Nothing to download yet.");
+    saveBlob(buildHtml(), "text/html;charset=utf-8", `${fileBase()}.html`);
+    toast.success("Full class with images downloaded");
+  };
+  const printPdf = () => {
+    if (!messages.length) return toast.error("Nothing to save yet.");
+    const w = window.open("", "_blank");
+    if (!w) return toast.error("Allow pop-ups to save as PDF, or use the HTML download.");
+    w.document.write(buildHtml());
+    w.document.close();
+    setTimeout(() => w.print(), 600);
+  };
+  const copyAll = async () => {
+    if (!messages.length) return;
+    await navigator.clipboard.writeText(buildMarkdown());
+    toast.success("Whole class copied");
+  };
+
+  const toolBtn =
+    "shrink-0 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/15 active:scale-95 transition px-3 h-9 text-xs font-medium";
+
   return (
     <>
+      <div className="shrink-0 border-b border-border bg-card/70 backdrop-blur">
+        <div className="max-w-3xl mx-auto flex gap-2 overflow-x-auto px-3 py-2 [scrollbar-width:none]">
+          <button type="button" onClick={downloadHtml} className={toolBtn} aria-label="Download full class with images">
+            <Download className="h-3.5 w-3.5" /> Download class
+          </button>
+          <button type="button" onClick={printPdf} className={toolBtn} aria-label="Save class as PDF">
+            <Printer className="h-3.5 w-3.5" /> Save as PDF
+          </button>
+          <button type="button" onClick={downloadMarkdown} className={toolBtn} aria-label="Download notes as text">
+            <FileText className="h-3.5 w-3.5" /> Notes (.md)
+          </button>
+          <button type="button" onClick={() => void copyAll()} className={toolBtn} aria-label="Copy whole class">
+            <Copy className="h-3.5 w-3.5" /> Copy all
+          </button>
+          <button type="button" onClick={openChatGptVersion} className={toolBtn} aria-label="Open ChatGPT version">
+            <ExternalLink className="h-3.5 w-3.5" /> CHATGPT VERSION / EXTERNAL
+          </button>
+        </div>
+      </div>
       <div
         ref={scrollRef}
         onScroll={onScroll}
