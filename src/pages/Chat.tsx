@@ -141,17 +141,27 @@ export default function Chat() {
     setLoadingThread(true);
     setInitialMessages(null);
     (async () => {
-      const { data, error } = await supabase
-        .from("messages")
-        .select("id,role,parts,created_at")
-        .eq("thread_id", threadId)
-        .order("created_at", { ascending: true });
+      // Page through all rows so very long classes are never cut off
+      const PAGE = 1000;
+      const all: { id: string; role: string; parts: unknown }[] = [];
+      let error: { message: string } | null = null;
+      for (let from = 0; ; from += PAGE) {
+        const res = await supabase
+          .from("messages")
+          .select("id,role,parts,created_at")
+          .eq("thread_id", threadId)
+          .order("created_at", { ascending: true })
+          .range(from, from + PAGE - 1);
+        if (res.error) { error = res.error; break; }
+        all.push(...(res.data ?? []));
+        if (!res.data || res.data.length < PAGE) break;
+      }
       if (error) {
         toast.error(error.message);
         setInitialMessages([]);
       } else {
         setInitialMessages(
-          (data ?? []).map((m) => ({
+          all.map((m) => ({
             id: m.id,
             role: m.role as UIMessage["role"],
             parts: (m.parts as UIMessage["parts"]) ?? [],
