@@ -633,7 +633,7 @@ function ChatWindow({
             <Copy className="h-3.5 w-3.5" /> <span className="truncate max-w-full">Copy all</span>
           </button>
           <button type="button" onClick={openChatGptVersion} className={toolBtn} aria-label="Open ChatGPT version">
-            <ExternalLink className="h-3.5 w-3.5" /> <span className="truncate max-w-full"><span className="sm:hidden">ChatGPT ver.</span><span className="hidden sm:inline">CHATGPT VERSION / EXTERNAL</span></span>
+            <ExternalLink className="h-3.5 w-3.5" /> <span className="truncate max-w-full"><span className="sm:hidden">ChatGPT</span><span className="hidden sm:inline">CHATGPT VERSION / EXTERNAL</span></span>
           </button>
         </div>
       </div>
