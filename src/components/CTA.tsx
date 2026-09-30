@@ -25,7 +25,7 @@ const CTA: React.FC = () => {
       <div className="flex justify-center mb-8">
         <Button 
           size="lg" 
-          className="px-8 py-6 text-lg font-semibold bg-gray-800 hover:bg-gray-700 rounded-md shadow-lg transition-all"
+          className="max-w-[calc(100vw-2rem)] h-auto whitespace-normal text-center px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold bg-gray-800 hover:bg-gray-700 rounded-md shadow-lg transition-all"
           onClick={handleExternalLink('https://aiwebtools.lovable.app/?via=aiwebtools', 'Explore AiWebTools.Ai (External Site)')}
         >
           Explore AiWebTools.Ai (EXTERNAL SITE)

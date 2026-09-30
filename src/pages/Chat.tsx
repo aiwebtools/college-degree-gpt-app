@@ -614,26 +614,26 @@ function ChatWindow({
   };
 
   const toolBtn =
-    "shrink-0 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/15 active:scale-95 transition px-3 h-9 text-xs font-medium";
+    "min-w-0 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5 rounded-xl sm:rounded-full border border-primary/30 bg-primary/5 hover:bg-primary/15 active:scale-95 transition px-1 sm:px-3 h-11 sm:h-9 text-[10px] sm:text-xs font-medium leading-tight";
 
   return (
     <>
       <div className="shrink-0 border-b border-border bg-card/70 backdrop-blur">
-        <div className="max-w-3xl mx-auto flex gap-2 overflow-x-auto px-3 py-2 [scrollbar-width:none]">
+        <div className="max-w-3xl mx-auto grid grid-cols-5 gap-1.5 sm:flex sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2">
           <button type="button" onClick={downloadHtml} className={toolBtn} aria-label="Download full class with images">
-            <Download className="h-3.5 w-3.5" /> Download class
+            <Download className="h-3.5 w-3.5" /> <span className="truncate max-w-full"><span className="sm:hidden">Download</span><span className="hidden sm:inline">Download class</span></span>
           </button>
           <button type="button" onClick={printPdf} className={toolBtn} aria-label="Save class as PDF">
-            <Printer className="h-3.5 w-3.5" /> Save as PDF
+            <Printer className="h-3.5 w-3.5" /> <span className="truncate max-w-full">PDF<span className="hidden sm:inline"> (save)</span></span>
           </button>
           <button type="button" onClick={downloadMarkdown} className={toolBtn} aria-label="Download notes as text">
-            <FileText className="h-3.5 w-3.5" /> Notes (.md)
+            <FileText className="h-3.5 w-3.5" /> <span className="truncate max-w-full">Notes</span>
           </button>
           <button type="button" onClick={() => void copyAll()} className={toolBtn} aria-label="Copy whole class">
-            <Copy className="h-3.5 w-3.5" /> Copy all
+            <Copy className="h-3.5 w-3.5" /> <span className="truncate max-w-full">Copy all</span>
           </button>
           <button type="button" onClick={openChatGptVersion} className={toolBtn} aria-label="Open ChatGPT version">
-            <ExternalLink className="h-3.5 w-3.5" /> CHATGPT VERSION / EXTERNAL
+            <ExternalLink className="h-3.5 w-3.5" /> <span className="truncate max-w-full"><span className="sm:hidden">ChatGPT</span><span className="hidden sm:inline">CHATGPT VERSION / EXTERNAL</span></span>
           </button>
         </div>
       </div>
