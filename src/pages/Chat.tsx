@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
@@ -53,6 +53,42 @@ const isCreditFallbackError = (message: string) => {
 
 const stripCreditPrefix = (message: string) =>
   message.replace(/^credits_exhausted:\s*/i, "").trim();
+
+const markdownComponents = {
+  a: ({ node, ...props }: any) => (
+    <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:opacity-80 break-all" />
+  ),
+};
+
+// Memoized so typing in the box doesn't re-render every lesson (that caused the lag).
+const MarkdownBlock = memo(({ text }: { text: string }) => (
+  <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+    {text}
+  </ReactMarkdown>
+));
+
+const cleanForSpeech = (t: string) =>
+  t
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/https?:\/\/\S+/g, " ")
+    .replace(/[#*_`>|~]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const splitForSpeech = (t: string) => {
+  const sentences = t.match(/[^.!?]+[.!?]+|\S[^.!?]*$/g) ?? [t];
+  const chunks: string[] = [];
+  let cur = "";
+  for (const s of sentences) {
+    const limit = chunks.length === 0 ? 220 : 900;
+    if (cur && (cur + s).length > limit) { chunks.push(cur.trim()); cur = ""; }
+    cur += s;
+  }
+  if (cur.trim()) chunks.push(cur.trim());
+  return chunks.slice(0, 12);
+};
 
 export default function Chat() {
   const { threadId } = useParams<{ threadId?: string }>();
