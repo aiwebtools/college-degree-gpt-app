@@ -29,7 +29,10 @@ import {
   Download,
   Printer,
   FileText,
+  Mic,
+  MicOff,
 } from "lucide-react";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
 import type { Session } from "@supabase/supabase-js";
 import { createTimePortalEffect } from "@/utils/timeEffects";
 
