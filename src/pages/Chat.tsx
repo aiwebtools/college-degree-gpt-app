@@ -350,6 +350,7 @@ function ChatWindow({
   onFirstUserMessage: (text: string) => void;
 }) {
   const [input, setInput] = useState("");
+  const voice = useVoiceInput((t) => setInput((cur) => (cur.trim() ? `${cur.trim()} ${t}` : t)));
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [atBottom, setAtBottom] = useState(true);
@@ -862,6 +863,24 @@ function ChatWindow({
                 }
               }}
             />
+            <Button
+              type="button"
+              size="icon"
+              variant={voice.state === "recording" ? "destructive" : "outline"}
+              onClick={voice.toggle}
+              disabled={voice.state === "transcribing"}
+              aria-label={voice.state === "recording" ? "Stop recording" : "Speak your message"}
+              title={voice.state === "recording" ? "Tap to stop" : "Talk to your professor"}
+              className={`shrink-0 h-12 w-12 rounded-2xl ${voice.state === "recording" ? "animate-pulse" : ""}`}
+            >
+              {voice.state === "transcribing" ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : voice.state === "recording" ? (
+                <MicOff className="h-4 w-4" />
+              ) : (
+                <Mic className="h-4 w-4" />
+              )}
+            </Button>
             {isLoading ? (
               <Button
                 type="button"
