@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
@@ -53,6 +53,42 @@ const isCreditFallbackError = (message: string) => {
 
 const stripCreditPrefix = (message: string) =>
   message.replace(/^credits_exhausted:\s*/i, "").trim();
+
+const markdownComponents = {
+  a: ({ node, ...props }: any) => (
+    <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary underline hover:opacity-80 break-all" />
+  ),
+};
+
+// Memoized so typing in the box doesn't re-render every lesson (that caused the lag).
+const MarkdownBlock = memo(({ text }: { text: string }) => (
+  <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+    {text}
+  </ReactMarkdown>
+));
+
+const cleanForSpeech = (t: string) =>
+  t
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/https?:\/\/\S+/g, " ")
+    .replace(/[#*_`>|~]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const splitForSpeech = (t: string) => {
+  const sentences = t.match(/[^.!?]+[.!?]+|\S[^.!?]*$/g) ?? [t];
+  const chunks: string[] = [];
+  let cur = "";
+  for (const s of sentences) {
+    const limit = chunks.length === 0 ? 220 : 900;
+    if (cur && (cur + s).length > limit) { chunks.push(cur.trim()); cur = ""; }
+    cur += s;
+  }
+  if (cur.trim()) chunks.push(cur.trim());
+  return chunks.slice(0, 12);
+};
 
 export default function Chat() {
   const { threadId } = useParams<{ threadId?: string }>();
@@ -486,55 +522,72 @@ function ChatWindow({
   const [speakingId, setSpeakingId] = useState<string | null>(null);
   const [loadingVoiceId, setLoadingVoiceId] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const voiceRunRef = useRef(0);
+
+  const stopVoice = () => {
+    voiceRunRef.current++;
+    audioRef.current?.pause();
+    audioRef.current = null;
+  };
+
+  const fetchVoiceChunk = async (text: string) => {
+    const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+      },
+      body: JSON.stringify({ text, voice: "onyx" }),
+    });
+    if (!res.ok) throw new Error((await res.text()) || `TTS failed (${res.status})`);
+    return URL.createObjectURL(await res.blob());
+  };
 
   const speakMessage = async (id: string, text: string) => {
-    try {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-      if (speakingId === id) {
-        setSpeakingId(null);
-        return;
-      }
-      setLoadingVoiceId(id);
-      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/tts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
-        },
-        body: JSON.stringify({ text, voice: "onyx" }),
-      });
-      if (!res.ok) {
-        const err = await res.text();
-        throw new Error(err || `TTS failed (${res.status})`);
-      }
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const audio = new Audio(url);
-      audioRef.current = audio;
-      audio.onended = () => {
-        setSpeakingId((cur) => (cur === id ? null : cur));
-        URL.revokeObjectURL(url);
-      };
-      audio.onerror = () => {
-        setSpeakingId((cur) => (cur === id ? null : cur));
-        URL.revokeObjectURL(url);
-      };
-      await audio.play();
+    const wasSpeaking = speakingId === id || loadingVoiceId === id;
+    stopVoice();
+    if (wasSpeaking) {
+      setSpeakingId(null);
       setLoadingVoiceId(null);
-      setSpeakingId(id);
+      return;
+    }
+    const run = voiceRunRef.current;
+    // Small first piece so the professor starts talking quickly; next pieces load while he speaks.
+    const chunks = splitForSpeech(cleanForSpeech(text));
+    if (!chunks.length) return;
+    setLoadingVoiceId(id);
+    setSpeakingId(null);
+    try {
+      let next: Promise<string> = fetchVoiceChunk(chunks[0]);
+      for (let i = 0; i < chunks.length; i++) {
+        const url = await next;
+        if (run !== voiceRunRef.current) { URL.revokeObjectURL(url); return; }
+        if (i + 1 < chunks.length) next = fetchVoiceChunk(chunks[i + 1]);
+        const audio = new Audio(url);
+        audioRef.current = audio;
+        await audio.play();
+        setLoadingVoiceId(null);
+        setSpeakingId(id);
+        await new Promise<void>((resolve) => {
+          audio.onended = () => resolve();
+          audio.onerror = () => resolve();
+          audio.onpause = () => resolve();
+        });
+        URL.revokeObjectURL(url);
+        if (run !== voiceRunRef.current) return;
+      }
     } catch (e) {
       console.error("tts error", e);
-      toast.error(e instanceof Error ? e.message : "Voice playback failed");
+      if (run === voiceRunRef.current) toast.error(e instanceof Error ? e.message : "Voice playback failed");
+    }
+    if (run === voiceRunRef.current) {
       setSpeakingId(null);
       setLoadingVoiceId(null);
     }
   };
 
-  useEffect(() => () => { audioRef.current?.pause(); }, []);
+  useEffect(() => () => stopVoice(), []);
 
   const openChatGptVersion = () => {
     createTimePortalEffect(CHATGPT_VERSION_URL, "College Degree GPT ChatGPT Version (External)");
@@ -698,21 +751,7 @@ function ChatWindow({
                         key={i}
                         className="prose prose-sm sm:prose-base dark:prose-invert max-w-none break-words prose-pre:overflow-x-auto prose-pre:text-xs prose-img:rounded-xl prose-headings:scroll-mt-16 [&_table]:block [&_table]:overflow-x-auto [&_table]:whitespace-nowrap"
                       >
-                        <ReactMarkdown
-                          remarkPlugins={[remarkGfm]}
-                          components={{
-                            a: ({ node, ...props }) => (
-                              <a
-                                {...props}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-primary underline hover:opacity-80 break-all"
-                              />
-                            ),
-                          }}
-                        >
-                          {(p as any).text}
-                        </ReactMarkdown>
+                        <MarkdownBlock text={(p as any).text} />
                       </div>
                     );
                   }
