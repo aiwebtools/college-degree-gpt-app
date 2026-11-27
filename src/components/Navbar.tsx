@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import GlassMorphism from './ui/GlassMorphism';
 import { Button } from '@/components/ui/button';
-import { Menu, X, ExternalLink, Home, BookOpen, Wrench, MessageCircle, MoreHorizontal } from 'lucide-react';
+import { Menu, X, ExternalLink, Home, BookOpen, Wrench, MessageCircle, MoreHorizontal, Download } from 'lucide-react';
 import { createTimePortalEffect, createInternalPortalEffect } from '@/utils/timeEffects';
+import PublicLessonLibrary from './PublicLessonLibrary';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,13 +42,13 @@ const Navbar: React.FC = () => {
     <div className={cn('fixed top-0 left-0 right-0 z-50 transition-all duration-300', isScrolled ? 'py-3' : 'py-5')}>
       <GlassMorphism intensity={isScrolled ? 'high' : 'low'} className={cn('mx-4 sm:mx-6 lg:mx-8 transition-all duration-300', isScrolled && 'shadow-lg')}>
         <div className="flex items-center justify-between px-4 sm:px-6 py-3">
-          <div className="flex items-center space-x-2">
+          <div className="flex min-w-0 items-center space-x-2">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
               <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <div className="flex flex-col">
+            <div className="flex min-w-0 flex-col">
               <span className="font-bold text-lg tracking-tight text-gray-900 dark:text-white">College Degree GPT</span>
               <span className="italic text-[11px] text-primary/80 font-serif" style={{ fontFamily: '"Great Vibes","Pinyon Script","Dancing Script",cursive' }}>a product of imagination</span>
               <span className="text-xs text-gray-700 dark:text-gray-300">Self-Taught Learning Experience</span>
@@ -55,23 +56,12 @@ const Navbar: React.FC = () => {
             </div>
           </div>
           
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'AiWebTools Home (External Site)')} className="flex items-center gap-1.5 text-sm font-medium text-gray-900 dark:text-white hover:text-primary transition-colors">
-              <Home className="h-4 w-4" />
-              AiWebTools Home (EXTERNAL SITE)
-            </a>
-            <a href="#" onClick={handleExternalLink('https://chatgpt.com/g/g-6730d59e8e648190be4221e319aad5cd-learn-any-course-gpt', 'Learn Any Course GPT (ChatGPT Version / External)')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Course GPT (CHATGPT VERSION / EXTERNAL)</a>
-            <a href="#" onClick={handleExternalLink('https://learnanyskillgpt.lovable.app/', 'Learn Any Skill GPT (External Site)')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Learn Any Skill GPT (EXTERNAL SITE)</a>
-            <a href="#" onClick={handleExternalLink('https://talk-to-history-gpt.lovable.app/', 'Talk to History GPT (External Site)')} className="link-underline text-sm font-medium text-gray-900 dark:text-white">Talk to History GPT (EXTERNAL SITE)</a>
-          </nav>
-          
-          {/* Mobile menu button and More AI Tools button */}
-          <div className="flex items-center space-x-2">
-            <Button size="sm" variant="outline" className="rounded-full hidden md:flex items-center gap-1.5 bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100" onClick={handleExternalLink(AIWEBTOOLS_URL, 'More AI Tools (External Site)')}>
+          {/* The menu is available at every screen size, including the PDF library. */}
+          <div className="flex shrink-0 items-center space-x-2">
+            <Button size="sm" variant="outline" className="rounded-full hidden xl:flex items-center gap-1.5 bg-purple-50 border-purple-200 text-purple-700 hover:bg-purple-100" onClick={handleExternalLink(AIWEBTOOLS_URL, 'More AI Tools (External Site)')}>
               More AI Tools (EXTERNAL SITE) <ExternalLink className="h-3.5 w-3.5" />
             </Button>
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-2">
               <Button size="sm" className="rounded-full px-6 bg-red-500 hover:bg-red-600 text-white" onClick={handleInternalChat}>
                 USE COLLEGE DEGREE GPT (IN-SITE VERSION)
               </Button>
@@ -79,20 +69,32 @@ const Navbar: React.FC = () => {
                 CHATGPT VERSION / EXTERNAL
               </Button>
             </div>
-            <button 
-              className="md:hidden p-2 rounded-md"
+            <Button
+              variant="ghost"
+              size="icon"
+              className="shrink-0"
               onClick={toggleMobileMenu}
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={mobileMenuOpen}
+              aria-controls="navigation-menu"
             >
               {mobileMenuOpen ? <X className="h-6 w-6 text-gray-900 dark:text-white" /> : <Menu className="h-6 w-6 text-gray-900 dark:text-white" />}
-            </button>
+            </Button>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden px-4 pt-2 pb-4 space-y-3 border-t border-gray-300 dark:border-gray-700">
+          <nav id="navigation-menu" aria-label="Tools and free learning resources" className="max-h-[calc(100dvh-12rem)] overflow-y-auto overscroll-contain rounded-b-lg border-t border-border bg-background px-4 pt-2 pb-4 space-y-3 text-foreground">
+            <Button
+              variant="outline"
+              className="h-auto min-h-12 w-full justify-start gap-3 whitespace-normal py-3 text-left text-sm"
+              onClick={handleExternalLink('https://docs.google.com/document/u/0/d/1TpVG9pncULpkHy9IhAjyXIgScyTW703Lf-IQKkXeJs4/pub?pli=1', 'Download College Degree GPT Prompt (External Document)')}
+            >
+              <Download className="h-5 w-5 shrink-0" />
+              <span>Download College Degree GPT Prompt <span className="block text-xs text-muted-foreground">(EXTERNAL DOCUMENT)</span></span>
+            </Button>
+            <PublicLessonLibrary />
             <a href="#" onClick={handleExternalLink(AIWEBTOOLS_URL, 'AiWebTools Home (External Site)')}
               className="flex items-center gap-3 py-3 px-4 text-sm font-medium rounded-lg border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-800 hover:from-blue-100 hover:to-blue-200 hover:shadow-lg hover:shadow-blue-200/50 transition-all duration-300 transform hover:scale-105 glow-blue">
               <Home className="h-5 w-5" />
@@ -124,7 +126,7 @@ const Navbar: React.FC = () => {
             <Button size="sm" variant="outline" className="w-full h-12 rounded-full mt-2 text-xs sm:text-sm whitespace-normal leading-tight" onClick={handleExternalLink('https://chatgpt.com/g/g-zF3j9G3Wd-college-degree-gpt', 'College Degree GPT ChatGPT Version (External)')}>
               CHATGPT VERSION / EXTERNAL
             </Button>
-          </div>
+          </nav>
         )}
       </GlassMorphism>
     </div>
