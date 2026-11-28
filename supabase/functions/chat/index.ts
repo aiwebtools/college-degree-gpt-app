@@ -18,6 +18,12 @@ const corsHeaders = {
 const CREDIT_FALLBACK_MESSAGE =
   "CREDITS_EXHAUSTED: Sorry, community credits have run out for today. Please try the ChatGPT version of College Degree GPT while credits refresh.";
 
+const BIONIC_MODEL = "GLM-5.3 Flash";
+const YOUTUBE_SYSTEM_NOTE =
+  "\n\nYOUTUBE LINKS: When sharing YouTube resources, ALWAYS include them as full clickable markdown links like [Title](https://youtube.com/watch?v=...) so the user can click them.";
+const IMAGE_SYSTEM_NOTE =
+  "\n\nIMAGE TOOL: When your instructions call for a DALL-E image (course cover, end-of-segment recap image, degree completion cert), call the tool `generate_image` with a vivid descriptive prompt. Do not describe the image in text — actually call the tool so the user sees it.";
+
 const getErrorStatus = (error: unknown) => {
   if (!error || typeof error !== "object") return undefined;
   const err = error as Record<string, unknown>;
@@ -58,7 +64,11 @@ Deno.serve(async (req) => {
 
   try {
     const apiKey = Deno.env.get("LOVABLE_API_KEY");
-    if (!apiKey) {
+    const bionicApiKey = Deno.env.get("BIONIC_API_KEY")?.trim();
+    const bionicBaseUrl = Deno.env.get("BIONIC_BASE_URL")?.trim()?.replace(/\/+$/, "");
+    const hasBionicBackup = Boolean(bionicApiKey && bionicBaseUrl);
+
+    if (!apiKey && !hasBionicBackup) {
       return new Response(JSON.stringify({ error: "Missing LOVABLE_API_KEY" }), {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -103,20 +113,44 @@ Deno.serve(async (req) => {
     const trimmed = rawMessages.slice(-MAX_HISTORY_MESSAGES);
     const messages: UIMessage[] = trimmed.map(sanitize) as UIMessage[];
 
+    const modelMessages = await convertToModelMessages(messages);
+
+    const createBionicStreamResponse = () => {
+      const bionic = createOpenAI({
+        baseURL: bionicBaseUrl!,
+        apiKey: bionicApiKey!,
+      });
+      const bionicResult = streamText({
+        model: bionic.chat(BIONIC_MODEL),
+        system: SYSTEM_PROMPT + YOUTUBE_SYSTEM_NOTE,
+        messages: modelMessages,
+        stopWhen: stepCountIs(10),
+      });
+      return bionicResult.toUIMessageStreamResponse({
+        headers: { ...corsHeaders, "X-AI-Provider": "bionic" },
+        onError: (err) => {
+          console.error("bionic fallback error", err);
+          return CREDIT_FALLBACK_MESSAGE;
+        },
+      });
+    };
+
+    if (!apiKey && hasBionicBackup) {
+      return createBionicStreamResponse();
+    }
+
     const initialRunId = getLovableAiGatewayRunId(req);
     const runIdFetch = createLovableAiGatewayRunIdFetch(initialRunId);
     const lovable = createOpenAI({
       baseURL: "https://ai.gateway.lovable.dev/v1",
-      apiKey,
+      apiKey: apiKey!,
       headers: {
-        "Lovable-API-Key": apiKey,
+        "Lovable-API-Key": apiKey!,
         "X-Lovable-AIG-SDK": "vercel-ai-sdk",
       },
       fetch: runIdFetch.fetch,
     });
     const model = lovable.responses("openai/gpt-6-astra");
-
-    const modelMessages = await convertToModelMessages(messages);
 
     const generateImage = tool({
       description:
@@ -130,7 +164,7 @@ Deno.serve(async (req) => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Lovable-API-Key": apiKey,
+              "Lovable-API-Key": apiKey!,
               "X-Lovable-AIG-SDK": "fetch",
             },
             body: JSON.stringify({
@@ -162,8 +196,7 @@ Deno.serve(async (req) => {
 
     const result = streamText({
       model,
-      system: SYSTEM_PROMPT +
-        "\n\nIMAGE TOOL: When your instructions call for a DALL-E image (course cover, end-of-segment recap image, degree completion cert), call the tool `generate_image` with a vivid descriptive prompt. Do not describe the image in text — actually call the tool so the user sees it. YOUTUBE LINKS: When sharing YouTube resources, ALWAYS include them as full clickable markdown links like [Title](https://youtube.com/watch?v=...) so the user can click them.",
+      system: SYSTEM_PROMPT + IMAGE_SYSTEM_NOTE + YOUTUBE_SYSTEM_NOTE,
       messages: modelMessages,
       tools: { generate_image: generateImage },
       stopWhen: stepCountIs(20),
@@ -187,7 +220,71 @@ Deno.serve(async (req) => {
       onError: safeGatewayErrorMessage,
     });
 
-    return withLovableAiGatewayRunIdHeader(response, runIdFetch, corsHeaders);
+    if (!hasBionicBackup || !response.body) {
+      return withLovableAiGatewayRunIdHeader(response, runIdFetch, corsHeaders);
+    }
+
+    // Peek initial stream chunks so a Lovable AI credit/limit error seamlessly falls back to Bionic.
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    const buffered: Uint8Array[] = [];
+    let fallbackToBionic = false;
+    let streamDone = false;
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) {
+        streamDone = true;
+        break;
+      }
+      buffered.push(value);
+      const text = decoder.decode(value, { stream: true });
+      if (text.includes("CREDITS_EXHAUSTED")) {
+        fallbackToBionic = true;
+        break;
+      }
+      if (
+        text.includes('"text-delta"') ||
+        text.includes('"reasoning-delta"') ||
+        text.includes('"tool-input-start"') ||
+        text.includes('"finish"')
+      ) {
+        break;
+      }
+    }
+
+    if (fallbackToBionic) {
+      await reader.cancel().catch(() => {});
+      console.warn("Lovable AI credits exhausted; falling back to Bionic API");
+      return createBionicStreamResponse();
+    }
+
+    const replayStream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        for (const chunk of buffered) controller.enqueue(chunk);
+        if (streamDone) controller.close();
+      },
+      async pull(controller) {
+        if (streamDone) return;
+        const { done, value } = await reader.read();
+        if (done) {
+          streamDone = true;
+          controller.close();
+        } else {
+          controller.enqueue(value);
+        }
+      },
+      cancel() {
+        return reader.cancel();
+      },
+    });
+
+    const replayResponse = new Response(replayStream, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+    return withLovableAiGatewayRunIdHeader(replayResponse, runIdFetch, corsHeaders);
   } catch (err) {
     console.error("chat error", err);
     const msg = safeGatewayErrorMessage(err);
